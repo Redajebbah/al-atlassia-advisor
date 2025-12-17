@@ -108,27 +108,41 @@ const OptionCards = ({
               key={option.id}
               onClick={() => handleClick(option.id)}
               className={cn(
-                "insurance-card text-center relative min-h-[88px] sm:min-h-[100px] touch-manipulation active:scale-95",
-                "animate-scale-in",
-                isSelected && "selected",
-                multiSelect && isSelected && "bg-primary/5"
+                "relative min-h-[88px] sm:min-h-[100px] touch-manipulation",
+                "bg-white rounded-xl p-4 text-center",
+                "border-2 transition-all duration-300",
+                "hover:shadow-lg hover:-translate-y-1 hover:border-blue-300",
+                "active:scale-95 animate-scale-in",
+                isSelected 
+                  ? "border-blue-600 shadow-lg bg-blue-50" 
+                  : "border-gray-200 shadow-sm"
               )}
               style={{ animationDelay: `${index * 50}ms` }}
             >
               {multiSelect && isSelected && (
-                <div className="absolute top-2 right-2 w-5 h-5 rounded-full bg-primary flex items-center justify-center">
-                  <Check className="w-3 h-3 text-primary-foreground" />
+                <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center shadow-md">
+                  <Check className="w-4 h-4 text-white" />
                 </div>
               )}
               {Icon ? (
-                <Icon className={cn(
-                  "w-6 h-6 mb-2 mx-auto transition-colors",
-                  isSelected ? "text-primary" : "text-muted-foreground"
-                )} />
+                <div className={cn(
+                  "w-10 h-10 mx-auto mb-2 rounded-full flex items-center justify-center transition-all duration-300",
+                  isSelected 
+                    ? "bg-gradient-to-br from-blue-600 to-blue-700" 
+                    : "bg-gray-100"
+                )}>
+                  <Icon className={cn(
+                    "w-5 h-5 transition-colors",
+                    isSelected ? "text-white" : "text-gray-600"
+                  )} />
+                </div>
               ) : option.icon && (
                 <span className="text-2xl mb-2 block">{option.icon}</span>
               )}
-              <span className="text-sm font-medium text-foreground">{option.label}</span>
+              <span className={cn(
+                "text-sm font-medium transition-colors",
+                isSelected ? "text-blue-700" : "text-gray-700"
+              )}>{option.label}</span>
             </button>
           );
         })}
@@ -137,7 +151,7 @@ const OptionCards = ({
       {multiSelect && selected.length > 0 && (
         <button
           onClick={handleConfirm}
-          className="mt-4 w-full gradient-primary text-primary-foreground rounded-xl py-3 font-medium transition-all hover:opacity-90 active:scale-[0.98]"
+          className="mt-4 w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-full py-3 px-6 font-medium transition-all hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] shadow-md"
         >
           {isRtl ? 'متابعة' : 'Continuer'}
         </button>

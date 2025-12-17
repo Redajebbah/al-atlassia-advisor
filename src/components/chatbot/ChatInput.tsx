@@ -30,17 +30,16 @@ const ChatInput = ({ onSubmit, language, placeholder, type = 'text' }: ChatInput
       className="w-full animate-fade-in-up"
       dir={isRtl ? "rtl" : "ltr"}
     >
-      <div className="flex gap-2">
+      <div className="flex gap-3 items-center bg-white rounded-full shadow-lg px-2 py-2 border border-gray-200 hover:shadow-xl transition-shadow duration-300">
         <input
           type={inputType}
           value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder={placeholder}
           className={cn(
-            "flex-1 bg-card border border-border rounded-xl px-3 sm:px-4 py-3 sm:py-3.5",
-            "text-[16px] sm:text-base text-foreground placeholder:text-muted-foreground",
-            "focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary",
-            "transition-all touch-manipulation",
+            "flex-1 bg-transparent px-4 py-2",
+            "text-[16px] sm:text-base text-foreground placeholder:text-gray-400",
+            "focus:outline-none transition-all touch-manipulation",
             isRtl ? "font-arabic text-right" : ""
           )}
           autoFocus
@@ -53,12 +52,14 @@ const ChatInput = ({ onSubmit, language, placeholder, type = 'text' }: ChatInput
           type="submit"
           disabled={!value.trim()}
           className={cn(
-            "gradient-primary text-primary-foreground rounded-xl px-3 sm:px-4 min-w-[48px] sm:min-w-[52px]",
-            "transition-all hover:opacity-90 active:scale-95 touch-manipulation",
-            "disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+            "bg-gradient-to-br from-blue-600 to-blue-700 text-white rounded-full",
+            "w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0",
+            "transition-all hover:scale-105 active:scale-95 touch-manipulation shadow-md hover:shadow-lg",
+            "disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100",
+            "flex items-center justify-center"
           )}
         >
-          <Send className={cn("w-4 h-4 sm:w-5 sm:h-5", isRtl && "rotate-180")} />
+          <Send className={cn("w-5 h-5", isRtl && "rotate-180")} />
         </button>
       </div>
     </form>
