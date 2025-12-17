@@ -19,17 +19,26 @@ const ChatHeader = ({ language }: ChatHeaderProps) => {
           <div className="flex items-center justify-between gap-3 sm:gap-6">
             {/* Left Section: Logos */}
             <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-              <img 
-                src={logoAlAtlassia} 
-                alt="Al Atlassia Assurances" 
-                className="h-10 sm:h-12 md:h-14 w-auto object-contain"
-              />
+              {/* Al Atlassia Logo */}
+              <div className="bg-white rounded px-2 py-1.5 sm:px-2.5 sm:py-2 shadow-sm">
+                <img 
+                  src={logoAlAtlassia} 
+                  alt="Al Atlassia Assurances" 
+                  className="h-8 sm:h-10 md:h-12 w-auto object-contain"
+                />
+              </div>
+              
+              {/* Divider */}
               <div className="h-10 sm:h-12 w-px bg-white/20" />
-              <img 
-                src={logoAtlantaSanad} 
-                alt="Atlanta Sanad" 
-                className="h-8 sm:h-10 md:h-12 w-auto object-contain"
-              />
+              
+              {/* Atlanta Sanad Logo */}
+              <div className="bg-white rounded px-2 py-1.5 sm:px-2.5 sm:py-2 shadow-sm">
+                <img 
+                  src={logoAtlantaSanad} 
+                  alt="Atlanta Sanad" 
+                  className="h-7 sm:h-9 md:h-11 w-auto object-contain"
+                />
+              </div>
             </div>
             
             {/* Right Section: Brand Name */}
