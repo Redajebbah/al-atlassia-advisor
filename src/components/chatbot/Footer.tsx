@@ -61,7 +61,7 @@ const Footer = ({ language }: FooterProps) => {
         )}>
           <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-8 pt-12">
             {/* Column 1: Company */}
-            <div className="space-y-4">
+            <div className="space-y-4 animate-fade-in-up" style={{ animationDelay: '0ms' }}>
               <div className="flex items-center gap-3">
                 <img 
                   className="w-16 h-16 bg-white rounded-lg p-2 shadow-lg" 
@@ -123,7 +123,7 @@ const Footer = ({ language }: FooterProps) => {
             </div>
 
             {/* Column 2: Services */}
-            <div className="space-y-4">
+            <div className="space-y-4 animate-fade-in-up" style={{ animationDelay: '150ms' }}>
               <h3 className={cn("text-lg font-semibold text-white mb-4", isRtl && "font-arabic")} dir={isRtl ? "rtl" : "ltr"}>
                 {isRtl ? 'خدماتنا' : 'Nos Services'}
               </h3>
@@ -148,7 +148,7 @@ const Footer = ({ language }: FooterProps) => {
             </div>
 
             {/* Column 3: Contact */}
-            <div className="space-y-4">
+            <div className="space-y-4 animate-fade-in-up" style={{ animationDelay: '300ms' }}>
               <h3 className={cn("text-lg font-semibold text-white mb-4", isRtl && "font-arabic")} dir={isRtl ? "rtl" : "ltr"}>
                 {isRtl ? 'اتصل بنا' : 'Contactez-nous'}
               </h3>
@@ -207,7 +207,7 @@ const Footer = ({ language }: FooterProps) => {
             </div>
 
             {/* Column 4: Emergency Assistance */}
-            <div className="space-y-4">
+            <div className="space-y-4 animate-fade-in-up" style={{ animationDelay: '450ms' }}>
               <h3 className={cn("text-lg font-semibold text-white mb-4", isRtl && "font-arabic")} dir={isRtl ? "rtl" : "ltr"}>
                 {isRtl ? 'المساعدة الطارئة' : 'Assistance d\'urgence'}
               </h3>
@@ -248,10 +248,10 @@ const Footer = ({ language }: FooterProps) => {
           </div>
 
           {/* Gradient Line Separator */}
-          <div className="mt-12 mb-6 h-px bg-gradient-to-r from-blue-400 via-white to-blue-400 opacity-30"></div>
+          <div className="mt-12 mb-6 h-px bg-gradient-to-r from-blue-400 via-white to-blue-400 opacity-30 animate-fade-in" style={{ animationDelay: '600ms' }}></div>
 
           {/* Copyright */}
-          <div className="text-center">
+          <div className="text-center animate-fade-in" style={{ animationDelay: '700ms' }}>
             <p className={cn("text-blue-200 text-sm", isRtl && "font-arabic")}>
               {isRtl 
                 ? 'حقوق النشر © 2024 الأطلسية للتأمينات. جميع الحقوق محفوظة'

@@ -14,13 +14,16 @@ const Header = () => {
       if (!ticking.current) {
         window.requestAnimationFrame(() => {
           const currentScrollY = window.scrollY;
+          const scrollDelta = currentScrollY - lastScrollY.current;
           
-          // Add hysteresis to prevent flickering
-          if (currentScrollY < 30) {
+          // Improved hysteresis with better thresholds
+          if (currentScrollY < 20) {
             setIsCompact(false);
-          } else if (currentScrollY > 80 && currentScrollY > lastScrollY.current) {
+          } else if (scrollDelta > 5 && currentScrollY > 100) {
+            // Scrolling down significantly
             setIsCompact(true);
-          } else if (currentScrollY < lastScrollY.current - 20) {
+          } else if (scrollDelta < -5) {
+            // Scrolling up
             setIsCompact(false);
           }
           
@@ -42,10 +45,10 @@ const Header = () => {
 
   return (
     <header
-      className="sticky top-0 z-50 bg-gradient-to-b from-blue-900 via-blue-800 to-blue-900 transition-all duration-300"
+      className="sticky top-0 z-50 transition-all duration-500 ease-in-out"
       style={{
-        backgroundColor: isCompact ? '#1e3a8a' : undefined,
-        boxShadow: isCompact ? '0 10px 40px rgba(0,0,0,0.3)' : undefined,
+        background: isCompact ? '#1e3a8a' : 'linear-gradient(to bottom, #1e3a8a, #1e40af, #1e3a8a)',
+        boxShadow: isCompact ? '0 10px 40px rgba(0,0,0,0.3)' : '0 2px 10px rgba(0,0,0,0.1)',
       }}
     >
       <div className="max-w-7xl mx-auto px-6 transition-all duration-300" style={{ paddingTop: isCompact ? '0.5rem' : '1rem', paddingBottom: isCompact ? '0.5rem' : '1rem' }}>
