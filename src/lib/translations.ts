@@ -60,7 +60,11 @@ type TranslationKey =
   | 'rc_professionnelle'
   | 'automobile_pro'
   | 'scolaireInfo'
-  | 'scolaireType'
+  | 'scolaireCoverageQuestion'
+  | 'scolaire_rc'
+  | 'scolaire_accidents_travail'
+  | 'scolaire_multirisques'
+  | 'scolaire_vehicules'
   | 'institutionName'
   | 'institutionPlaceholder'
   | 'clientName'
@@ -150,8 +154,12 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     rc_professionnelle: 'م.م. المهنية',
     automobile_pro: 'تأمين السيارات',
     scolaireInfo: 'التأمين المدرسي يوفر الحماية لأبنائك خلال العام الدراسي.',
-    scolaireType: 'اختر نوع التأمين المدرسي:',
-    institutionName: 'ما اسم المؤسسة التعليمية؟',
+    scolaireCoverageQuestion: 'هذا التأمين يشمل:',
+    scolaire_rc: 'تأمين المسؤولية المدنية',
+    scolaire_accidents_travail: 'تأمين حوادث الشغل',
+    scolaire_multirisques: 'التأمين المتعدد المخاطر',
+    scolaire_vehicules: 'التأمين على المركبات',
+    institutionName: 'اسم المؤسسة التعليمية',
     institutionPlaceholder: 'أدخل اسم المؤسسة',
     clientName: 'ما اسمك الكامل؟',
     namePlaceholder: 'أدخل اسمك الكامل',
@@ -239,8 +247,12 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     rc_professionnelle: 'RC professionnelle',
     automobile_pro: 'Assurance automobile',
     scolaireInfo: 'L\'assurance scolaire protège vos enfants tout au long de l\'année scolaire.',
-    scolaireType: 'Choisissez le type d\'assurance scolaire :',
-    institutionName: 'Quel est le nom de l\'établissement ?',
+    scolaireCoverageQuestion: 'Cette assurance comprend :',
+    scolaire_rc: 'Assurance responsabilité civile',
+    scolaire_accidents_travail: 'Assurance accidents du travail',
+    scolaire_multirisques: 'Assurance multirisque',
+    scolaire_vehicules: 'Assurance véhicules',
+    institutionName: 'Nom de l\'établissement scolaire',
     institutionPlaceholder: 'Entrez le nom de l\'établissement',
     clientName: 'Quel est votre nom complet ?',
     namePlaceholder: 'Entrez votre nom complet',
@@ -367,4 +379,11 @@ export const getHourOptions = (lang: Language): ChatOption[] => [
   { id: 'morning', label: t('morning', lang) },
   { id: 'afternoon', label: t('afternoon', lang) },
   { id: 'evening', label: t('evening', lang) },
+];
+
+export const getScolaireCoverageOptions = (lang: Language): ChatOption[] => [
+  { id: 'scolaire_rc', label: t('scolaire_rc', lang) },
+  { id: 'scolaire_accidents_travail', label: t('scolaire_accidents_travail', lang) },
+  { id: 'scolaire_multirisques', label: t('scolaire_multirisques', lang) },
+  { id: 'scolaire_vehicules', label: t('scolaire_vehicules', lang) },
 ];

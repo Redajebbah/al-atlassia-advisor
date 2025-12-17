@@ -26,6 +26,7 @@ import {
   getContactMethodOptions,
   getEntrepriseInsuranceOptions,
   getProfessionnelInsuranceOptions,
+  getScolaireCoverageOptions,
   getContactPreferenceOptions,
   getDayOptions,
   getHourOptions
@@ -180,13 +181,12 @@ export const useChatbot = (language: Language) => {
           setState(prev => ({ ...prev, preSelectedOptions: ['rc_professionnelle'] }));
           break;
 
-        case 'scolaire_type':
+        case 'scolaire_coverage':
           addBotMessage(t('scolaireInfo', language));
           setTimeout(() => {
             showTyping();
             setTimeout(() => {
-              setInputMode('text', language === 'ar' ? 'نوع التأمين' : 'Type d\'assurance');
-              addBotMessage(t('scolaireType', language));
+              addBotMessage(t('scolaireCoverageQuestion', language), getScolaireCoverageOptions(language), true);
             }, 600);
           }, 500);
           break;
@@ -272,7 +272,7 @@ export const useChatbot = (language: Language) => {
             processStep('professionnels_types');
             break;
           case 'scolaire':
-            processStep('scolaire_type');
+            processStep('scolaire_coverage');
             break;
           case 'autres':
             showTyping();
@@ -348,6 +348,11 @@ export const useChatbot = (language: Language) => {
     addUserMessage(labels);
     
     switch (state.step) {
+      case 'scolaire_coverage':
+        setState(prev => ({ ...prev, insuranceData: { ...prev.insuranceData, coverageTypes: selectedIds } }));
+        processStep('scolaire_institution');
+        break;
+
       case 'entreprises_types':
         setState(prev => ({ ...prev, insuranceData: { ...prev.insuranceData, insuranceTypes: selectedIds } }));
         processStep('client_name');
@@ -377,11 +382,6 @@ export const useChatbot = (language: Language) => {
       case 'entreprises_activity':
         setState(prev => ({ ...prev, insuranceData: { ...prev.insuranceData, activityType: value } }));
         processStep('entreprises_types');
-        break;
-
-      case 'scolaire_type':
-        setState(prev => ({ ...prev, insuranceData: { ...prev.insuranceData, scolaireType: value } }));
-        processStep('scolaire_institution');
         break;
 
       case 'scolaire_institution':

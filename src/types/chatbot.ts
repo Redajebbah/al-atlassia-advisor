@@ -68,7 +68,7 @@ export interface ProfessionnelsData {
 }
 
 export interface ScolaireData {
-  insuranceType: string;
+  coverageTypes: string[];
   institutionName: string;
 }
 
@@ -97,7 +97,7 @@ export type ChatStep =
   | 'entreprises_activity'
   | 'entreprises_types'
   | 'professionnels_types'
-  | 'scolaire_type'
+  | 'scolaire_coverage'
   | 'scolaire_institution'
   | 'client_name'
   | 'client_phone'

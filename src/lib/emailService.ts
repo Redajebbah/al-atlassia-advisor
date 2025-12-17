@@ -101,8 +101,10 @@ const formatInsuranceDetails = (
       break;
 
     case 'scolaire':
-      if (data.scolaireType) {
-        details.push(`${lang === 'fr' ? 'Type d\'assurance' : 'نوع التأمين'}: ${data.scolaireType}`);
+      if (data.coverageTypes && data.coverageTypes.length > 0) {
+        details.push(
+          `${lang === 'fr' ? 'Types de couverture' : 'أنواع التغطية'}: ${data.coverageTypes.join(', ')}`
+        );
       }
       if (data.institutionName) {
         details.push(`${lang === 'fr' ? 'Nom de l\'établissement' : 'اسم المؤسسة'}: ${data.institutionName}`);
