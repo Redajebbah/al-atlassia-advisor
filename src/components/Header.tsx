@@ -7,25 +7,29 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isCompact, setIsCompact] = useState(false);
   const lastScrollY = useRef(0);
+  const ticking = useRef(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      
-      // If near top (< 50px), always show full header
-      if (currentScrollY < 50) {
-        setIsCompact(false);
+      if (!ticking.current) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+          
+          // Add hysteresis to prevent flickering
+          if (currentScrollY < 30) {
+            setIsCompact(false);
+          } else if (currentScrollY > 80 && currentScrollY > lastScrollY.current) {
+            setIsCompact(true);
+          } else if (currentScrollY < lastScrollY.current - 20) {
+            setIsCompact(false);
+          }
+          
+          lastScrollY.current = currentScrollY;
+          ticking.current = false;
+        });
+        
+        ticking.current = true;
       }
-      // If scrolling down and past threshold, show compact
-      else if (currentScrollY > lastScrollY.current && currentScrollY > 50) {
-        setIsCompact(true);
-      }
-      // If scrolling up, show full header
-      else if (currentScrollY < lastScrollY.current) {
-        setIsCompact(false);
-      }
-      
-      lastScrollY.current = currentScrollY;
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -38,15 +42,105 @@ const Header = () => {
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-300 ${
-        isCompact
-          ? 'bg-blue-900 shadow-2xl'
-          : 'bg-gradient-to-b from-blue-900 via-blue-800 to-blue-900'
-      }`}
+      className="sticky top-0 z-50 bg-gradient-to-b from-blue-900 via-blue-800 to-blue-900 transition-all duration-300"
+      style={{
+        backgroundColor: isCompact ? '#1e3a8a' : undefined,
+        boxShadow: isCompact ? '0 10px 40px rgba(0,0,0,0.3)' : undefined,
+      }}
     >
-      <div className={`max-w-7xl mx-auto px-6 transition-all duration-300 ${isCompact ? 'py-2' : 'py-4'}`}>
-        {isCompact ? (
-          /* COMPACT STATE */
+      <div className="max-w-7xl mx-auto px-6 transition-all duration-300" style={{ paddingTop: isCompact ? '0.5rem' : '1rem', paddingBottom: isCompact ? '0.5rem' : '1rem' }}>
+        <div className={`transition-all duration-300 ${isCompact ? 'opacity-0 h-0 overflow-hidden pointer-events-none' : 'opacity-100'}`}>
+          {/* FULL STATE - Always rendered but hidden when compact */}
+          <div className="flex items-center justify-between gap-6">
+            {/* Left: Logos */}
+            <div className="flex items-center gap-4 flex-1">
+              <div className="flex items-center gap-3 bg-white p-2 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
+                <img
+                  src={logoAlAtlassia}
+                  alt="Al Atlassia Assurances"
+                  className="h-12 w-auto object-contain"
+                />
+              </div>
+
+              <div className="hidden md:block w-0.5 h-12 bg-blue-700"></div>
+
+              <div className="flex items-center gap-3 bg-white p-2 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
+                <img
+                  src={logoAtlantaSanad}
+                  alt="Atlanta Sanad"
+                  className="h-12 w-auto object-contain"
+                />
+              </div>
+            </div>
+
+            {/* Right: Brand Text */}
+            <div className="flex-1 text-right">
+              <div className="space-y-1">
+                <div className="flex flex-col md:flex-row items-end md:items-center gap-2 justify-end">
+                  <h1 className="text-2xl md:text-3xl font-bold text-white leading-tight font-arabic">
+                    الأطلسية للتأمينات
+                  </h1>
+                  <span className="text-base md:text-lg text-blue-200 hidden md:inline">|</span>
+                  <h2 className="text-lg md:text-2xl font-semibold text-blue-100">
+                    Al Atlassia Assurances
+                  </h2>
+                </div>
+                <p className="text-xs md:text-sm text-blue-300 leading-tight font-arabic">
+                  وسيط تأمين خاضع لمقتضيات القانون رقم 17.99 المتعلق بمدونة التأمينات
+                </p>
+              </div>
+            </div>
+
+            {/* Mobile Menu Toggle */}
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="md:hidden text-white hover:text-blue-200 transition-colors"
+            >
+              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
+
+          {/* Navigation */}
+          <div
+            className={`mt-4 pt-4 border-t border-blue-700/50 transition-all duration-300 overflow-hidden ${
+              isOpen ? 'max-h-20' : 'max-h-0 md:max-h-12'
+            }`}
+          >
+            <nav className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">
+              <a
+                href="#"
+                className="text-blue-100 hover:text-white transition-colors duration-300 relative group"
+              >
+                <span>Accueil</span>
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
+              </a>
+              <a
+                href="#"
+                className="text-blue-100 hover:text-white transition-colors duration-300 relative group"
+              >
+                <span>Services</span>
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
+              </a>
+              <a
+                href="#"
+                className="text-blue-100 hover:text-white transition-colors duration-300 relative group"
+              >
+                <span>À Propos</span>
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
+              </a>
+              <a
+                href="#"
+                className="text-blue-100 hover:text-white transition-colors duration-300 relative group"
+              >
+                <span>Contact</span>
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
+              </a>
+            </nav>
+          </div>
+        </div>
+
+        {/* COMPACT STATE - Always rendered but hidden when full */}
+        <div className={`transition-all duration-300 ${isCompact ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden pointer-events-none absolute'}`}>
           <div className="flex items-center justify-between gap-4">
             {/* Single Logo Left */}
             <button
@@ -108,97 +202,7 @@ const Header = () => {
               <ChevronUp className="w-4 h-4" />
             </button>
           </div>
-        ) : (
-          /* FULL STATE */
-          <div className="transition-all duration-300">
-            <div className="flex items-center justify-between gap-6">
-              {/* Left: Logos */}
-              <div className="flex items-center gap-4 flex-1">
-                <div className="flex items-center gap-3 bg-white p-2 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
-                  <img
-                    src={logoAlAtlassia}
-                    alt="Al Atlassia Assurances"
-                    className="h-12 w-auto object-contain"
-                  />
-                </div>
-
-                <div className="hidden md:block w-0.5 h-12 bg-blue-700"></div>
-
-                <div className="flex items-center gap-3 bg-white p-2 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
-                  <img
-                    src={logoAtlantaSanad}
-                    alt="Atlanta Sanad"
-                    className="h-12 w-auto object-contain"
-                  />
-                </div>
-              </div>
-
-              {/* Right: Brand Text */}
-              <div className="flex-1 text-right">
-                <div className="space-y-1">
-                  <div className="flex flex-col md:flex-row items-end md:items-center gap-2 justify-end">
-                    <h1 className="text-2xl md:text-3xl font-bold text-white leading-tight font-arabic">
-                      الأطلسية للتأمينات
-                    </h1>
-                    <span className="text-base md:text-lg text-blue-200 hidden md:inline">|</span>
-                    <h2 className="text-lg md:text-2xl font-semibold text-blue-100">
-                      Al Atlassia Assurances
-                    </h2>
-                  </div>
-                  <p className="text-xs md:text-sm text-blue-300 leading-tight font-arabic">
-                    وسيط تأمين خاضع لمقتضيات القانون رقم 17.99 المتعلق بمدونة التأمينات
-                  </p>
-                </div>
-              </div>
-
-              {/* Mobile Menu Toggle */}
-              <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="md:hidden text-white hover:text-blue-200 transition-colors"
-              >
-                {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-              </button>
-            </div>
-
-            {/* Navigation */}
-            <div
-              className={`mt-4 pt-4 border-t border-blue-700/50 transition-all duration-300 overflow-hidden ${
-                isOpen ? 'max-h-20' : 'max-h-0 md:max-h-12'
-              }`}
-            >
-              <nav className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">
-                <a
-                  href="#"
-                  className="text-blue-100 hover:text-white transition-colors duration-300 relative group"
-                >
-                  <span>Accueil</span>
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
-                </a>
-                <a
-                  href="#"
-                  className="text-blue-100 hover:text-white transition-colors duration-300 relative group"
-                >
-                  <span>Services</span>
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
-                </a>
-                <a
-                  href="#"
-                  className="text-blue-100 hover:text-white transition-colors duration-300 relative group"
-                >
-                  <span>À Propos</span>
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
-                </a>
-                <a
-                  href="#"
-                  className="text-blue-100 hover:text-white transition-colors duration-300 relative group"
-                >
-                  <span>Contact</span>
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
-                </a>
-              </nav>
-            </div>
-          </div>
-        )}
+        </div>
 
         {/* Mobile Menu (works in both states) */}
         {isOpen && (
