@@ -15,7 +15,7 @@ const ChatMessage = ({ type, content, language, isNew = false }: ChatMessageProp
   return (
     <div
       className={cn(
-        "flex w-full mb-4",
+        "flex w-full mb-3 sm:mb-4",
         isBot ? (isRtl ? "justify-end" : "justify-start") : (isRtl ? "justify-start" : "justify-end"),
         isNew && (isBot ? "animate-slide-in-left" : "animate-slide-in-right")
       )}
@@ -23,12 +23,12 @@ const ChatMessage = ({ type, content, language, isNew = false }: ChatMessageProp
     >
       <div
         className={cn(
-          "max-w-[85%] md:max-w-[75%]",
+          "max-w-[90%] sm:max-w-[85%] md:max-w-[75%]",
           isBot ? "chat-bubble-bot" : "chat-bubble-user",
           isRtl ? "font-arabic" : ""
         )}
       >
-        <p className="text-sm md:text-base leading-relaxed whitespace-pre-line">
+        <p className="text-[15px] sm:text-sm md:text-base leading-relaxed whitespace-pre-line break-words">
           {content}
         </p>
       </div>

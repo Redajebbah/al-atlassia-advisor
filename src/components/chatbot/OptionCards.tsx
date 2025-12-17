@@ -95,7 +95,7 @@ const OptionCards = ({
               key={option.id}
               onClick={() => handleClick(option.id)}
               className={cn(
-                "insurance-card text-center relative",
+                "insurance-card text-center relative min-h-[88px] sm:min-h-[100px] touch-manipulation active:scale-95",
                 "animate-scale-in",
                 isSelected && "selected",
                 multiSelect && isSelected && "bg-primary/5"

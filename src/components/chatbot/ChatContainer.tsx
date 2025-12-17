@@ -53,11 +53,11 @@ const ChatContainer = ({ language, onReset }: ChatContainerProps) => {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-background" dir={isRtl ? 'rtl' : 'ltr'}>
+    <div className="h-[100dvh] flex flex-col bg-background overflow-hidden touch-pan-y" dir={isRtl ? 'rtl' : 'ltr'}>
       <ChatHeader language={language} />
       
-      <main className="flex-1 overflow-y-auto chat-scroll">
-        <div className="max-w-2xl mx-auto px-4 py-6">
+      <main className="flex-1 overflow-y-auto chat-scroll overscroll-contain">
+        <div className="max-w-2xl mx-auto px-3 sm:px-4 py-4 sm:py-6 pb-safe">
           {state.messages.map((message, index) => (
             <ChatMessage
               key={message.id}
@@ -76,8 +76,8 @@ const ChatContainer = ({ language, onReset }: ChatContainerProps) => {
         {showFooter && <ChatFooter language={language} />}
       </main>
 
-      <div className="border-t border-border bg-card/80 backdrop-blur-sm">
-        <div className="max-w-2xl mx-auto px-4 py-4">
+      <div className="border-t border-border bg-card/95 backdrop-blur-sm safe-bottom">
+        <div className="max-w-2xl mx-auto px-3 sm:px-4 py-3 sm:py-4 pb-safe">
           {state.currentOptions.length > 0 && (
             <OptionCards
               options={state.currentOptions}
