@@ -6,9 +6,7 @@ import ChatMessage from './ChatMessage';
 import TypingIndicator from './TypingIndicator';
 import OptionCards from './OptionCards';
 import ChatInput from './ChatInput';
-import PartnerCarousel from './PartnerCarousel';
 import ChatFooter from './ChatFooter';
-import Footer from './Footer';
 import { cn } from '@/lib/utils';
 import { MapPin, RotateCcw, Check } from 'lucide-react';
 
@@ -75,10 +73,6 @@ const ChatContainer = ({ language, onReset }: ChatContainerProps) => {
         </div>
         
         {showFooter && <ChatFooter language={language} />}
-        
-        <PartnerCarousel />
-        
-        <Footer language={language} />
       </main>
 
       <div className="border-t border-border bg-card/95 backdrop-blur-sm safe-bottom">
