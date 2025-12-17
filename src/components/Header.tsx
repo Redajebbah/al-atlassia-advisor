@@ -51,46 +51,46 @@ const Header = () => {
         boxShadow: isCompact ? '0 10px 40px rgba(0,0,0,0.3)' : '0 2px 10px rgba(0,0,0,0.1)',
       }}
     >
-      <div className="max-w-7xl mx-auto px-6 transition-all duration-500 ease-in-out" style={{ paddingTop: isCompact ? '0.5rem' : '1rem', paddingBottom: isCompact ? '0.5rem' : '1rem' }}>
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 transition-all duration-500 ease-in-out" style={{ paddingTop: isCompact ? '0.5rem' : '0.75rem', paddingBottom: isCompact ? '0.5rem' : '0.75rem' }}>
         {!isCompact ? (
           /* FULL STATE */
           <div className="animate-in fade-in duration-500">
-          <div className="flex items-center justify-between gap-4 md:gap-8">
+          <div className="flex items-center justify-between gap-2 sm:gap-3 md:gap-6">
             {/* Left Logo */}
             <div className="flex-shrink-0">
-              <div className="bg-white p-2 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
+              <div className="bg-white p-1 sm:p-1.5 md:p-2 rounded-md md:rounded-lg shadow-md md:shadow-lg transform hover:scale-105 transition-transform duration-300">
                 <img
                   src={logoAlAtlassia}
                   alt="Al Atlassia Assurances"
-                  className="h-12 w-auto object-contain"
+                  className="h-8 sm:h-10 md:h-12 w-auto object-contain"
                 />
               </div>
             </div>
 
             {/* Center: Brand Text */}
-            <div className="flex-1 text-center px-2">
-              <div className="space-y-1">
-                <div className="flex flex-col items-center gap-1">
-                  <h1 className="text-xl md:text-3xl font-bold text-white leading-tight font-arabic">
+            <div className="flex-1 text-center px-1 sm:px-2 min-w-0">
+              <div className="space-y-0.5 sm:space-y-1">
+                <div className="flex flex-col items-center gap-0.5">
+                  <h1 className="text-sm sm:text-lg md:text-2xl lg:text-3xl font-bold text-white leading-tight font-arabic">
                     الأطلسية للتأمينات
                   </h1>
-                  <h2 className="text-base md:text-2xl font-semibold text-blue-100">
+                  <h2 className="text-xs sm:text-sm md:text-xl lg:text-2xl font-semibold text-blue-100">
                     Al Atlassia Assurances
                   </h2>
                 </div>
-                <p className="text-[10px] md:text-xs text-blue-300 leading-tight font-arabic whitespace-nowrap overflow-hidden text-ellipsis">
+                <p className="hidden sm:block text-[9px] sm:text-[10px] md:text-xs text-blue-300 leading-tight font-arabic">
                   وسيط تأمين خاضع لمقتضيات القانون رقم 17.99 المتعلق بمدونة التأمينات
                 </p>
               </div>
             </div>
 
-            {/* Right Logo */}
-            <div className="flex-shrink-0">
-              <div className="bg-white p-2 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
+            {/* Right Logo - Hidden on very small screens */}
+            <div className="hidden xs:block flex-shrink-0">
+              <div className="bg-white p-1 sm:p-1.5 md:p-2 rounded-md md:rounded-lg shadow-md md:shadow-lg transform hover:scale-105 transition-transform duration-300">
                 <img
                   src={logoAtlantaSanad}
                   alt="Atlanta Sanad"
-                  className="h-12 w-auto object-contain"
+                  className="h-8 sm:h-10 md:h-12 w-auto object-contain"
                 />
               </div>
             </div>
@@ -100,17 +100,17 @@ const Header = () => {
               onClick={() => setIsOpen(!isOpen)}
               className="md:hidden text-white hover:text-blue-200 transition-colors flex-shrink-0"
             >
-              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
             </button>
           </div>
 
           {/* Navigation */}
           <div
-            className={`mt-4 pt-4 border-t border-blue-700/50 transition-all duration-300 overflow-hidden ${
+            className={`mt-2 sm:mt-3 md:mt-4 pt-2 sm:pt-3 md:pt-4 border-t border-blue-700/50 transition-all duration-300 overflow-hidden ${
               isOpen ? 'max-h-20' : 'max-h-0 md:max-h-12'
             }`}
           >
-            <nav className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">
+            <nav className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-6 lg:gap-8">
               <a
                 href="#"
                 className="text-blue-100 hover:text-white transition-colors duration-300 relative group"
@@ -145,21 +145,21 @@ const Header = () => {
         ) : (
           /* COMPACT STATE */
           <div className="animate-in fade-in duration-500">
-            <div className="flex items-center justify-between gap-3 md:gap-6">
+            <div className="flex items-center justify-between gap-2 sm:gap-3 md:gap-4">
             {/* Left Logo */}
             <button
               onClick={scrollToTop}
-              className="flex-shrink-0 bg-white p-1.5 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300"
+              className="flex-shrink-0 bg-white p-1 sm:p-1.5 rounded-md sm:rounded-lg shadow-md sm:shadow-lg transform hover:scale-105 transition-transform duration-300"
             >
               <img
                 src={logoAlAtlassia}
                 alt="Al Atlassia Assurances"
-                className="h-8 w-auto object-contain"
+                className="h-6 sm:h-7 md:h-8 w-auto object-contain"
               />
             </button>
 
             {/* Center: Compact Navigation */}
-            <nav className="hidden md:flex items-center justify-center gap-4 lg:gap-6 flex-1">
+            <nav className="hidden md:flex items-center justify-center gap-3 lg:gap-5 flex-1">
               <a
                 href="#"
                 className="text-xs lg:text-sm text-blue-100 hover:text-white transition-colors duration-300 relative group whitespace-nowrap"
@@ -190,12 +190,12 @@ const Header = () => {
               </a>
             </nav>
 
-            {/* Right Logo */}
-            <div className="flex-shrink-0 bg-white p-1.5 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
+            {/* Right Logo - Hidden on very small screens */}
+            <div className="hidden xs:block flex-shrink-0 bg-white p-1 sm:p-1.5 rounded-md sm:rounded-lg shadow-md sm:shadow-lg transform hover:scale-105 transition-transform duration-300">
               <img
                 src={logoAtlantaSanad}
                 alt="Atlanta Sanad"
-                className="h-8 w-auto object-contain"
+                className="h-6 sm:h-7 md:h-8 w-auto object-contain"
               />
             </div>
 
@@ -204,7 +204,7 @@ const Header = () => {
               onClick={() => setIsOpen(!isOpen)}
               className="md:hidden text-white hover:text-blue-200 transition-colors flex-shrink-0"
             >
-              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
             </button>
           </div>
         </div>
