@@ -376,9 +376,14 @@ export const getDayOptions = (lang: Language): ChatOption[] => [
 ];
 
 export const getHourOptions = (lang: Language): ChatOption[] => [
-  { id: 'morning', label: t('morning', lang) },
-  { id: 'afternoon', label: t('afternoon', lang) },
-  { id: 'evening', label: t('evening', lang) },
+  { id: '10-11', label: lang === 'ar' ? '10:00–11:00' : '10:00–11:00' },
+  { id: '11-12', label: lang === 'ar' ? '11:00–12:00' : '11:00–12:00' },
+  { id: '12-13', label: lang === 'ar' ? '12:00–13:00' : '12:00–13:00' },
+  { id: '13-14', label: lang === 'ar' ? '13:00–14:00' : '13:00–14:00' },
+  { id: '14-15', label: lang === 'ar' ? '14:00–15:00' : '14:00–15:00' },
+  { id: '15-16', label: lang === 'ar' ? '15:00–16:00' : '15:00–16:00' },
+  { id: '16-17', label: lang === 'ar' ? '16:00–17:00' : '16:00–17:00' },
+  { id: '17-18', label: lang === 'ar' ? '17:00–18:00' : '17:00–18:00' },
 ];
 
 export const getScolaireCoverageOptions = (lang: Language): ChatOption[] => [
