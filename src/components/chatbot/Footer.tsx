@@ -1,6 +1,6 @@
 import { Language } from '@/types/chatbot';
 import { cn } from '@/lib/utils';
-import { Facebook, Instagram, Linkedin, Youtube } from 'lucide-react';
+import { Facebook, Instagram, Linkedin, Youtube, Mail, Phone, Smartphone, MessageCircle } from 'lucide-react';
 import logoAlAtlassia from '@/assets/logo-al-atlassia.jpg';
 
 interface FooterProps {
@@ -78,7 +78,8 @@ const Footer = ({ language }: FooterProps) => {
               <div className={cn("w-full flex flex-col space-y-6", isRtl && "font-arabic")} dir={isRtl ? "rtl" : "ltr"}>
                 {/* Email */}
                 <div className="w-full flex flex-col">
-                  <h3 className="xs:text-lg text-sm font-semibold mb-2">
+                  <h3 className="xs:text-lg text-sm font-semibold mb-2 flex items-center gap-2">
+                    <Mail className="w-4 h-4 text-gray-400" />
                     {isRtl ? 'البريد الإلكتروني' : 'E-mail'}
                   </h3>
                   <a href="mailto:aalatlassia@gmail.com" className="text-gray-300 hover:text-indigo-400 transition-colors">
@@ -88,7 +89,8 @@ const Footer = ({ language }: FooterProps) => {
 
                 {/* Fixe */}
                 <div className="w-full flex flex-col">
-                  <h3 className="xs:text-lg text-sm font-semibold mb-2">
+                  <h3 className="xs:text-lg text-sm font-semibold mb-2 flex items-center gap-2">
+                    <Phone className="w-4 h-4 text-gray-400" />
                     {isRtl ? 'الهاتف الثابت' : 'Fixe'}
                   </h3>
                   <a href="tel:0539919354" className="text-gray-300 hover:text-indigo-400 transition-colors">
@@ -98,7 +100,8 @@ const Footer = ({ language }: FooterProps) => {
 
                 {/* Portable / WhatsApp */}
                 <div className="w-full flex flex-col">
-                  <h3 className="xs:text-lg text-sm font-semibold mb-2">
+                  <h3 className="xs:text-lg text-sm font-semibold mb-2 flex items-center gap-2">
+                    <Smartphone className="w-4 h-4 text-gray-400" />
                     {isRtl ? 'الهاتف المحمول / واتساب' : 'Portable / WhatsApp'}
                   </h3>
                   <a href="tel:0662153757" className="text-gray-300 hover:text-indigo-400 transition-colors">
@@ -108,7 +111,8 @@ const Footer = ({ language }: FooterProps) => {
 
                 {/* WhatsApp */}
                 <div className="w-full flex flex-col">
-                  <h3 className="xs:text-lg text-sm font-semibold mb-2">
+                  <h3 className="xs:text-lg text-sm font-semibold mb-2 flex items-center gap-2">
+                    <MessageCircle className="w-4 h-4 text-gray-400" />
                     {isRtl ? 'واتساب' : 'WhatsApp'}
                   </h3>
                   <a href="tel:0666228437" className="text-gray-300 hover:text-indigo-400 transition-colors">
