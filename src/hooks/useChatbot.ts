@@ -73,7 +73,8 @@ export const useChatbot = (language: Language) => {
       }],
       currentOptions: options,
       currentMultiSelect: multiSelect,
-      currentInputType: null,
+      // Only clear inputType if we're showing options
+      currentInputType: options.length > 0 ? null : prev.currentInputType,
       isTyping: false,
     }));
   }, []);
