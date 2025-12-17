@@ -6,7 +6,7 @@
 
 @layer base {
   :root {
-    /* Insurance Corporate Blue Palette */
+    /* Al Atlassia Official Colors */
     --background: 210 20% 98%;
     --foreground: 215 25% 20%;
 
@@ -16,8 +16,8 @@
     --popover: 0 0% 100%;
     --popover-foreground: 215 25% 20%;
 
-    /* Primary - Corporate Blue */
-    --primary: 205 75% 42%;
+    /* Primary - Official Navy Blue from Al Atlassia */
+    --primary: 215 65% 28%;
     --primary-foreground: 0 0% 100%;
 
     /* Secondary - Light Blue/Grey */
@@ -45,10 +45,10 @@
     --success: 152 69% 40%;
     --success-foreground: 0 0% 100%;
 
-    /* Custom Insurance Colors */
-    --insurance-blue: 205 75% 42%;
-    --insurance-blue-light: 205 65% 92%;
-    --insurance-blue-dark: 205 80% 32%;
+    /* Al Atlassia Brand Colors */
+    --insurance-blue: 215 65% 28%;
+    --insurance-blue-light: 215 65% 92%;
+    --insurance-blue-dark: 215 65% 18%;
     --insurance-coral: 350 70% 55%;
     --insurance-coral-light: 350 70% 95%;
     --insurance-grey: 210 15% 96%;
