@@ -1,6 +1,20 @@
 import { ChatOption, Language } from '@/types/chatbot';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
+import { 
+  Car, 
+  Home, 
+  HeartPulse, 
+  Heart, 
+  Building2, 
+  Briefcase, 
+  GraduationCap, 
+  FileText,
+  Building,
+  Phone,
+  MessageCircle,
+  Check
+} from 'lucide-react';
 
 interface OptionCardsProps {
   options: ChatOption[];
@@ -11,6 +25,20 @@ interface OptionCardsProps {
   columns?: 2 | 3 | 4;
   preSelected?: string[];
 }
+
+const iconMap: Record<string, React.ElementType> = {
+  automobile: Car,
+  habitation: Home,
+  sante: HeartPulse,
+  vie: Heart,
+  entreprises: Building2,
+  professionnels: Briefcase,
+  scolaire: GraduationCap,
+  autres: FileText,
+  bureau: Building,
+  appel: Phone,
+  whatsapp: MessageCircle,
+};
 
 const OptionCards = ({ 
   options, 
@@ -47,30 +75,50 @@ const OptionCards = ({
     4: 'grid-cols-2 md:grid-cols-4',
   };
 
+  const getIcon = (optionId: string) => {
+    const IconComponent = iconMap[optionId];
+    return IconComponent ? <IconComponent className="w-6 h-6 text-primary mb-2" /> : null;
+  };
+
   return (
     <div 
       className={cn("w-full animate-fade-in-up", isRtl ? "font-arabic" : "")}
       dir={isRtl ? "rtl" : "ltr"}
     >
       <div className={cn("grid gap-3", gridCols[columns])}>
-        {options.map((option, index) => (
-          <button
-            key={option.id}
-            onClick={() => handleClick(option.id)}
-            className={cn(
-              "insurance-card text-center",
-              "animate-scale-in",
-              selected.includes(option.id) && "selected",
-              multiSelect && selected.includes(option.id) && "bg-primary/5"
-            )}
-            style={{ animationDelay: `${index * 50}ms` }}
-          >
-            {option.icon && (
-              <span className="text-2xl mb-2 block">{option.icon}</span>
-            )}
-            <span className="text-sm font-medium text-foreground">{option.label}</span>
-          </button>
-        ))}
+        {options.map((option, index) => {
+          const Icon = iconMap[option.id];
+          const isSelected = selected.includes(option.id);
+          
+          return (
+            <button
+              key={option.id}
+              onClick={() => handleClick(option.id)}
+              className={cn(
+                "insurance-card text-center relative",
+                "animate-scale-in",
+                isSelected && "selected",
+                multiSelect && isSelected && "bg-primary/5"
+              )}
+              style={{ animationDelay: `${index * 50}ms` }}
+            >
+              {multiSelect && isSelected && (
+                <div className="absolute top-2 right-2 w-5 h-5 rounded-full bg-primary flex items-center justify-center">
+                  <Check className="w-3 h-3 text-primary-foreground" />
+                </div>
+              )}
+              {Icon ? (
+                <Icon className={cn(
+                  "w-6 h-6 mb-2 mx-auto transition-colors",
+                  isSelected ? "text-primary" : "text-muted-foreground"
+                )} />
+              ) : option.icon && (
+                <span className="text-2xl mb-2 block">{option.icon}</span>
+              )}
+              <span className="text-sm font-medium text-foreground">{option.label}</span>
+            </button>
+          );
+        })}
       </div>
       
       {multiSelect && selected.length > 0 && (

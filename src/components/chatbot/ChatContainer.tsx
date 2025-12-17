@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Language } from '@/types/chatbot';
 import { useChatbot } from '@/hooks/useChatbot';
 import ChatHeader from './ChatHeader';
@@ -7,15 +7,19 @@ import TypingIndicator from './TypingIndicator';
 import OptionCards from './OptionCards';
 import ChatInput from './ChatInput';
 import PartnerCarousel from './PartnerCarousel';
+import ChatFooter from './ChatFooter';
 import { cn } from '@/lib/utils';
+import { MapPin, RotateCcw, Check } from 'lucide-react';
 
 interface ChatContainerProps {
   language: Language;
+  onReset: () => void;
 }
 
-const ChatContainer = ({ language }: ChatContainerProps) => {
+const ChatContainer = ({ language, onReset }: ChatContainerProps) => {
   const { state, initialize, handleOptionSelect, handleMultiSelect, handleTextInput } = useChatbot(language);
   const chatEndRef = useRef<HTMLDivElement>(null);
+  const [showFooter, setShowFooter] = useState(false);
   const isRtl = language === 'ar';
 
   useEffect(() => {
@@ -25,6 +29,12 @@ const ChatContainer = ({ language }: ChatContainerProps) => {
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [state.messages, state.isTyping]);
+
+  useEffect(() => {
+    if (state.step === 'confirmation' || state.step === 'vie_bureau') {
+      setShowFooter(true);
+    }
+  }, [state.step]);
 
   const onOptionSelect = (optionId: string) => {
     const option = state.currentOptions.find(o => o.id === optionId);
@@ -61,9 +71,11 @@ const ChatContainer = ({ language }: ChatContainerProps) => {
           
           <div ref={chatEndRef} />
         </div>
+        
+        {showFooter && <ChatFooter language={language} />}
       </main>
 
-      <div className="border-t border-border bg-card/50 backdrop-blur-sm">
+      <div className="border-t border-border bg-card/80 backdrop-blur-sm">
         <div className="max-w-2xl mx-auto px-4 py-4">
           {state.currentOptions.length > 0 && (
             <OptionCards
@@ -87,24 +99,45 @@ const ChatContainer = ({ language }: ChatContainerProps) => {
           )}
           
           {state.step === 'confirmation' && (
-            <div className="text-center py-4">
+            <div className="text-center py-4 space-y-4">
               <div className={cn(
                 "inline-flex items-center gap-2 text-primary font-medium",
                 isRtl && "font-arabic"
               )}>
-                <span className="text-2xl">✓</span>
+                <span className="w-8 h-8 rounded-full bg-success/10 flex items-center justify-center">
+                  <Check className="w-4 h-4 text-success" />
+                </span>
                 {isRtl ? 'تم إرسال طلبك بنجاح' : 'Votre demande a été envoyée'}
               </div>
+              
+              <button
+                onClick={onReset}
+                className="flex items-center gap-2 mx-auto px-4 py-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+              >
+                <RotateCcw className="w-4 h-4" />
+                {isRtl ? 'طلب جديد' : 'Nouvelle demande'}
+              </button>
             </div>
           )}
           
           {state.step === 'vie_bureau' && (
-            <div className="text-center py-4">
-              <button
-                onClick={() => window.open('https://maps.google.com/?q=Ksar+El+Kebir+Morocco', '_blank')}
-                className="gradient-primary text-primary-foreground rounded-xl px-6 py-3 font-medium transition-all hover:opacity-90 active:scale-[0.98]"
+            <div className="text-center py-4 space-y-3">
+              <a
+                href="https://maps.google.com/?q=Hay+Marche+Verte+Ksar+El+Kebir+Morocco"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 gradient-primary text-primary-foreground rounded-xl px-6 py-3 font-medium transition-all hover:opacity-90 active:scale-[0.98]"
               >
-                {isRtl ? '📍 عرض على الخريطة' : '📍 Voir sur la carte'}
+                <MapPin className="w-5 h-5" />
+                {isRtl ? 'عرض على الخريطة' : 'Voir sur la carte'}
+              </a>
+              
+              <button
+                onClick={onReset}
+                className="flex items-center gap-2 mx-auto px-4 py-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+              >
+                <RotateCcw className="w-4 h-4" />
+                {isRtl ? 'طلب جديد' : 'Nouvelle demande'}
               </button>
             </div>
           )}

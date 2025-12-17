@@ -275,14 +275,14 @@ export const t = (key: TranslationKey, lang: Language): string => {
 };
 
 export const getInsuranceOptions = (lang: Language): ChatOption[] => [
-  { id: 'automobile', label: t('automobile', lang), icon: '🚗' },
-  { id: 'habitation', label: t('habitation', lang), icon: '🏠' },
-  { id: 'sante', label: t('sante', lang), icon: '💊' },
-  { id: 'vie', label: t('vie', lang), icon: '❤️' },
-  { id: 'entreprises', label: t('entreprises', lang), icon: '🏢' },
-  { id: 'professionnels', label: t('professionnels', lang), icon: '👨‍💼' },
-  { id: 'scolaire', label: t('scolaire', lang), icon: '🎓' },
-  { id: 'autres', label: t('autres', lang), icon: '📋' },
+  { id: 'automobile', label: t('automobile', lang) },
+  { id: 'habitation', label: t('habitation', lang) },
+  { id: 'sante', label: t('sante', lang) },
+  { id: 'vie', label: t('vie', lang) },
+  { id: 'entreprises', label: t('entreprises', lang) },
+  { id: 'professionnels', label: t('professionnels', lang) },
+  { id: 'scolaire', label: t('scolaire', lang) },
+  { id: 'autres', label: t('autres', lang) },
 ];
 
 export const getVehicleOptions = (lang: Language): ChatOption[] => [
@@ -325,8 +325,8 @@ export const getCurrentInsuranceTypeOptions = (lang: Language): ChatOption[] => 
 ];
 
 export const getContactMethodOptions = (lang: Language): ChatOption[] => [
-  { id: 'bureau', label: t('bureau', lang), icon: '🏢' },
-  { id: 'appel', label: t('appel', lang), icon: '📞' },
+  { id: 'bureau', label: t('bureau', lang) },
+  { id: 'appel', label: t('appel', lang) },
 ];
 
 export const getEntrepriseInsuranceOptions = (lang: Language): ChatOption[] => [
@@ -350,8 +350,8 @@ export const getProfessionnelInsuranceOptions = (lang: Language): ChatOption[] =
 ];
 
 export const getContactPreferenceOptions = (lang: Language): ChatOption[] => [
-  { id: 'whatsapp', label: t('whatsapp', lang), icon: '💬' },
-  { id: 'appel', label: t('call', lang), icon: '📞' },
+  { id: 'whatsapp', label: t('whatsapp', lang) },
+  { id: 'appel', label: t('call', lang) },
 ];
 
 export const getDayOptions = (lang: Language): ChatOption[] => [
