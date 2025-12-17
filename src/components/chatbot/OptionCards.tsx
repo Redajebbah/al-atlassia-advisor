@@ -98,7 +98,7 @@ const OptionCards = ({
       className={cn("w-full animate-fade-in-up", isRtl ? "font-arabic" : "")}
       dir={isRtl ? "rtl" : "ltr"}
     >
-      <div className={cn("grid gap-3", gridCols[columns])}>
+      <div className={cn("grid gap-2", gridCols[columns])}>
         {options.map((option, index) => {
           const Icon = iconMap[option.id];
           const isSelected = selected.includes(option.id);
@@ -108,8 +108,8 @@ const OptionCards = ({
               key={option.id}
               onClick={() => handleClick(option.id)}
               className={cn(
-                "relative min-h-[70px] touch-manipulation",
-                "bg-white rounded-lg p-3 text-center",
+                "relative min-h-[55px] touch-manipulation",
+                "bg-white rounded-lg p-2 text-center",
                 "border-2 transition-all duration-300",
                 "hover:shadow-md hover:border-blue-300",
                 "active:scale-95 animate-scale-in",
@@ -120,27 +120,27 @@ const OptionCards = ({
               style={{ animationDelay: `${index * 50}ms` }}
             >
               {multiSelect && isSelected && (
-                <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center shadow-md">
-                  <Check className="w-4 h-4 text-white" />
+                <div className="absolute top-1.5 right-1.5 w-5 h-5 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center shadow-md">
+                  <Check className="w-3 h-3 text-white" />
                 </div>
               )}
               {Icon ? (
                 <div className={cn(
-                  "w-8 h-8 mx-auto mb-1.5 rounded-full flex items-center justify-center transition-all duration-300",
+                  "w-6 h-6 mx-auto mb-1 rounded-full flex items-center justify-center transition-all duration-300",
                   isSelected 
                     ? "bg-gradient-to-br from-blue-600 to-blue-700" 
                     : "bg-gray-100"
                 )}>
                   <Icon className={cn(
-                    "w-4 h-4 transition-colors",
+                    "w-3.5 h-3.5 transition-colors",
                     isSelected ? "text-white" : "text-gray-600"
                   )} />
                 </div>
               ) : option.icon && (
-                <span className="text-xl mb-1.5 block">{option.icon}</span>
+                <span className="text-base mb-1 block">{option.icon}</span>
               )}
               <span className={cn(
-                "text-xs font-medium transition-colors leading-tight",
+                "text-[10px] font-medium transition-colors leading-tight",
                 isSelected ? "text-blue-700" : "text-gray-700"
               )}>{option.label}</span>
             </button>
