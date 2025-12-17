@@ -16,9 +16,7 @@ import {
   Check,
   Truck,
   Bike,
-  Scooter,
-  Tractor,
-  CarFront
+  TramFront
 } from 'lucide-react';
 
 interface OptionCardsProps {
@@ -47,10 +45,10 @@ const iconMap: Record<string, React.ElementType> = {
   voiture: Car,
   camion: Truck,
   moto: Bike,
-  trottinette: Scooter,
-  triporteur: Bike,
-  tracteur: Tractor,
-  pickup: CarFront,
+  trottinette: TramFront,
+  triporteur: TramFront,
+  tracteur: Truck,
+  pickup: Truck,
   camion_petit: Truck,
   camion_grand: Truck,
 };
