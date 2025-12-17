@@ -1,116 +1,236 @@
-import { Menu, X } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { Menu, X, ChevronUp } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
 import logoAlAtlassia from '@/assets/logo-al-atlassia.jpg';
 import logoAtlantaSanad from '@/assets/logo-atlanta-sanad.png';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isCompact, setIsCompact] = useState(false);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
+      const currentScrollY = window.scrollY;
+      
+      // If near top (< 50px), always show full header
+      if (currentScrollY < 50) {
+        setIsCompact(false);
+      }
+      // If scrolling down and past threshold, show compact
+      else if (currentScrollY > lastScrollY.current && currentScrollY > 50) {
+        setIsCompact(true);
+      }
+      // If scrolling up, show full header
+      else if (currentScrollY < lastScrollY.current) {
+        setIsCompact(false);
+      }
+      
+      lastScrollY.current = currentScrollY;
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <header
       className={`sticky top-0 z-50 transition-all duration-300 ${
-        isScrolled
+        isCompact
           ? 'bg-blue-900 shadow-2xl'
           : 'bg-gradient-to-b from-blue-900 via-blue-800 to-blue-900'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 py-4">
-        <div className="flex items-center justify-between gap-6">
-          {/* Left: Logos */}
-          <div className="flex items-center gap-4 flex-1">
-            <div className="flex items-center gap-3 bg-white p-2 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
+      <div className={`max-w-7xl mx-auto px-6 transition-all duration-300 ${isCompact ? 'py-2' : 'py-4'}`}>
+        {isCompact ? (
+          /* COMPACT STATE */
+          <div className="flex items-center justify-between gap-4">
+            {/* Single Logo Left */}
+            <button
+              onClick={scrollToTop}
+              className="flex items-center gap-2 bg-white p-1.5 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300"
+            >
               <img
                 src={logoAlAtlassia}
                 alt="Al Atlassia Assurances"
-                className="h-12 w-auto object-contain"
+                className="h-8 w-auto object-contain"
               />
-            </div>
+            </button>
 
-            <div className="hidden md:block w-0.5 h-12 bg-blue-700"></div>
+            {/* Compact Navigation */}
+            <nav className="hidden md:flex items-center justify-center gap-6 flex-1">
+              <a
+                href="#"
+                className="text-sm text-blue-100 hover:text-white transition-colors duration-300 relative group"
+              >
+                <span>Accueil</span>
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
+              </a>
+              <a
+                href="#"
+                className="text-sm text-blue-100 hover:text-white transition-colors duration-300 relative group"
+              >
+                <span>Services</span>
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
+              </a>
+              <a
+                href="#"
+                className="text-sm text-blue-100 hover:text-white transition-colors duration-300 relative group"
+              >
+                <span>À Propos</span>
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
+              </a>
+              <a
+                href="#"
+                className="text-sm text-blue-100 hover:text-white transition-colors duration-300 relative group"
+              >
+                <span>Contact</span>
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
+              </a>
+            </nav>
 
-            <div className="flex items-center gap-3 bg-white p-2 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
-              <img
-                src={logoAtlantaSanad}
-                alt="Atlanta Sanad"
-                className="h-12 w-auto object-contain"
-              />
-            </div>
+            {/* Mobile Menu Toggle */}
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="md:hidden text-white hover:text-blue-200 transition-colors"
+            >
+              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+
+            {/* Scroll to Top Button */}
+            <button
+              onClick={scrollToTop}
+              className="hidden md:flex items-center gap-1 text-blue-200 hover:text-white transition-colors duration-300 text-sm"
+            >
+              <ChevronUp className="w-4 h-4" />
+            </button>
           </div>
+        ) : (
+          /* FULL STATE */
+          <div className="transition-all duration-300">
+            <div className="flex items-center justify-between gap-6">
+              {/* Left: Logos */}
+              <div className="flex items-center gap-4 flex-1">
+                <div className="flex items-center gap-3 bg-white p-2 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
+                  <img
+                    src={logoAlAtlassia}
+                    alt="Al Atlassia Assurances"
+                    className="h-12 w-auto object-contain"
+                  />
+                </div>
 
-          {/* Right: Brand Text */}
-          <div className="flex-1 text-right">
-            <div className="space-y-1">
-              <div className="flex flex-col md:flex-row items-end md:items-center gap-2 justify-end">
-                <h1 className="text-2xl md:text-3xl font-bold text-white leading-tight font-arabic">
-                  الأطلسية للتأمينات
-                </h1>
-                <span className="text-base md:text-lg text-blue-200 hidden md:inline">|</span>
-                <h2 className="text-lg md:text-2xl font-semibold text-blue-100">
-                  Al Atlassia Assurances
-                </h2>
+                <div className="hidden md:block w-0.5 h-12 bg-blue-700"></div>
+
+                <div className="flex items-center gap-3 bg-white p-2 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
+                  <img
+                    src={logoAtlantaSanad}
+                    alt="Atlanta Sanad"
+                    className="h-12 w-auto object-contain"
+                  />
+                </div>
               </div>
-              <p className="text-xs md:text-sm text-blue-300 leading-tight font-arabic">
-                وسيط تأمين خاضع لمقتضيات القانون رقم 17.99 المتعلق بمدونة التأمينات
-              </p>
+
+              {/* Right: Brand Text */}
+              <div className="flex-1 text-right">
+                <div className="space-y-1">
+                  <div className="flex flex-col md:flex-row items-end md:items-center gap-2 justify-end">
+                    <h1 className="text-2xl md:text-3xl font-bold text-white leading-tight font-arabic">
+                      الأطلسية للتأمينات
+                    </h1>
+                    <span className="text-base md:text-lg text-blue-200 hidden md:inline">|</span>
+                    <h2 className="text-lg md:text-2xl font-semibold text-blue-100">
+                      Al Atlassia Assurances
+                    </h2>
+                  </div>
+                  <p className="text-xs md:text-sm text-blue-300 leading-tight font-arabic">
+                    وسيط تأمين خاضع لمقتضيات القانون رقم 17.99 المتعلق بمدونة التأمينات
+                  </p>
+                </div>
+              </div>
+
+              {/* Mobile Menu Toggle */}
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="md:hidden text-white hover:text-blue-200 transition-colors"
+              >
+                {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
+            </div>
+
+            {/* Navigation */}
+            <div
+              className={`mt-4 pt-4 border-t border-blue-700/50 transition-all duration-300 overflow-hidden ${
+                isOpen ? 'max-h-20' : 'max-h-0 md:max-h-12'
+              }`}
+            >
+              <nav className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">
+                <a
+                  href="#"
+                  className="text-blue-100 hover:text-white transition-colors duration-300 relative group"
+                >
+                  <span>Accueil</span>
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
+                </a>
+                <a
+                  href="#"
+                  className="text-blue-100 hover:text-white transition-colors duration-300 relative group"
+                >
+                  <span>Services</span>
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
+                </a>
+                <a
+                  href="#"
+                  className="text-blue-100 hover:text-white transition-colors duration-300 relative group"
+                >
+                  <span>À Propos</span>
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
+                </a>
+                <a
+                  href="#"
+                  className="text-blue-100 hover:text-white transition-colors duration-300 relative group"
+                >
+                  <span>Contact</span>
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
+                </a>
+              </nav>
             </div>
           </div>
+        )}
 
-          {/* Mobile Menu Toggle */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-white hover:text-blue-200 transition-colors"
-          >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-        </div>
-
-        {/* Navigation */}
-        <div
-          className={`mt-4 pt-4 border-t border-blue-700/50 transition-all duration-300 overflow-hidden ${
-            isOpen ? 'max-h-20' : 'max-h-0 md:max-h-12'
-          }`}
-        >
-          <nav className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">
-            <a
-              href="#"
-              className="text-blue-100 hover:text-white transition-colors duration-300 relative group"
-            >
-              <span>Accueil</span>
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
-            </a>
-            <a
-              href="#"
-              className="text-blue-100 hover:text-white transition-colors duration-300 relative group"
-            >
-              <span>Services</span>
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
-            </a>
-            <a
-              href="#"
-              className="text-blue-100 hover:text-white transition-colors duration-300 relative group"
-            >
-              <span>À Propos</span>
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
-            </a>
-            <a
-              href="#"
-              className="text-blue-100 hover:text-white transition-colors duration-300 relative group"
-            >
-              <span>Contact</span>
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
-            </a>
-          </nav>
-        </div>
+        {/* Mobile Menu (works in both states) */}
+        {isOpen && (
+          <div className="md:hidden mt-3 pt-3 border-t border-blue-700/50">
+            <nav className="flex flex-col gap-3">
+              <a
+                href="#"
+                className="text-blue-100 hover:text-white transition-colors duration-300 py-2"
+              >
+                Accueil
+              </a>
+              <a
+                href="#"
+                className="text-blue-100 hover:text-white transition-colors duration-300 py-2"
+              >
+                Services
+              </a>
+              <a
+                href="#"
+                className="text-blue-100 hover:text-white transition-colors duration-300 py-2"
+              >
+                À Propos
+              </a>
+              <a
+                href="#"
+                className="text-blue-100 hover:text-white transition-colors duration-300 py-2"
+              >
+                Contact
+              </a>
+            </nav>
+          </div>
+        )}
       </div>
 
       {/* Gradient Accent Line */}
