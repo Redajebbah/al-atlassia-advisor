@@ -17,11 +17,14 @@ import {
   Truck,
   Bike,
   TramFront,
-  Zap,
-  Tractor,
-  PackageOpen,
-  Container
+  Tractor
 } from 'lucide-react';
+import { 
+  FaPersonScooter, 
+  FaMotorcycle, 
+  FaTruckPickup, 
+  FaTruckMoving 
+} from 'react-icons/fa6';
 
 interface OptionCardsProps {
   options: ChatOption[];
@@ -49,12 +52,12 @@ const iconMap: Record<string, React.ElementType> = {
   voiture: Car,
   camion: Truck,
   moto: Bike,
-  trottinette: Zap,
-  triporteur: Container,
+  trottinette: FaPersonScooter,
+  triporteur: FaMotorcycle,
   tracteur: Tractor,
-  pickup: PackageOpen,
+  pickup: FaTruckPickup,
   camion_petit: Truck,
-  camion_grand: Container,
+  camion_grand: FaTruckMoving,
 };
 
 // Special highlighting for featured options
