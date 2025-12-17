@@ -108,13 +108,13 @@ const OptionCards = ({
               key={option.id}
               onClick={() => handleClick(option.id)}
               className={cn(
-                "relative min-h-[88px] sm:min-h-[100px] touch-manipulation",
-                "bg-white rounded-xl p-4 text-center",
+                "relative min-h-[70px] touch-manipulation",
+                "bg-white rounded-lg p-3 text-center",
                 "border-2 transition-all duration-300",
-                "hover:shadow-lg hover:-translate-y-1 hover:border-blue-300",
+                "hover:shadow-md hover:border-blue-300",
                 "active:scale-95 animate-scale-in",
                 isSelected 
-                  ? "border-blue-600 shadow-lg bg-blue-50" 
+                  ? "border-blue-600 shadow-md bg-blue-50" 
                   : "border-gray-200 shadow-sm"
               )}
               style={{ animationDelay: `${index * 50}ms` }}
@@ -126,21 +126,21 @@ const OptionCards = ({
               )}
               {Icon ? (
                 <div className={cn(
-                  "w-10 h-10 mx-auto mb-2 rounded-full flex items-center justify-center transition-all duration-300",
+                  "w-8 h-8 mx-auto mb-1.5 rounded-full flex items-center justify-center transition-all duration-300",
                   isSelected 
                     ? "bg-gradient-to-br from-blue-600 to-blue-700" 
                     : "bg-gray-100"
                 )}>
                   <Icon className={cn(
-                    "w-5 h-5 transition-colors",
+                    "w-4 h-4 transition-colors",
                     isSelected ? "text-white" : "text-gray-600"
                   )} />
                 </div>
               ) : option.icon && (
-                <span className="text-2xl mb-2 block">{option.icon}</span>
+                <span className="text-xl mb-1.5 block">{option.icon}</span>
               )}
               <span className={cn(
-                "text-sm font-medium transition-colors",
+                "text-xs font-medium transition-colors leading-tight",
                 isSelected ? "text-blue-700" : "text-gray-700"
               )}>{option.label}</span>
             </button>

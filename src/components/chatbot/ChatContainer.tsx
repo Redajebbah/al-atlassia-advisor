@@ -53,11 +53,11 @@ const ChatContainer = ({ language, onReset }: ChatContainerProps) => {
   };
 
   return (
-    <div className="flex flex-col bg-gradient-to-br from-blue-50 via-gray-50 to-blue-50 touch-pan-y py-6" style={{ minHeight: 'calc(100dvh - 140px)' }} dir={isRtl ? 'rtl' : 'ltr'}>
+    <div className="flex flex-col bg-gradient-to-br from-blue-50 via-gray-50 to-blue-50 touch-pan-y py-4" style={{ minHeight: 'calc(100dvh - 140px)' }} dir={isRtl ? 'rtl' : 'ltr'}>
       <div className="max-w-4xl mx-auto w-full px-4">
-        <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-blue-100 flex flex-col" style={{ height: 'calc(100dvh - 200px)' }}>
+        <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-blue-100 flex flex-col" style={{ height: 'calc(100dvh - 180px)' }}>
           <main className="flex-1 overflow-y-auto chat-scroll overscroll-contain overflow-x-hidden bg-gradient-to-b from-white to-gray-50/50">
-        <div className="max-w-2xl mx-auto px-3 sm:px-4 py-6 sm:py-8 pb-safe">
+        <div className="max-w-2xl mx-auto px-3 sm:px-4 py-4 sm:py-5 pb-safe">
           {state.messages.map((message, index) => (
             <ChatMessage
               key={message.id}
@@ -77,7 +77,7 @@ const ChatContainer = ({ language, onReset }: ChatContainerProps) => {
       </main>
 
       <div className="border-t border-blue-100 bg-white/95 backdrop-blur-md safe-bottom shadow-lg">
-        <div className="max-w-2xl mx-auto px-3 sm:px-4 py-4 sm:py-5 pb-safe">
+        <div className="max-w-2xl mx-auto px-3 sm:px-4 py-3 sm:py-3.5 pb-safe max-h-[40vh] overflow-y-auto chat-scroll">
           {state.currentOptions.length > 0 && (
             <OptionCards
               options={state.currentOptions}
