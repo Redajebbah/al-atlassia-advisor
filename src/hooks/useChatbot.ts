@@ -30,6 +30,7 @@ import {
   getDayOptions,
   getHourOptions
 } from '@/lib/translations';
+import { sendEmailNotification } from '@/lib/emailService';
 
 interface ChatbotState {
   step: ChatStep;
@@ -223,10 +224,26 @@ export const useChatbot = (language: Language) => {
 
         case 'confirmation':
           addBotMessage(t('confirmation', language));
+          
+          // Send email notification
+          if (state.selectedInsurance && state.clientInfo.fullName) {
+            sendEmailNotification({
+              selectedInsurance: state.selectedInsurance,
+              insuranceData: state.insuranceData,
+              clientInfo: state.clientInfo as ClientInfo,
+              language,
+            }).then((success) => {
+              if (success) {
+                console.log('Email notification sent successfully');
+              } else {
+                console.error('Failed to send email notification');
+              }
+            });
+          }
           break;
       }
     }, 600);
-  }, [language, addBotMessage, setInputMode, showTyping]);
+  }, [language, addBotMessage, setInputMode, showTyping, state.selectedInsurance, state.insuranceData, state.clientInfo]);
 
   const handleOptionSelect = useCallback((optionId: string, optionLabel: string) => {
     addUserMessage(optionLabel);
