@@ -16,7 +16,8 @@ import {
   Check,
   Truck,
   Bike,
-  TramFront
+  TramFront,
+  Zap
 } from 'lucide-react';
 
 interface OptionCardsProps {
@@ -45,13 +46,16 @@ const iconMap: Record<string, React.ElementType> = {
   voiture: Car,
   camion: Truck,
   moto: Bike,
-  trottinette: TramFront,
+  trottinette: Zap,
   triporteur: TramFront,
   tracteur: Truck,
   pickup: Truck,
   camion_petit: Truck,
   camion_grand: Truck,
 };
+
+// Special highlighting for featured options
+const featuredOptions = ['trottinette'];
 
 const OptionCards = ({ 
   options, 
@@ -102,6 +106,7 @@ const OptionCards = ({
         {options.map((option, index) => {
           const Icon = iconMap[option.id];
           const isSelected = selected.includes(option.id);
+          const isFeatured = featuredOptions.includes(option.id);
           
           return (
             <button
@@ -109,16 +114,20 @@ const OptionCards = ({
               onClick={() => handleClick(option.id)}
               className={cn(
                 "relative min-h-[55px] touch-manipulation",
-                "bg-white rounded-lg p-2 text-center",
+                "rounded-lg p-2 text-center",
                 "border-2 transition-all duration-300",
-                "hover:shadow-md hover:border-blue-300",
                 "active:scale-95 animate-scale-in",
-                isSelected 
-                  ? "border-blue-600 shadow-md bg-blue-50" 
-                  : "border-gray-200 shadow-sm"
+                isFeatured && !isSelected && "bg-gradient-to-br from-green-50 to-emerald-50 border-green-400 shadow-lg hover:shadow-xl hover:from-green-100 hover:to-emerald-100 hover:border-green-500 ring-2 ring-green-300 ring-opacity-50",
+                !isFeatured && !isSelected && "bg-white hover:shadow-md hover:border-blue-300 border-gray-200 shadow-sm",
+                isSelected && "border-blue-600 shadow-md bg-blue-50"
               )}
               style={{ animationDelay: `${index * 50}ms` }}
             >
+              {isFeatured && !isSelected && (
+                <div className="absolute -top-2 -right-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-[8px] px-2 py-0.5 rounded-full shadow-md font-semibold animate-pulse">
+                  {language === 'ar' ? 'جديد' : 'NEW'}
+                </div>
+              )}
               {multiSelect && isSelected && (
                 <div className="absolute top-1.5 right-1.5 w-5 h-5 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center shadow-md">
                   <Check className="w-3 h-3 text-white" />
@@ -127,13 +136,13 @@ const OptionCards = ({
               {Icon ? (
                 <div className={cn(
                   "w-6 h-6 mx-auto mb-1 rounded-full flex items-center justify-center transition-all duration-300",
-                  isSelected 
-                    ? "bg-gradient-to-br from-blue-600 to-blue-700" 
-                    : "bg-gray-100"
+                  isFeatured && !isSelected && "bg-gradient-to-br from-green-500 to-emerald-600 animate-pulse",
+                  !isFeatured && isSelected && "bg-gradient-to-br from-blue-600 to-blue-700",
+                  !isFeatured && !isSelected && "bg-gray-100"
                 )}>
                   <Icon className={cn(
                     "w-3.5 h-3.5 transition-colors",
-                    isSelected ? "text-white" : "text-gray-600"
+                    (isFeatured && !isSelected) || isSelected ? "text-white" : "text-gray-600"
                   )} />
                 </div>
               ) : option.icon && (
@@ -141,7 +150,9 @@ const OptionCards = ({
               )}
               <span className={cn(
                 "text-[10px] font-medium transition-colors leading-tight",
-                isSelected ? "text-blue-700" : "text-gray-700"
+                isFeatured && !isSelected && "text-green-700 font-semibold",
+                isSelected && "text-blue-700",
+                !isFeatured && !isSelected && "text-gray-700"
               )}>{option.label}</span>
             </button>
           );
