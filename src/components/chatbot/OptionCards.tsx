@@ -24,7 +24,7 @@ import {
   FaMotorcycle, 
   FaTruckPickup, 
   FaTruckMoving 
-} from 'react-icons/fa6';
+} from 'react-icons/fa';
 
 interface OptionCardsProps {
   options: ChatOption[];
