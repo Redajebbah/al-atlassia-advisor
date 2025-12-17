@@ -19,8 +19,8 @@ import {
   TramFront,
   Zap,
   Tractor,
-  Construction,
-  Layers
+  PackageOpen,
+  Container
 } from 'lucide-react';
 
 interface OptionCardsProps {
@@ -50,11 +50,11 @@ const iconMap: Record<string, React.ElementType> = {
   camion: Truck,
   moto: Bike,
   trottinette: Zap,
-  triporteur: Layers,
+  triporteur: Container,
   tracteur: Tractor,
-  pickup: Construction,
+  pickup: PackageOpen,
   camion_petit: Truck,
-  camion_grand: Construction,
+  camion_grand: Container,
 };
 
 // Special highlighting for featured options
