@@ -406,8 +406,10 @@ export const useChatbot = (language: Language) => {
   }, [state.step, processStep, addUserMessage]);
 
   const initialize = useCallback(() => {
-    processStep('welcome');
-  }, [processStep]);
+    if (state.messages.length === 0) {
+      processStep('welcome');
+    }
+  }, [state.messages.length, processStep]);
 
   return {
     state,
