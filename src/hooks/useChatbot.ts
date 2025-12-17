@@ -136,8 +136,8 @@ export const useChatbot = (language: Language) => {
           break;
 
         case 'habitation_value':
+          setInputMode('number', t('valuePlaceholder', language));
           addBotMessage(t('housingValue', language));
-          setInputMode('text', t('valuePlaceholder', language));
           break;
 
         case 'sante_coverage':
@@ -145,8 +145,8 @@ export const useChatbot = (language: Language) => {
           break;
 
         case 'sante_age':
-          addBotMessage(t('healthAge', language));
           setInputMode('number', t('agePlaceholder', language));
+          addBotMessage(t('age', language));
           break;
 
         case 'sante_current':
@@ -166,8 +166,8 @@ export const useChatbot = (language: Language) => {
           break;
 
         case 'entreprises_activity':
-          addBotMessage(t('activityType', language));
           setInputMode('text', t('activityPlaceholder', language));
+          addBotMessage(t('activityType', language));
           break;
 
         case 'entreprises_types':
@@ -184,30 +184,30 @@ export const useChatbot = (language: Language) => {
           setTimeout(() => {
             showTyping();
             setTimeout(() => {
-              addBotMessage(t('scolaireType', language));
               setInputMode('text', language === 'ar' ? 'نوع التأمين' : 'Type d\'assurance');
+              addBotMessage(t('scolaireType', language));
             }, 600);
           }, 500);
           break;
 
         case 'scolaire_institution':
-          addBotMessage(t('institutionName', language));
           setInputMode('text', t('institutionPlaceholder', language));
+          addBotMessage(t('institutionName', language));
           break;
 
         case 'client_name':
-          addBotMessage(t('clientName', language));
           setInputMode('text', t('namePlaceholder', language));
+          addBotMessage(t('clientName', language));
           break;
 
         case 'client_phone':
-          addBotMessage(t('clientPhone', language));
           setInputMode('phone', t('phonePlaceholder', language));
+          addBotMessage(t('clientPhone', language));
           break;
 
         case 'client_city':
-          addBotMessage(t('clientCity', language));
           setInputMode('text', t('cityPlaceholder', language));
+          addBotMessage(t('clientCity', language));
           break;
 
         case 'client_contact_preference':
