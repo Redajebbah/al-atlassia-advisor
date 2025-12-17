@@ -20,10 +20,8 @@ import {
   Tractor
 } from 'lucide-react';
 import { 
-  FaPersonScooter, 
   FaMotorcycle, 
-  FaTruckPickup, 
-  FaTruckMoving 
+  FaTruck 
 } from 'react-icons/fa';
 
 interface OptionCardsProps {
@@ -52,12 +50,12 @@ const iconMap: Record<string, React.ElementType> = {
   voiture: Car,
   camion: Truck,
   moto: Bike,
-  trottinette: FaPersonScooter,
-  triporteur: FaMotorcycle,
+  trottinette: FaMotorcycle, // closest available for electric scooter
+  triporteur: FaTruck, // truck icon as closest available
   tracteur: Tractor,
-  pickup: FaTruckPickup,
+  pickup: FaTruck, // truck icon as closest available
   camion_petit: Truck,
-  camion_grand: FaTruckMoving,
+  camion_grand: FaTruck, // truck icon as closest available
 };
 
 // Special highlighting for featured options
