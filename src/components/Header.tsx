@@ -78,14 +78,14 @@ const Header = () => {
                     Al Atlassia Assurances
                   </h2>
                 </div>
-                <p className="hidden sm:block text-[9px] sm:text-[10px] md:text-xs text-blue-300 leading-tight font-arabic">
+                <p className="text-[8px] sm:text-[10px] md:text-xs text-blue-300 leading-tight font-arabic px-1">
                   وسيط تأمين خاضع لمقتضيات القانون رقم 17.99 المتعلق بمدونة التأمينات
                 </p>
               </div>
             </div>
 
-            {/* Right Logo - Hidden on very small screens */}
-            <div className="hidden xs:block flex-shrink-0">
+            {/* Right Logo */}
+            <div className="flex-shrink-0">
               <div className="bg-white p-1 sm:p-1.5 md:p-2 rounded-md md:rounded-lg shadow-md md:shadow-lg transform hover:scale-105 transition-transform duration-300">
                 <img
                   src={logoAtlantaSanad}
@@ -190,8 +190,8 @@ const Header = () => {
               </a>
             </nav>
 
-            {/* Right Logo - Hidden on very small screens */}
-            <div className="hidden xs:block flex-shrink-0 bg-white p-1 sm:p-1.5 rounded-md sm:rounded-lg shadow-md sm:shadow-lg transform hover:scale-105 transition-transform duration-300">
+            {/* Right Logo */}
+            <div className="flex-shrink-0 bg-white p-1 sm:p-1.5 rounded-md sm:rounded-lg shadow-md sm:shadow-lg transform hover:scale-105 transition-transform duration-300">
               <img
                 src={logoAtlantaSanad}
                 alt="Atlanta Sanad"
