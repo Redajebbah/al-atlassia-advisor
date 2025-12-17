@@ -51,8 +51,10 @@ const ChatContainer = ({ language, onReset }: ChatContainerProps) => {
   };
 
   return (
-    <div className="flex flex-col bg-background overflow-hidden touch-pan-y" style={{ height: 'calc(100dvh - 140px)' }} dir={isRtl ? 'rtl' : 'ltr'}>
-      <main className="flex-1 overflow-y-auto chat-scroll overscroll-contain">
+    <div className="flex flex-col bg-gradient-to-b from-gray-50 to-gray-100 overflow-hidden touch-pan-y py-6" style={{ minHeight: 'calc(100dvh - 140px)' }} dir={isRtl ? 'rtl' : 'ltr'}>
+      <div className="max-w-4xl mx-auto w-full px-4">
+        <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-200">
+          <main className="flex-1 overflow-y-auto chat-scroll overscroll-contain" style={{ maxHeight: 'calc(100dvh - 200px)' }}>
         <div className="max-w-2xl mx-auto px-3 sm:px-4 py-4 sm:py-6 pb-safe">
           {state.messages.map((message, index) => (
             <ChatMessage
@@ -138,6 +140,8 @@ const ChatContainer = ({ language, onReset }: ChatContainerProps) => {
               </button>
             </div>
           )}
+        </div>
+      </div>
         </div>
       </div>
     </div>

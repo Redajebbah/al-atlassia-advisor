@@ -18,19 +18,21 @@ const Index = () => {
   }
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       {/* Professional Header */}
       <Header />
       
-      {/* ZONE 1: Chatbot - Adjusted height for header */}
-      <ChatContainer language={language} onReset={handleReset} />
+      {/* ZONE 1: Chatbot - Separated with padding */}
+      <div className="flex-1">
+        <ChatContainer language={language} onReset={handleReset} />
+      </div>
       
-      {/* ZONE 2: Page Content - Normal flow below chatbot */}
-      <div className="page-content">
+      {/* ZONE 2: Page Content - Clear separation */}
+      <div className="mt-12">
         <PartnerCarousel />
         <Footer language={language} />
       </div>
-    </>
+    </div>
   );
 };
 
