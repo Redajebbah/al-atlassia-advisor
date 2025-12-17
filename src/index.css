@@ -41,6 +41,10 @@
 
     --radius: 0.75rem;
 
+    /* Success color */
+    --success: 152 69% 40%;
+    --success-foreground: 0 0% 100%;
+
     /* Custom Insurance Colors */
     --insurance-blue: 205 75% 42%;
     --insurance-blue-light: 205 65% 92%;

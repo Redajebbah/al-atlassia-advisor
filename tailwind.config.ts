@@ -51,6 +51,10 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
+        },
         insurance: {
           blue: "hsl(var(--insurance-blue))",
           "blue-light": "hsl(var(--insurance-blue-light))",
