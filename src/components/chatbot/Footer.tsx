@@ -62,7 +62,7 @@ const Footer = ({ language }: FooterProps) => {
           <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-8 pt-12">
             {/* Column 1: Company */}
             <div className="space-y-4 animate-fade-in-up" style={{ animationDelay: '0ms' }}>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 animate-fade-in-up" style={{ animationDelay: '0ms' }}>
                 <img 
                   className="w-16 h-16 bg-white rounded-lg p-2 shadow-lg" 
                   src={logoAlAtlassia} 
@@ -78,7 +78,7 @@ const Footer = ({ language }: FooterProps) => {
                 </div>
               </div>
               
-              <p className={cn("text-blue-100 text-sm leading-relaxed", isRtl && "font-arabic text-right")} dir={isRtl ? "rtl" : "ltr"}>
+              <p className={cn("text-blue-100 text-sm leading-relaxed animate-fade-in-up", isRtl && "font-arabic text-right")} dir={isRtl ? "rtl" : "ltr"} style={{ animationDelay: '100ms' }}>
                 {isRtl 
                   ? 'الأطلسية للتأمينات، شركة رائدة في مجال التأمين بالمغرب، نقدم حلول تأمين شاملة لحماية عائلتك وممتلكاتك وأعمالك.'
                   : "Al Atlassia Assurances, société leader dans le secteur de l'assurance au Maroc, offrant des solutions complètes pour protéger votre famille, vos biens et vos entreprises."
@@ -86,7 +86,7 @@ const Footer = ({ language }: FooterProps) => {
               </p>
 
               {/* Social Media Icons with Hover Animation */}
-              <div className="flex gap-3 pt-2">
+              <div className="flex gap-3 pt-2 animate-fade-in-up" style={{ animationDelay: '200ms' }}>
                 <a 
                   href="https://www.facebook.com/alatlassia.assurance" 
                   target="_blank"
@@ -123,16 +123,16 @@ const Footer = ({ language }: FooterProps) => {
             </div>
 
             {/* Column 2: Services */}
-            <div className="space-y-4 animate-fade-in-up" style={{ animationDelay: '150ms' }}>
-              <h3 className={cn("text-lg font-semibold text-white mb-4", isRtl && "font-arabic")} dir={isRtl ? "rtl" : "ltr"}>
+            <div className="space-y-4">
+              <h3 className={cn("text-lg font-semibold text-white mb-4 animate-fade-in-up", isRtl && "font-arabic")} dir={isRtl ? "rtl" : "ltr"} style={{ animationDelay: '150ms' }}>
                 {isRtl ? 'خدماتنا' : 'Nos Services'}
               </h3>
               <ul className="space-y-3">
                 {services.map((service, index) => (
                   <li 
                     key={service.id}
-                    style={{ animationDelay: `${index * 100}ms` }}
-                    className="group"
+                    style={{ animationDelay: `${200 + index * 80}ms` }}
+                    className="group animate-fade-in-up"
                   >
                     <div className={cn(
                       "flex items-center gap-3 text-blue-100 hover:text-white transition-all duration-300 cursor-pointer",

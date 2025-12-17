@@ -45,14 +45,14 @@ const Header = () => {
 
   return (
     <header
-      className="sticky top-0 z-50 transition-all duration-500 ease-in-out"
+      className="sticky top-0 z-50 transition-all duration-500 ease-in-out overflow-hidden"
       style={{
         background: isCompact ? '#1e3a8a' : 'linear-gradient(to bottom, #1e3a8a, #1e40af, #1e3a8a)',
         boxShadow: isCompact ? '0 10px 40px rgba(0,0,0,0.3)' : '0 2px 10px rgba(0,0,0,0.1)',
       }}
     >
-      <div className="max-w-7xl mx-auto px-6 transition-all duration-300" style={{ paddingTop: isCompact ? '0.5rem' : '1rem', paddingBottom: isCompact ? '0.5rem' : '1rem' }}>
-        <div className={`transition-all duration-300 ${isCompact ? 'opacity-0 h-0 overflow-hidden pointer-events-none' : 'opacity-100'}`}>
+      <div className="max-w-7xl mx-auto px-6 transition-all duration-500 ease-in-out" style={{ paddingTop: isCompact ? '0.5rem' : '1rem', paddingBottom: isCompact ? '0.5rem' : '1rem' }}>
+        <div className="transition-all duration-500 ease-in-out" style={{ transform: isCompact ? 'translateY(-100%)' : 'translateY(0)', opacity: isCompact ? 0 : 1, maxHeight: isCompact ? 0 : '500px' }}>
           {/* FULL STATE - Always rendered but hidden when compact */}
           <div className="flex items-center justify-between gap-6">
             {/* Left: Logos */}
@@ -143,7 +143,7 @@ const Header = () => {
         </div>
 
         {/* COMPACT STATE - Always rendered but hidden when full */}
-        <div className={`transition-all duration-300 ${isCompact ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden pointer-events-none absolute'}`}>
+        <div className="transition-all duration-500 ease-in-out" style={{ transform: isCompact ? 'translateY(0)' : 'translateY(-100%)', opacity: isCompact ? 1 : 0, position: isCompact ? 'relative' : 'absolute', pointerEvents: isCompact ? 'auto' : 'none' }}>
           <div className="flex items-center justify-between gap-4">
             {/* Single Logo Left */}
             <button
