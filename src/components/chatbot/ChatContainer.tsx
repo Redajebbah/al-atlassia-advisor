@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Language } from '@/types/chatbot';
 import { useChatbot } from '@/hooks/useChatbot';
-import ChatHeader from './ChatHeader';
 import ChatMessage from './ChatMessage';
 import TypingIndicator from './TypingIndicator';
 import OptionCards from './OptionCards';
@@ -52,9 +51,7 @@ const ChatContainer = ({ language, onReset }: ChatContainerProps) => {
   };
 
   return (
-    <div className="h-[100dvh] flex flex-col bg-background overflow-hidden touch-pan-y" dir={isRtl ? 'rtl' : 'ltr'}>
-      <ChatHeader language={language} />
-      
+    <div className="flex flex-col bg-background overflow-hidden touch-pan-y" style={{ height: 'calc(100dvh - 140px)' }} dir={isRtl ? 'rtl' : 'ltr'}>
       <main className="flex-1 overflow-y-auto chat-scroll overscroll-contain">
         <div className="max-w-2xl mx-auto px-3 sm:px-4 py-4 sm:py-6 pb-safe">
           {state.messages.map((message, index) => (

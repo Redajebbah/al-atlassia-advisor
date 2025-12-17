@@ -4,6 +4,7 @@ import LanguageSelection from '@/components/chatbot/LanguageSelection';
 import ChatContainer from '@/components/chatbot/ChatContainer';
 import PartnerCarousel from '@/components/chatbot/PartnerCarousel';
 import Footer from '@/components/chatbot/Footer';
+import Header from '@/components/Header';
 
 const Index = () => {
   const [language, setLanguage] = useState<Language | null>(null);
@@ -18,7 +19,10 @@ const Index = () => {
 
   return (
     <>
-      {/* ZONE 1: Chatbot - Fixed full viewport height */}
+      {/* Professional Header */}
+      <Header />
+      
+      {/* ZONE 1: Chatbot - Adjusted height for header */}
       <ChatContainer language={language} onReset={handleReset} />
       
       {/* ZONE 2: Page Content - Normal flow below chatbot */}
