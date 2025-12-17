@@ -23,12 +23,12 @@ const Index = () => {
       <Header />
       
       {/* ZONE 1: Chatbot - Separated with padding */}
-      <div className="flex-1 overflow-hidden">
+      <div className="flex-1 overflow-hidden mb-16">
         <ChatContainer language={language} onReset={handleReset} />
       </div>
       
       {/* ZONE 2: Page Content - Clear separation */}
-      <div className="mt-12">
+      <div className="mt-20 pt-8 border-t-4 border-blue-200 bg-gradient-to-b from-gray-50 to-white">
         <PartnerCarousel />
         <Footer language={language} />
       </div>
