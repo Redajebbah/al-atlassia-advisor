@@ -8,6 +8,7 @@ import OptionCards from './OptionCards';
 import ChatInput from './ChatInput';
 import PartnerCarousel from './PartnerCarousel';
 import ChatFooter from './ChatFooter';
+import Footer from './Footer';
 import { cn } from '@/lib/utils';
 import { MapPin, RotateCcw, Check } from 'lucide-react';
 
@@ -146,6 +147,8 @@ const ChatContainer = ({ language, onReset }: ChatContainerProps) => {
       </div>
 
       <PartnerCarousel />
+      
+      <Footer language={language} />
     </div>
   );
 };
