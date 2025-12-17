@@ -18,12 +18,12 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col overflow-hidden">
       {/* Professional Header */}
       <Header />
       
       {/* ZONE 1: Chatbot - Separated with padding */}
-      <div className="flex-1">
+      <div className="flex-1 overflow-hidden">
         <ChatContainer language={language} onReset={handleReset} />
       </div>
       

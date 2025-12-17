@@ -26,7 +26,9 @@ const ChatContainer = ({ language, onReset }: ChatContainerProps) => {
   }, []); // Only run once on mount
 
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (chatEndRef.current) {
+      chatEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+    }
   }, [state.messages, state.isTyping]);
 
   useEffect(() => {
@@ -51,10 +53,10 @@ const ChatContainer = ({ language, onReset }: ChatContainerProps) => {
   };
 
   return (
-    <div className="flex flex-col bg-gradient-to-b from-gray-50 to-gray-100 overflow-hidden touch-pan-y py-6" style={{ minHeight: 'calc(100dvh - 140px)' }} dir={isRtl ? 'rtl' : 'ltr'}>
+    <div className="flex flex-col bg-gradient-to-b from-gray-50 to-gray-100 touch-pan-y py-6" style={{ minHeight: 'calc(100dvh - 140px)' }} dir={isRtl ? 'rtl' : 'ltr'}>
       <div className="max-w-4xl mx-auto w-full px-4">
-        <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-200">
-          <main className="flex-1 overflow-y-auto chat-scroll overscroll-contain" style={{ maxHeight: 'calc(100dvh - 200px)' }}>
+        <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col" style={{ height: 'calc(100dvh - 200px)' }}>
+          <main className="flex-1 overflow-y-auto chat-scroll overscroll-contain overflow-x-hidden">
         <div className="max-w-2xl mx-auto px-3 sm:px-4 py-4 sm:py-6 pb-safe">
           {state.messages.map((message, index) => (
             <ChatMessage
