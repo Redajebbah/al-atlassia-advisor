@@ -20,7 +20,7 @@ const Footer = ({ language }: FooterProps) => {
             <div className="mt-4">
               <div className="flex-1 flex justify-between items-center">
                 <img 
-                  className="sm:w-[10rem] xs:w-[7rem] z-10 bg-white rounded-lg p-2" 
+                  className="w-[5rem] sm:w-[6rem] z-10 bg-white rounded-lg p-1.5" 
                   src={logoAlAtlassia} 
                   alt="Al Atlassia Assurances" 
                 />

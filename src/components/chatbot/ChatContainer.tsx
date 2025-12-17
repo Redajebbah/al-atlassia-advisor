@@ -77,8 +77,6 @@ const ChatContainer = ({ language, onReset }: ChatContainerProps) => {
         {showFooter && <ChatFooter language={language} />}
         
         <PartnerCarousel />
-        
-        <Footer language={language} />
       </main>
 
       <div className="border-t border-border bg-card/95 backdrop-blur-sm safe-bottom">
@@ -149,6 +147,8 @@ const ChatContainer = ({ language, onReset }: ChatContainerProps) => {
           )}
         </div>
       </div>
+      
+      <Footer language={language} />
     </div>
   );
 };
