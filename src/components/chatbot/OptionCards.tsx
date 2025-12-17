@@ -13,7 +13,12 @@ import {
   Building,
   Phone,
   MessageCircle,
-  Check
+  Check,
+  Truck,
+  Bike,
+  Scooter,
+  Tractor,
+  CarFront
 } from 'lucide-react';
 
 interface OptionCardsProps {
@@ -38,6 +43,16 @@ const iconMap: Record<string, React.ElementType> = {
   bureau: Building,
   appel: Phone,
   whatsapp: MessageCircle,
+  // Vehicle types
+  voiture: Car,
+  camion: Truck,
+  moto: Bike,
+  trottinette: Scooter,
+  triporteur: Bike,
+  tracteur: Tractor,
+  pickup: CarFront,
+  camion_petit: Truck,
+  camion_grand: Truck,
 };
 
 const OptionCards = ({ 
