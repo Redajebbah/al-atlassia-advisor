@@ -55,20 +55,38 @@ const Header = () => {
         {!isCompact ? (
           /* FULL STATE */
           <div className="animate-in fade-in duration-500">
-          <div className="flex items-center justify-between gap-6">
-            {/* Left: Logos */}
-            <div className="flex items-center gap-4 flex-1">
-              <div className="flex items-center gap-3 bg-white p-2 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
+          <div className="flex items-center justify-between gap-4 md:gap-8">
+            {/* Left Logo */}
+            <div className="flex-shrink-0">
+              <div className="bg-white p-2 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
                 <img
                   src={logoAlAtlassia}
                   alt="Al Atlassia Assurances"
                   className="h-12 w-auto object-contain"
                 />
               </div>
+            </div>
 
-              <div className="hidden md:block w-0.5 h-12 bg-blue-700"></div>
+            {/* Center: Brand Text */}
+            <div className="flex-1 text-center px-2">
+              <div className="space-y-1">
+                <div className="flex flex-col items-center gap-1">
+                  <h1 className="text-xl md:text-3xl font-bold text-white leading-tight font-arabic">
+                    الأطلسية للتأمينات
+                  </h1>
+                  <h2 className="text-base md:text-2xl font-semibold text-blue-100">
+                    Al Atlassia Assurances
+                  </h2>
+                </div>
+                <p className="text-[10px] md:text-xs text-blue-300 leading-tight font-arabic whitespace-nowrap overflow-hidden text-ellipsis">
+                  وسيط تأمين خاضع لمقتضيات القانون رقم 17.99 المتعلق بمدونة التأمينات
+                </p>
+              </div>
+            </div>
 
-              <div className="flex items-center gap-3 bg-white p-2 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
+            {/* Right Logo */}
+            <div className="flex-shrink-0">
+              <div className="bg-white p-2 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
                 <img
                   src={logoAtlantaSanad}
                   alt="Atlanta Sanad"
@@ -77,28 +95,10 @@ const Header = () => {
               </div>
             </div>
 
-            {/* Right: Brand Text */}
-            <div className="flex-1 text-right">
-              <div className="space-y-1">
-                <div className="flex flex-col md:flex-row items-end md:items-center gap-2 justify-end">
-                  <h1 className="text-2xl md:text-3xl font-bold text-white leading-tight font-arabic">
-                    الأطلسية للتأمينات
-                  </h1>
-                  <span className="text-base md:text-lg text-blue-200 hidden md:inline">|</span>
-                  <h2 className="text-lg md:text-2xl font-semibold text-blue-100">
-                    Al Atlassia Assurances
-                  </h2>
-                </div>
-                <p className="text-xs md:text-sm text-blue-300 leading-tight font-arabic">
-                  وسيط تأمين خاضع لمقتضيات القانون رقم 17.99 المتعلق بمدونة التأمينات
-                </p>
-              </div>
-            </div>
-
             {/* Mobile Menu Toggle */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden text-white hover:text-blue-200 transition-colors"
+              className="md:hidden text-white hover:text-blue-200 transition-colors flex-shrink-0"
             >
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -145,11 +145,11 @@ const Header = () => {
         ) : (
           /* COMPACT STATE */
           <div className="animate-in fade-in duration-500">
-            <div className="flex items-center justify-between gap-4">
-            {/* Single Logo Left */}
+            <div className="flex items-center justify-between gap-3 md:gap-6">
+            {/* Left Logo */}
             <button
               onClick={scrollToTop}
-              className="flex items-center gap-2 bg-white p-1.5 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300"
+              className="flex-shrink-0 bg-white p-1.5 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300"
             >
               <img
                 src={logoAlAtlassia}
@@ -158,52 +158,53 @@ const Header = () => {
               />
             </button>
 
-            {/* Compact Navigation */}
-            <nav className="hidden md:flex items-center justify-center gap-6 flex-1">
+            {/* Center: Compact Navigation */}
+            <nav className="hidden md:flex items-center justify-center gap-4 lg:gap-6 flex-1">
               <a
                 href="#"
-                className="text-sm text-blue-100 hover:text-white transition-colors duration-300 relative group"
+                className="text-xs lg:text-sm text-blue-100 hover:text-white transition-colors duration-300 relative group whitespace-nowrap"
               >
                 <span>Accueil</span>
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
               </a>
               <a
                 href="#"
-                className="text-sm text-blue-100 hover:text-white transition-colors duration-300 relative group"
+                className="text-xs lg:text-sm text-blue-100 hover:text-white transition-colors duration-300 relative group whitespace-nowrap"
               >
                 <span>Services</span>
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
               </a>
               <a
                 href="#"
-                className="text-sm text-blue-100 hover:text-white transition-colors duration-300 relative group"
+                className="text-xs lg:text-sm text-blue-100 hover:text-white transition-colors duration-300 relative group whitespace-nowrap"
               >
                 <span>À Propos</span>
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
               </a>
               <a
                 href="#"
-                className="text-sm text-blue-100 hover:text-white transition-colors duration-300 relative group"
+                className="text-xs lg:text-sm text-blue-100 hover:text-white transition-colors duration-300 relative group whitespace-nowrap"
               >
                 <span>Contact</span>
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
               </a>
             </nav>
 
+            {/* Right Logo */}
+            <div className="flex-shrink-0 bg-white p-1.5 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
+              <img
+                src={logoAtlantaSanad}
+                alt="Atlanta Sanad"
+                className="h-8 w-auto object-contain"
+              />
+            </div>
+
             {/* Mobile Menu Toggle */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden text-white hover:text-blue-200 transition-colors"
+              className="md:hidden text-white hover:text-blue-200 transition-colors flex-shrink-0"
             >
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-
-            {/* Scroll to Top Button */}
-            <button
-              onClick={scrollToTop}
-              className="hidden md:flex items-center gap-1 text-blue-200 hover:text-white transition-colors duration-300 text-sm"
-            >
-              <ChevronUp className="w-4 h-4" />
             </button>
           </div>
         </div>
