@@ -2,7 +2,7 @@ import { Language } from '@/types/chatbot';
 import { cn } from '@/lib/utils';
 import logoAlAtlassia from '@/assets/logo-al-atlassia.jpg';
 import logoAtlantaSanad from '@/assets/logo-atlanta-sanad.png';
-import { Shield, MessageSquare } from 'lucide-react';
+import { MessageSquare } from 'lucide-react';
 
 interface ChatHeaderProps {
   language: Language;
@@ -12,39 +12,57 @@ const ChatHeader = ({ language }: ChatHeaderProps) => {
   const isRtl = language === 'ar';
   
   return (
-    <header className="bg-[#1e3a6f] text-white shadow-lg sticky top-0 z-50 safe-top">
-      <div className="px-3 sm:px-4 py-3 sm:py-4">
-        <div className="max-w-2xl mx-auto flex items-center justify-between gap-3 sm:gap-4">
-          {/* Al Atlassia Logo with Text */}
-          <div className="flex items-center gap-3 sm:gap-4 min-w-0 flex-1">
-            <img 
-              src={logoAlAtlassia} 
-              alt="al atlassia assurances" 
-              className="h-12 sm:h-14 md:h-16 w-auto object-contain shrink-0"
-            />
+    <header className="bg-[#1e3a6f] text-white shadow-md sticky top-0 z-50 safe-top">
+      {/* Main Header Content */}
+      <div className="px-3 sm:px-6 py-3 sm:py-4 border-b border-white/10">
+        <div className="max-w-4xl mx-auto">
+          <div className="flex items-center justify-between gap-3 sm:gap-6">
+            {/* Left Section: Logos */}
+            <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+              <img 
+                src={logoAlAtlassia} 
+                alt="Al Atlassia Assurances" 
+                className="h-10 sm:h-12 md:h-14 w-auto object-contain"
+              />
+              <div className="h-10 sm:h-12 w-px bg-white/20" />
+              <img 
+                src={logoAtlantaSanad} 
+                alt="Atlanta Sanad" 
+                className="h-8 sm:h-10 md:h-12 w-auto object-contain"
+              />
+            </div>
             
-            {/* Divider */}
-            <div className="hidden md:block h-12 w-px bg-white/20 shrink-0" />
-            
-            {/* Atlanta Sanad Logo */}
-            <img 
-              src={logoAtlantaSanad} 
-              alt="Atlanta Sanad Assurance" 
-              className="hidden md:block h-10 sm:h-12 w-auto object-contain shrink-0"
-            />
+            {/* Right Section: Brand Name */}
+            <div className={cn(
+              "flex flex-col items-end text-right min-w-0",
+              isRtl && "items-start text-left"
+            )}>
+              {/* Arabic Name */}
+              <h1 className="font-arabic text-sm sm:text-base md:text-lg font-semibold leading-tight text-white/95 whitespace-nowrap">
+                الأطلسية للتأمينات
+              </h1>
+              {/* French Name */}
+              <p className="text-[10px] sm:text-xs md:text-sm text-white/75 font-light tracking-wide whitespace-nowrap">
+                Al Atlassia Assurances
+              </p>
+            </div>
           </div>
-          
-          {/* Assistant Badge */}
+        </div>
+      </div>
+      
+      {/* Bottom Bar: Assistant Badge */}
+      <div className="bg-[#1a3461] px-3 sm:px-6 py-2">
+        <div className="max-w-4xl mx-auto">
           <div className={cn(
-            "flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm shrink-0",
+            "flex items-center justify-center gap-2",
             isRtl ? "font-arabic" : ""
           )}>
             <div className="relative">
-              <MessageSquare className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-              <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-400 rounded-full border border-[#1e3a6f]" />
+              <MessageSquare className="w-3.5 h-3.5 text-white/90" />
+              <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 bg-green-400 rounded-full border border-[#1a3461] shadow-sm" />
             </div>
-            <span className="text-[10px] sm:text-xs font-medium text-white hidden sm:inline">
-              {isRtl ? 'مساعدك الرقمي' : 'Assistant en ligne'}
+            <span className="text-xs text-white/90 font-medium">
+              {isRtl ? 'مساعدك الرقمي المباشر' : 'Votre Assistant Digital'}
             </span>
           </div>
         </div>
