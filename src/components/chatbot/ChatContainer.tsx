@@ -124,7 +124,9 @@ const ChatContainer = ({ language, onReset }: ChatContainerProps) => {
           {state.step === 'vie_bureau' && (
             <div className="text-center py-4 space-y-3 animate-fade-in-up">
               <a
-                href="https://maps.google.com/?q=Hay+Marche+Verte+Ksar+El+Kebir+Morocco"
+                href={isRtl
+                  ? 'https://maps.google.com/?q=35.00274163192203,-5.910795861057443'
+                  : 'https://maps.google.com/?q=Hay+Marche+Verte+Ksar+El+Kebir+Morocco'}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-full px-6 py-3 font-medium transition-all hover:shadow-xl hover:scale-105 active:scale-95 shadow-lg"

@@ -45,6 +45,7 @@ export interface HabitationData {
   housingType: HousingType;
   status: HousingStatus;
   value: string;
+  furnitureValue?: string;
 }
 
 export interface SanteData {
@@ -89,6 +90,7 @@ export type ChatStep =
   | 'habitation_type'
   | 'habitation_status'
   | 'habitation_value'
+  | 'habitation_furniture_value'
   | 'sante_coverage'
   | 'sante_age'
   | 'sante_current'

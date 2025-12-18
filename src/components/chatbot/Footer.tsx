@@ -73,7 +73,7 @@ const Footer = ({ language }: FooterProps) => {
                     {isRtl ? 'الأطلسية للتأمينات' : 'Al Atlassia'}
                   </h3>
                   <p className="text-blue-200 text-sm">
-                    {isRtl ? 'حماية تثق بها' : 'Protection de confiance'}
+                    {isRtl ? 'طريقة جديدة في التأمين' : 'Une nouvelle approche de l’assurance'}
                   </p>
                 </div>
               </div>
@@ -122,30 +122,7 @@ const Footer = ({ language }: FooterProps) => {
               </div>
             </div>
 
-            {/* Column 2: Services */}
-            <div className="space-y-4">
-              <h3 className={cn("text-lg font-semibold text-white mb-4 animate-fade-in-up", isRtl && "font-arabic")} dir={isRtl ? "rtl" : "ltr"} style={{ animationDelay: '150ms' }}>
-                {isRtl ? 'خدماتنا' : 'Nos Services'}
-              </h3>
-              <ul className="space-y-3">
-                {services.map((service, index) => (
-                  <li 
-                    key={service.id}
-                    style={{ animationDelay: `${200 + index * 80}ms` }}
-                    className="group animate-fade-in-up"
-                  >
-                    <div className={cn(
-                      "flex items-center gap-3 text-blue-100 hover:text-white transition-all duration-300 cursor-pointer",
-                      "border-l-2 border-transparent hover:border-blue-400 pl-3 py-1",
-                      isRtl && "border-l-0 border-r-2 pl-0 pr-3"
-                    )}>
-                      <service.icon className="w-4 h-4 text-blue-400 group-hover:scale-110 transition-transform duration-300" />
-                      <span className={cn("text-sm", isRtl && "font-arabic")}>{service.label}</span>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {/* Column 2: (Services section removed as per instructions) */}
 
             {/* Column 3: Contact */}
             <div className="space-y-4 animate-fade-in-up" style={{ animationDelay: '300ms' }}>
@@ -166,43 +143,43 @@ const Footer = ({ language }: FooterProps) => {
                   </div>
                 </a>
 
-                {/* Phone */}
-                <a 
-                  href="tel:0539919354" 
-                  className="group flex items-center gap-3 p-3 rounded-lg hover:bg-blue-800/50 transition-all duration-300"
-                >
+                {/* Fixed Phone */}
+                <div className="group flex items-center gap-3 p-3 rounded-lg hover:bg-blue-800/50 transition-all duration-300">
                   <Phone className="w-5 h-5 text-blue-400 group-hover:scale-110 transition-transform duration-300" />
                   <div>
-                    <p className={cn("text-xs text-blue-200", isRtl && "font-arabic")}>{isRtl ? 'الهاتف الثابت' : 'Fixe'}</p>
+                    <p className={cn("text-xs text-blue-200", isRtl && "font-arabic")}>{isRtl ? 'الهاتف الثابت' : 'Téléphone fixe'}</p>
                     <p className="text-sm text-white">05 39 91 93 54</p>
                   </div>
-                </a>
+                </div>
 
-                {/* Mobile */}
-                <a 
-                  href="tel:0662153757" 
-                  className="group flex items-center gap-3 p-3 rounded-lg hover:bg-blue-800/50 transition-all duration-300"
-                >
+                {/* Mobile Phone */}
+                <div className="group flex items-center gap-3 p-3 rounded-lg hover:bg-blue-800/50 transition-all duration-300">
                   <Smartphone className="w-5 h-5 text-blue-400 group-hover:scale-110 transition-transform duration-300" />
                   <div>
-                    <p className={cn("text-xs text-blue-200", isRtl && "font-arabic")}>{isRtl ? 'الهاتف المحمول' : 'Mobile'}</p>
+                    <p className={cn("text-xs text-blue-200", isRtl && "font-arabic")}>{isRtl ? 'واتساب/ الهاتف المحمول' : 'WhatsApp / Téléphone mobile'}</p>
                     <p className="text-sm text-white">06 62 15 37 57</p>
                   </div>
-                </a>
+                </div>
 
                 {/* WhatsApp */}
-                <a 
-                  href="https://wa.me/212666228437" 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center gap-3 p-3 rounded-lg hover:bg-blue-800/50 transition-all duration-300"
-                >
+                <div className="group flex items-center gap-3 p-3 rounded-lg hover:bg-blue-800/50 transition-all duration-300">
                   <MessageCircle className="w-5 h-5 text-blue-400 group-hover:scale-110 transition-transform duration-300" />
                   <div>
                     <p className={cn("text-xs text-blue-200", isRtl && "font-arabic")}>{isRtl ? 'واتساب' : 'WhatsApp'}</p>
                     <p className="text-sm text-white">06 66 22 84 37</p>
                   </div>
-                </a>
+                </div>
+
+                {/* Website link with label, aligned and localized */}
+                <div className="group flex items-center gap-3 p-3 rounded-lg hover:bg-blue-800/50 transition-all duration-300">
+                  <Shield className="w-5 h-5 text-blue-400 group-hover:scale-110 transition-transform duration-300" />
+                  <div>
+                    <p className={cn("text-xs text-blue-200", isRtl && "font-arabic")}>{isRtl ? 'الموقع الإلكتروني' : 'Site web'}</p>
+                    <a href="https://alatlassia-assurances.com" target="_blank" rel="noopener noreferrer" className="text-sm text-blue-300 hover:text-white underline break-all">
+                      https://alatlassia-assurances.com
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
 

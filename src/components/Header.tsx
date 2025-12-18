@@ -77,6 +77,13 @@ const Header = () => {
                   <h2 className="text-xs sm:text-sm md:text-xl lg:text-2xl font-semibold text-blue-100">
                     Al Atlassia Assurances
                   </h2>
+                  {/* Slogan update (FR/AR) */}
+                  <span className="block text-[10px] sm:text-xs md:text-sm text-blue-200 font-arabic mt-1">
+                    طريقة جديدة في التأمين
+                  </span>
+                  <span className="block text-[10px] sm:text-xs md:text-sm text-blue-200 mt-1">
+                    Une nouvelle approche de l’assurance
+                  </span>
                 </div>
                 <p className="text-[8px] sm:text-[10px] md:text-xs text-blue-300 leading-tight font-arabic px-1">
                   وسيط تأمين خاضع لمقتضيات القانون رقم 17.99 المتعلق بمدونة التأمينات

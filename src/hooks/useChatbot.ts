@@ -140,6 +140,14 @@ export const useChatbot = (language: Language) => {
         case 'habitation_value':
           setInputMode('number', t('valuePlaceholder', language));
           addBotMessage(t('housingValue', language));
+          setTimeout(() => {
+            setState(prev => ({ ...prev, step: 'habitation_furniture_value' }));
+          }, 500);
+          break;
+
+        case 'habitation_furniture_value':
+          setInputMode('number', t('valuePlaceholder', language));
+          addBotMessage(t('furnitureValue', language));
           break;
 
         case 'sante_coverage':
