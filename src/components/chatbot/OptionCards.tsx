@@ -67,15 +67,18 @@ const iconMap: Record<string, React.ElementType | string> = {
 // Special highlighting for featured options
 const featuredOptions = ['trottinette'];
 
-const OptionCards = ({ 
-  options, 
-  onSelect, 
-  language, 
+const OptionCards = ({
+  options = [],
+  onSelect,
+  language,
   multiSelect = false,
   onMultiSelect,
   columns = 2,
   preSelected = []
 }: OptionCardsProps) => {
+  // Safety check for invalid options
+  if (!Array.isArray(options) || options.length === 0) return null;
+
   const isRtl = language === 'ar';
   const [selected, setSelected] = useState<string[]>(preSelected);
 

@@ -38,7 +38,7 @@ const ChatContainer = ({ language, onReset }: ChatContainerProps) => {
   }, [state.step]);
 
   const onOptionSelect = (optionId: string) => {
-    const option = state.currentOptions.find(o => o.id === optionId);
+    const option = state.currentOptions?.find(o => o.id === optionId);
     if (option) {
       handleOptionSelect(optionId, option.label);
     }
@@ -46,7 +46,7 @@ const ChatContainer = ({ language, onReset }: ChatContainerProps) => {
 
   const onMultiSelect = (selectedIds: string[]) => {
     const labels = selectedIds
-      .map(id => state.currentOptions.find(o => o.id === id)?.label)
+      .map(id => state.currentOptions?.find(o => o.id === id)?.label)
       .filter(Boolean)
       .join(', ');
     handleMultiSelect(selectedIds, labels);
@@ -78,7 +78,7 @@ const ChatContainer = ({ language, onReset }: ChatContainerProps) => {
 
       <div className="border-t border-blue-100 bg-white/95 backdrop-blur-md safe-bottom shadow-lg flex-shrink-0">
         <div className="max-w-2xl mx-auto px-3 sm:px-4 py-3 sm:py-4 pb-safe">
-          {state.currentOptions.length > 0 && (
+          {state.currentOptions && state.currentOptions.length > 0 && (
             <OptionCards
               options={state.currentOptions}
               onSelect={onOptionSelect}
