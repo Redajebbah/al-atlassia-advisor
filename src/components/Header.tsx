@@ -102,13 +102,7 @@ const Header = () => {
               </div>
             </div>
 
-            {/* Mobile Menu Toggle */}
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden text-white hover:text-blue-200 transition-colors flex-shrink-0"
-            >
-              {isOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
-            </button>
+            {/* Mobile Menu Toggle removed as requested */}
           </div>
 
           {/* Navigation */}
