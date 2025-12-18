@@ -174,7 +174,7 @@ const OptionCards = ({
                   <Check className="w-3 h-3 text-white" />
                 </div>
               )}
-              {!isTimeSlot && (
+              {!isTimeSlot && getIcon(option.id) && (
                 <div className={cn(
                   "flex items-center justify-center mx-auto mb-1 w-8 h-8 rounded-full bg-blue-50",
                   isSelected && "bg-blue-100"
