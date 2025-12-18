@@ -286,9 +286,18 @@ export const useChatbot = (language: Language) => {
             showTyping();
             setTimeout(() => {
               addBotMessage(t('autresInfo', language));
-              setTimeout(() => processStep('client_name'), 800);
+              setTimeout(() => {
+                addBotMessage(t('autresNeedQuestion', language), undefined, false, 'text', t('autresNeedPlaceholder', language));
+                setInputMode('text');
+                setState(prev => ({ ...prev, step: 'autres_need' }));
+              }, 800);
             }, 600);
             break;
+              case 'autres_need':
+                // Save the user's description (limit to 200 words)
+                setState(prev => ({ ...prev, insuranceData: { ...prev.insuranceData, autresNeed: value } }));
+                processStep('client_name');
+                break;
         }
         break;
 
@@ -394,6 +403,11 @@ export const useChatbot = (language: Language) => {
 
       case 'scolaire_institution':
         setState(prev => ({ ...prev, insuranceData: { ...prev.insuranceData, institutionName: value } }));
+        processStep('client_name');
+        break;
+
+      case 'autres_need':
+        setState(prev => ({ ...prev, insuranceData: { ...prev.insuranceData, autresNeed: value } }));
         processStep('client_name');
         break;
 

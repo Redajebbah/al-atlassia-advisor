@@ -101,6 +101,7 @@ export type ChatStep =
   | 'professionnels_types'
   | 'scolaire_coverage'
   | 'scolaire_institution'
+  | 'autres_need'
   | 'client_name'
   | 'client_phone'
   | 'client_city'
