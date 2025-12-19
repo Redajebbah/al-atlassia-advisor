@@ -25,6 +25,7 @@ const translateInsuranceType = (type: InsuranceType, lang: Language): string => 
     professionnels: { fr: 'Assurance Professionnels', ar: 'التأمين المهني' },
     scolaire: { fr: 'Assurance Scolaire', ar: 'التأمين المدرسي' },
     autres: { fr: 'Autres Assurances', ar: 'تأمينات أخرى' },
+    transport_public: { fr: 'Assurance Transport Public des Utilisateurs', ar: 'تأمين النقل العمومي للمستخدمين' },
   };
   return translations[type][lang];
 };
@@ -108,6 +109,12 @@ const formatInsuranceDetails = (
       }
       if (data.institutionName) {
         details.push(`${lang === 'fr' ? 'Nom de l\'établissement' : 'اسم المؤسسة'}: ${data.institutionName}`);
+      }
+      break;
+
+    case 'transport_public':
+      if (data.transportMeans) {
+        details.push(`${lang === 'fr' ? 'Moyen de transport' : 'وسيلة النقل'}: ${data.transportMeans}`);
       }
       break;
   }

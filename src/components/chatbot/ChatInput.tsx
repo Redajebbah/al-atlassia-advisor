@@ -1,5 +1,6 @@
 import { Language } from '@/types/chatbot';
 import { cn } from '@/lib/utils';
+import { t } from '@/lib/translations';
 import { useState } from 'react';
 import { Send } from 'lucide-react';
 
@@ -12,14 +13,30 @@ interface ChatInputProps {
 
 const ChatInput = ({ onSubmit, language, placeholder, type = 'text' }: ChatInputProps) => {
   const [value, setValue] = useState('');
+  const [touched, setTouched] = useState(false);
+  const [error, setError] = useState('');
   const isRtl = language === 'ar';
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (value.trim()) {
-      onSubmit(value.trim());
-      setValue('');
+    const trimmed = value.trim();
+    if (!trimmed) return;
+
+    if (type === 'phone') {
+      // Validate Moroccan phone number on submit
+      const normalized = trimmed.replace(/[\s-]/g, '');
+      const valid = /^(?:\+212[67]\d{8}|0[67]\d{8})$/.test(normalized);
+        if (!valid) {
+        setTouched(true);
+        setError(t('phoneInvalid' as any, language));
+        return; // do NOT proceed to next step
+      }
     }
+
+    onSubmit(trimmed);
+    setValue('');
+    setTouched(false);
+    setError('');
   };
 
   const inputType = type === 'phone' ? 'tel' : type === 'number' ? 'number' : 'text';
@@ -34,7 +51,18 @@ const ChatInput = ({ onSubmit, language, placeholder, type = 'text' }: ChatInput
         <input
           type={inputType}
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={(e) => {
+            const v = e.target.value;
+            setValue(v);
+            // live clear of error if becomes valid; do not block typing
+            if (type === 'phone' && (touched || error)) {
+              const normalized = v.replace(/[\s-]/g, '');
+              const valid = /^(?:\+212[67]\d{8}|0[67]\d{8})$/.test(normalized);
+              if (valid) {
+                setError('');
+              }
+            }
+          }}
           placeholder={placeholder}
           className={cn(
             "flex-1 bg-transparent px-4 py-2",
@@ -47,6 +75,18 @@ const ChatInput = ({ onSubmit, language, placeholder, type = 'text' }: ChatInput
           autoCorrect="off"
           autoCapitalize="off"
           spellCheck="false"
+          onBlur={() => {
+            if (type === 'phone') {
+              setTouched(true);
+              const normalized = value.trim().replace(/[\s-]/g, '');
+              const valid = /^(?:\+212[67]\d{8}|0[67]\d{8})$/.test(normalized);
+              if (!valid && value.trim() !== '') {
+                setError(t('phoneInvalid' as any, language));
+              } else {
+                setError('');
+              }
+            }
+          }}
         />
         <button
           type="submit"
@@ -62,6 +102,9 @@ const ChatInput = ({ onSubmit, language, placeholder, type = 'text' }: ChatInput
           <Send className={cn("w-5 h-5", isRtl && "rotate-180")} />
         </button>
       </div>
+      {error && (
+        <p className={cn("mt-2 text-sm text-destructive", isRtl && "font-arabic")}>{error}</p>
+      )}
     </form>
   );
 };

@@ -8,7 +8,8 @@ export type InsuranceType =
   | 'entreprises'
   | 'professionnels'
   | 'scolaire'
-  | 'autres';
+  | 'autres'
+  | 'transport_public';
 
 export type VehicleType = 
   | 'voiture'
@@ -73,6 +74,10 @@ export interface ScolaireData {
   institutionName: string;
 }
 
+export interface TransportPublicData {
+  transportMeans: string;
+}
+
 export type InsuranceData = 
   | { type: 'automobile'; data: AutomobileData }
   | { type: 'habitation'; data: HabitationData }
@@ -82,6 +87,7 @@ export type InsuranceData =
   | { type: 'professionnels'; data: ProfessionnelsData }
   | { type: 'scolaire'; data: ScolaireData }
   | { type: 'autres'; data: null };
+  | { type: 'transport_public'; data: TransportPublicData };
 
 export type ChatStep = 
   | 'welcome'
@@ -102,6 +108,7 @@ export type ChatStep =
   | 'scolaire_coverage'
   | 'scolaire_institution'
   | 'autres_need'
+  | 'transport_means'
   | 'client_name'
   | 'client_phone'
   | 'client_city'

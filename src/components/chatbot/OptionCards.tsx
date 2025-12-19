@@ -57,6 +57,9 @@ const iconMap: Record<string, React.ElementType | string> = {
   tracteur: Tractor,
   camion_petit: Truck,
   
+  // Transport public option
+  transport_public: Truck,
+
   // Vehicle types - Custom PNG icons
   trottinette: trottinetteIcon,
   pickup: pickupIcon,

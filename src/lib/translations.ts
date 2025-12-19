@@ -11,6 +11,11 @@ type TranslationKey =
   | 'professionnels'
   | 'scolaire'
   | 'autres'
+  | 'transport_public'
+  | 'transport_means_question'
+  | 'transport_taxi'
+  | 'transport_nusers'
+  | 'transport_touristic'
   | 'vehicleType'
   | 'voiture'
   | 'camion'
@@ -71,6 +76,7 @@ type TranslationKey =
   | 'namePlaceholder'
   | 'clientPhone'
   | 'phonePlaceholder'
+  | 'phoneInvalid'
   | 'clientCity'
   | 'cityPlaceholder'
   | 'contactPreference'
@@ -105,6 +111,11 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     professionnels: 'تأمين المهنيين',
     scolaire: 'التأمين المدرسي',
     autres: 'تأمينات أخرى',
+    transport_public: 'تأمين النقل العمومي للمستخدمين',
+    transport_means_question: 'ما هي وسيلة النقل المستعملة؟',
+    transport_taxi: 'تاكسي',
+    transport_nusers: 'نقل المستخدمين',
+    transport_touristic: 'نقل سياحي',
     vehicleType: 'ما نوع المركبة؟',
     voiture: 'سيارة',
     camion: 'شاحنة',
@@ -166,6 +177,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     namePlaceholder: 'أدخل اسمك الكامل',
     clientPhone: 'ما رقم هاتفك؟',
     phonePlaceholder: 'أدخل رقم الهاتف',
+    phoneInvalid: '⚠️ الرقم  غير صحيح. المرجو إدخال رقم  صالح.',
     clientCity: 'في أي مدينة تقيم؟',
     cityPlaceholder: 'أدخل اسم المدينة',
     contactPreference: 'كيف تفضل أن نتواصل معك؟',
@@ -201,6 +213,11 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     professionnels: 'Assurance Professionnels',
     scolaire: 'Assurance Scolaire',
     autres: 'Autres Assurances',
+    transport_public: 'Assurance Transport Public des Utilisateurs',
+    transport_means_question: 'Quel moyen de transport utilisez-vous ?',
+    transport_taxi: 'Taxi',
+    transport_nusers: 'Transport Utilisateurs',
+    transport_touristic: 'Transport Touristique',
     vehicleType: 'Quel est le type de véhicule ?',
     voiture: 'Voiture',
     camion: 'Camion',
@@ -262,6 +279,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     namePlaceholder: 'Entrez votre nom complet',
     clientPhone: 'Quel est votre numéro de téléphone ?',
     phonePlaceholder: 'Entrez votre numéro',
+    phoneInvalid: '⚠️ Le numéro saisi n’est pas valide. Veuillez entrer un numéro valide.',
     clientCity: 'Dans quelle ville résidez-vous ?',
     cityPlaceholder: 'Entrez le nom de la ville',
     contactPreference: 'Comment préférez-vous être contacté ?',
@@ -294,6 +312,7 @@ export const t = (key: TranslationKey, lang: Language): string => {
 
 export const getInsuranceOptions = (lang: Language): ChatOption[] => [
   { id: 'automobile', label: t('automobile', lang) },
+  { id: 'transport_public', label: t('transport_public', lang) },
   { id: 'habitation', label: t('habitation', lang) },
   { id: 'sante', label: t('sante', lang) },
   { id: 'vie', label: t('vie', lang) },
@@ -301,6 +320,12 @@ export const getInsuranceOptions = (lang: Language): ChatOption[] => [
   { id: 'professionnels', label: t('professionnels', lang) },
   { id: 'scolaire', label: t('scolaire', lang) },
   { id: 'autres', label: t('autres', lang) },
+];
+
+export const getTransportMeansOptions = (lang: Language): ChatOption[] => [
+  { id: 'transport_taxi', label: t('transport_taxi', lang) },
+  { id: 'transport_nusers', label: t('transport_nusers', lang) },
+  { id: 'transport_touristic', label: t('transport_touristic', lang) },
 ];
 
 export const getVehicleOptions = (lang: Language): ChatOption[] => [

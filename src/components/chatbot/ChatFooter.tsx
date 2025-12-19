@@ -50,17 +50,21 @@ const ChatFooter = ({ language }: ChatFooterProps) => {
         {/* Logos & Description */}
         <div className="flex flex-col items-center text-center mb-8">
           <div className="flex items-center gap-4 mb-4">
-            <img 
-              src={logoAlAtlassia} 
-              alt="Al Atlassia Assurances" 
-              className="h-12 w-auto object-contain"
-            />
+            <div className="partner-wrapper">
+              <img
+                src={logoAlAtlassia}
+                alt="Al Atlassia Assurances"
+                className="partner-logo-equal"
+              />
+            </div>
             <div className="h-10 w-px bg-border" />
-            <img 
-              src={logoAtlantaSanad} 
-              alt="Atlanta Sanad" 
-              className="h-12 w-auto object-contain"
-            />
+            <div className="partner-wrapper">
+              <img
+                src={logoAtlantaSanad}
+                alt="Atlanta Sanad"
+                className="partner-logo-equal"
+              />
+            </div>
           </div>
           <p className={cn(
             "text-sm text-muted-foreground max-w-md",

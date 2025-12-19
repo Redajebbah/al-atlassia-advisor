@@ -58,11 +58,11 @@ const Header = () => {
           <div className="flex items-center justify-between gap-2 sm:gap-3 md:gap-6">
             {/* Left Logo */}
             <div className="flex-shrink-0">
-              <div className="bg-white p-1 sm:p-1.5 md:p-2 rounded-md md:rounded-lg shadow-md md:shadow-lg transform hover:scale-105 transition-transform duration-300">
+              <div className="partner-wrapper transform hover:scale-105 transition-transform duration-300">
                 <img
                   src={logoAlAtlassia}
                   alt="Al Atlassia Assurances"
-                  className="h-8 sm:h-10 md:h-12 w-auto object-contain"
+                  className="partner-logo-equal"
                 />
               </div>
             </div>
@@ -93,11 +93,11 @@ const Header = () => {
 
             {/* Right Logo */}
             <div className="flex-shrink-0">
-              <div className="bg-white p-1 sm:p-1.5 md:p-2 rounded-md md:rounded-lg shadow-md md:shadow-lg transform hover:scale-105 transition-transform duration-300">
+              <div className="partner-wrapper transform hover:scale-105 transition-transform duration-300">
                 <img
                   src={logoAtlantaSanad}
                   alt="Atlanta Sanad"
-                  className="h-8 sm:h-10 md:h-12 w-auto object-contain"
+                  className="partner-logo-equal"
                 />
               </div>
             </div>
@@ -150,12 +150,12 @@ const Header = () => {
             {/* Left Logo */}
             <button
               onClick={scrollToTop}
-              className="flex-shrink-0 bg-white p-1 sm:p-1.5 rounded-md sm:rounded-lg shadow-md sm:shadow-lg transform hover:scale-105 transition-transform duration-300"
+              className="flex-shrink-0 partner-wrapper transform hover:scale-105 transition-transform duration-300"
             >
               <img
                 src={logoAlAtlassia}
                 alt="Al Atlassia Assurances"
-                className="h-6 sm:h-7 md:h-8 w-auto object-contain"
+                className="partner-logo-equal"
               />
             </button>
 
@@ -192,11 +192,11 @@ const Header = () => {
             </nav>
 
             {/* Right Logo */}
-            <div className="flex-shrink-0 bg-white p-1 sm:p-1.5 rounded-md sm:rounded-lg shadow-md sm:shadow-lg transform hover:scale-105 transition-transform duration-300">
+            <div className="flex-shrink-0 partner-wrapper transform hover:scale-105 transition-transform duration-300">
               <img
                 src={logoAtlantaSanad}
                 alt="Atlanta Sanad"
-                className="h-6 sm:h-7 md:h-8 w-auto object-contain"
+                className="partner-logo-equal"
               />
             </div>
 

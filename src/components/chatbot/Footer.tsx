@@ -63,11 +63,13 @@ const Footer = ({ language }: FooterProps) => {
             {/* Column 1: Company */}
             <div className="space-y-4 animate-fade-in-up" style={{ animationDelay: '0ms' }}>
               <div className="flex items-center gap-3 animate-fade-in-up" style={{ animationDelay: '0ms' }}>
-                <img 
-                  className="w-16 h-16 bg-white rounded-lg p-2 shadow-lg" 
-                  src={logoAlAtlassia} 
-                  alt="Al Atlassia Assurances" 
-                />
+                <div className="partner-wrapper">
+                  <img
+                    className="partner-logo-equal"
+                    src={logoAlAtlassia}
+                    alt="Al Atlassia Assurances"
+                  />
+                </div>
                 <div>
                   <h3 className={cn("text-xl font-bold text-white", isRtl && "font-arabic")} dir={isRtl ? "rtl" : "ltr"}>
                     {isRtl ? 'الأطلسية للتأمينات' : 'Al Atlassia'}

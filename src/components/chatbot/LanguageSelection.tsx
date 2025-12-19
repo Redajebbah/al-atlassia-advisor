@@ -13,17 +13,21 @@ const LanguageSelection = ({ onSelect }: LanguageSelectionProps) => {
     <div className="min-h-screen gradient-hero flex flex-col items-center justify-center p-6">
       {/* Logos */}
       <div className="flex items-center gap-4 mb-8 animate-fade-in-up">
-        <img 
-          src={logoAlAtlassia} 
-          alt="Al Atlassia Assurances" 
-          className="h-14 md:h-16 w-auto object-contain"
-        />
+        <div className="partner-wrapper">
+          <img
+            src={logoAlAtlassia}
+            alt="Al Atlassia Assurances"
+            className="partner-logo-equal"
+          />
+        </div>
         <div className="h-12 w-px bg-border" />
-        <img 
-          src={logoAtlantaSanad} 
-          alt="Atlanta Sanad" 
-          className="h-14 md:h-16 w-auto object-contain"
-        />
+        <div className="partner-wrapper">
+          <img
+            src={logoAtlantaSanad}
+            alt="Atlanta Sanad"
+            className="partner-logo-equal"
+          />
+        </div>
       </div>
 
       <div className="text-center mb-10 animate-fade-in-up animation-delay-100">

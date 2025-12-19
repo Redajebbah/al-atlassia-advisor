@@ -20,11 +20,11 @@ const ChatHeader = ({ language }: ChatHeaderProps) => {
             {/* Left Section: Logos */}
             <div className="flex items-center gap-2 sm:gap-3 shrink-0">
               {/* Al Atlassia Logo */}
-              <div className="bg-white rounded px-2 py-1.5 sm:px-2.5 sm:py-2 shadow-sm">
-                <img 
-                  src={logoAlAtlassia} 
-                  alt="Al Atlassia Assurances" 
-                  className="h-8 sm:h-10 md:h-12 w-auto object-contain"
+              <div className="partner-wrapper">
+                <img
+                  src={logoAlAtlassia}
+                  alt="Al Atlassia Assurances"
+                  className="partner-logo-equal"
                 />
               </div>
               
@@ -32,11 +32,11 @@ const ChatHeader = ({ language }: ChatHeaderProps) => {
               <div className="h-10 sm:h-12 w-px bg-white/20" />
               
               {/* Atlanta Sanad Logo */}
-              <div className="bg-white rounded px-2 py-1.5 sm:px-2.5 sm:py-2 shadow-sm">
-                <img 
-                  src={logoAtlantaSanad} 
-                  alt="Atlanta Sanad" 
-                  className="h-7 sm:h-9 md:h-11 w-auto object-contain"
+              <div className="partner-wrapper">
+                <img
+                  src={logoAtlantaSanad}
+                  alt="Atlanta Sanad"
+                  className="partner-logo-equal"
                 />
               </div>
             </div>

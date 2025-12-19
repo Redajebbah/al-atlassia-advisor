@@ -30,6 +30,7 @@ import {
   getContactPreferenceOptions,
   getDayOptions,
   getHourOptions
+  ,getTransportMeansOptions
 } from '@/lib/translations';
 import { sendEmailNotification } from '@/lib/emailService';
 
@@ -175,6 +176,10 @@ export const useChatbot = (language: Language) => {
           addBotMessage(t('bureauInfo', language));
           break;
 
+        case 'transport_means':
+          addBotMessage(t('transport_means_question', language), getTransportMeansOptions(language));
+          break;
+
         case 'entreprises_activity':
           setInputMode('text', t('activityPlaceholder', language));
           addBotMessage(t('activityType', language));
@@ -282,6 +287,9 @@ export const useChatbot = (language: Language) => {
           case 'scolaire':
             processStep('scolaire_coverage');
             break;
+          case 'transport_public':
+            processStep('transport_means');
+            break;
           case 'autres':
             showTyping();
             setTimeout(() => {
@@ -357,6 +365,11 @@ export const useChatbot = (language: Language) => {
       case 'client_hour':
         setState(prev => ({ ...prev, clientInfo: { ...prev.clientInfo, preferredHour: optionId } }));
         processStep('confirmation');
+        break;
+
+      case 'transport_means':
+        setState(prev => ({ ...prev, insuranceData: { ...prev.insuranceData, transportMeans: optionId } }));
+        processStep('client_name');
         break;
     }
   }, [state.step, processStep, addUserMessage, addBotMessage, showTyping, language]);
