@@ -13,21 +13,25 @@ const LanguageSelection = ({ onSelect }: LanguageSelectionProps) => {
     <div className="fixed inset-0 z-50 gradient-hero flex items-center justify-center p-6 overflow-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
       <div className="w-full max-w-md" style={{ paddingTop: 'env(safe-area-inset-top, 1rem)', paddingBottom: 'env(safe-area-inset-bottom, 1rem)' }}>
       {/* Logos */}
-      <div className="flex items-center gap-4 mb-8 animate-fade-in-up flex-wrap justify-center">
-        <div className="partner-wrapper flex items-center justify-center">
-          <img
-            src={logoAlAtlassia}
-            alt="Al Atlassia Assurances"
-            className="partner-logo-equal w-20 sm:w-24 md:w-28 lg:w-32 h-auto object-contain"
-          />
+      <div className="flex items-center gap-4 mb-8 animate-fade-in-up flex-wrap justify-center mt-6">
+        <div className="flex items-center justify-center">
+          <div className="w-20 sm:w-24 md:w-28 lg:w-32 h-20 sm:h-24 md:h-28 lg:h-32 rounded-xl bg-white shadow-md flex items-center justify-center">
+            <img
+              src={logoAlAtlassia}
+              alt="Al Atlassia Assurances"
+              className="max-w-[72%] max-h-[72%] object-contain"
+            />
+          </div>
         </div>
         <div className="h-12 w-px bg-border" />
-        <div className="partner-wrapper flex items-center justify-center">
-          <img
-            src={logoAtlantaSanad}
-            alt="Atlanta Sanad"
-            className="partner-logo-equal w-20 sm:w-24 md:w-28 lg:w-32 h-auto object-contain"
-          />
+        <div className="flex items-center justify-center">
+          <div className="w-20 sm:w-24 md:w-28 lg:w-32 h-20 sm:h-24 md:h-28 lg:h-32 rounded-xl bg-white shadow-md flex items-center justify-center">
+            <img
+              src={logoAtlantaSanad}
+              alt="Atlanta Sanad"
+              className="max-w-[72%] max-h-[72%] object-contain"
+            />
+          </div>
         </div>
       </div>
 

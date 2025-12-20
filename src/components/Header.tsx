@@ -58,12 +58,14 @@ const Header = () => {
           <div className="flex items-center justify-between gap-2 sm:gap-3 md:gap-6">
             {/* Left Logo */}
             <div className="flex-shrink-0">
-              <div className="partner-wrapper transform hover:scale-105 transition-transform duration-300 flex items-center justify-center">
-                <img
-                  src={logoAlAtlassia}
-                  alt="Al Atlassia Assurances"
-                  className="partner-logo-equal w-16 sm:w-20 md:w-24 h-auto object-contain"
-                />
+              <div className="transform hover:scale-105 transition-transform duration-300 flex items-center justify-center">
+                <div className="w-12 sm:w-16 md:w-20 lg:w-24 h-12 sm:h-16 md:h-20 lg:h-24 rounded-lg bg-white shadow-sm flex items-center justify-center">
+                  <img
+                    src={logoAlAtlassia}
+                    alt="Al Atlassia Assurances"
+                    className="max-w-[80%] max-h-[80%] object-contain"
+                  />
+                </div>
               </div>
             </div>
 
@@ -93,12 +95,14 @@ const Header = () => {
 
             {/* Right Logo */}
             <div className="flex-shrink-0">
-              <div className="partner-wrapper transform hover:scale-105 transition-transform duration-300 flex items-center justify-center">
-                <img
-                  src={logoAtlantaSanad}
-                  alt="Atlanta Sanad"
-                  className="partner-logo-equal w-16 sm:w-20 md:w-24 h-auto object-contain"
-                />
+              <div className="transform hover:scale-105 transition-transform duration-300 flex items-center justify-center">
+                <div className="w-12 sm:w-16 md:w-20 lg:w-24 h-12 sm:h-16 md:h-20 lg:h-24 rounded-lg bg-white shadow-sm flex items-center justify-center">
+                  <img
+                    src={logoAtlantaSanad}
+                    alt="Atlanta Sanad"
+                    className="max-w-[80%] max-h-[80%] object-contain"
+                  />
+                </div>
               </div>
             </div>
 
@@ -150,13 +154,15 @@ const Header = () => {
             {/* Left Logo */}
             <button
               onClick={scrollToTop}
-              className="flex-shrink-0 partner-wrapper transform hover:scale-105 transition-transform duration-300 flex items-center justify-center"
+              className="flex-shrink-0 transform hover:scale-105 transition-transform duration-300 flex items-center justify-center"
             >
-              <img
-                src={logoAlAtlassia}
-                alt="Al Atlassia Assurances"
-                className="partner-logo-equal w-12 sm:w-16 md:w-20 h-auto object-contain"
-              />
+              <div className="w-10 sm:w-12 md:w-14 h-10 sm:h-12 md:h-14 rounded-lg bg-white shadow-sm flex items-center justify-center">
+                <img
+                  src={logoAlAtlassia}
+                  alt="Al Atlassia Assurances"
+                  className="max-w-[78%] max-h-[78%] object-contain"
+                />
+              </div>
             </button>
 
             {/* Center: Compact Navigation */}
@@ -192,12 +198,14 @@ const Header = () => {
             </nav>
 
             {/* Right Logo */}
-            <div className="flex-shrink-0 partner-wrapper transform hover:scale-105 transition-transform duration-300 flex items-center justify-center">
-              <img
-                src={logoAtlantaSanad}
-                alt="Atlanta Sanad"
-                className="partner-logo-equal w-12 sm:w-16 md:w-20 h-auto object-contain"
-              />
+            <div className="flex-shrink-0 transform hover:scale-105 transition-transform duration-300 flex items-center justify-center">
+              <div className="w-10 sm:w-12 md:w-14 h-10 sm:h-12 md:h-14 rounded-lg bg-white shadow-sm flex items-center justify-center">
+                <img
+                  src={logoAtlantaSanad}
+                  alt="Atlanta Sanad"
+                  className="max-w-[78%] max-h-[78%] object-contain"
+                />
+              </div>
             </div>
 
             {/* Mobile Menu Toggle */}
