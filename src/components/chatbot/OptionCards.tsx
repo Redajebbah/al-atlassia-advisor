@@ -139,7 +139,7 @@ const OptionCards = ({
       className={cn("w-full animate-fade-in-up", isRtl ? "font-arabic" : "")}
       dir={isRtl ? "rtl" : "ltr"}
     >
-      <div className={cn("grid gap-2", gridCols)}>
+      <div className={cn("grid gap-1.5", gridCols)}>
         {options.map((option, index) => {
           const isSelected = selected.includes(option.id);
           const isFeatured = featuredOptions.includes(option.id);
@@ -151,14 +151,14 @@ const OptionCards = ({
               className={cn(
                 isTimeSlot
                   ? [
-                      "min-h-0 h-10 px-3 sm:px-4 rounded-full border text-sm font-medium flex items-center justify-center transition-all duration-200",
+                      "min-h-0 h-9 px-2.5 sm:px-3 rounded-full border text-sm font-medium flex items-center justify-center transition-all duration-200",
                       "bg-white border-gray-200 text-primary",
                       "active:scale-95 animate-scale-in",
                       isSelected && "border-blue-600 bg-blue-50 text-blue-900 shadow-sm",
                       !isSelected && "hover:border-blue-300 hover:bg-blue-50",
                     ]
                   : [
-                      "relative min-h-[55px] touch-manipulation rounded-lg p-2 text-center border-2 transition-all duration-300 active:scale-95 animate-scale-in",
+                      "relative min-h-[48px] touch-manipulation rounded-lg p-1.5 text-center border-2 transition-all duration-300 active:scale-95 animate-scale-in",
                       isFeatured && !isSelected && "bg-gradient-to-br from-green-50 to-emerald-50 border-green-400 shadow-lg hover:shadow-xl hover:from-green-100 hover:to-emerald-100 hover:border-green-500 ring-2 ring-green-300 ring-opacity-50",
                       !isFeatured && !isSelected && "bg-white hover:shadow-md hover:border-blue-300 border-gray-200 shadow-sm",
                       isSelected && "border-blue-600 shadow-md bg-blue-50"
@@ -179,7 +179,7 @@ const OptionCards = ({
               )}
               {!isTimeSlot && getIcon(option.id) && (
                 <div className={cn(
-                  "flex items-center justify-center mx-auto mb-1 w-8 h-8 rounded-full bg-blue-50",
+                  "flex items-center justify-center mx-auto mb-1 w-7 h-7 rounded-full bg-blue-50",
                   isSelected && "bg-blue-100"
                 )}>
                   {getIcon(option.id)}
@@ -187,8 +187,8 @@ const OptionCards = ({
               )}
               <div className={cn(
                 isTimeSlot
-                  ? "text-base font-semibold text-primary"
-                  : "font-semibold text-primary text-[10px] sm:text-xs whitespace-pre-line",
+                  ? "text-sm font-semibold text-primary"
+                  : "font-semibold text-primary text-[9px] sm:text-[10px] whitespace-pre-line",
                 isRtl && "font-arabic"
               )}>{option.label}</div>
             </button>
@@ -199,7 +199,7 @@ const OptionCards = ({
       {multiSelect && selected.length > 0 && (
         <button
           onClick={handleConfirm}
-          className="mt-4 w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-full py-3 px-6 font-medium transition-all hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] shadow-md"
+          className="mt-3 w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-full py-2.5 px-4 font-medium transition-all hover:shadow-md hover:scale-[1.01] active:scale-[0.98] shadow-md"
         >
           {isRtl ? 'متابعة' : 'Continuer'}
         </button>

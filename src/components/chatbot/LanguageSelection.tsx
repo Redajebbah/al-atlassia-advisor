@@ -10,7 +10,7 @@ interface LanguageSelectionProps {
 
 const LanguageSelection = ({ onSelect }: LanguageSelectionProps) => {
   return (
-    <div className="min-h-screen gradient-hero flex flex-col items-center justify-center p-6">
+    <div className="fixed inset-0 z-50 gradient-hero flex flex-col items-center justify-center p-6">
       {/* Logos */}
       <div className="flex items-center gap-4 mb-8 animate-fade-in-up">
         <div className="partner-wrapper">
@@ -46,16 +46,16 @@ const LanguageSelection = ({ onSelect }: LanguageSelectionProps) => {
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-4 w-full max-w-md">
+      <div className="flex flex-col sm:flex-row gap-3 w-full max-w-md">
         <button
           onClick={() => onSelect('ar')}
           className={cn(
             "language-card flex-1 animate-fade-in-up animation-delay-200",
-            "group hover:border-primary/20 min-h-[140px]"
+            "group hover:border-primary/20 min-h-[120px]"
           )}
         >
-          <span className="text-4xl mb-2">🇲🇦</span>
-          <span className="text-xl font-bold text-foreground font-arabic">العربية</span>
+          <span className="text-3xl mb-2">🇲🇦</span>
+          <span className="text-lg font-bold text-foreground font-arabic">العربية</span>
           <span className="text-xs text-muted-foreground mt-1">Arabe</span>
         </button>
 
@@ -63,11 +63,11 @@ const LanguageSelection = ({ onSelect }: LanguageSelectionProps) => {
           onClick={() => onSelect('fr')}
           className={cn(
             "language-card flex-1 animate-fade-in-up animation-delay-300",
-            "group hover:border-primary/20 min-h-[140px]"
+            "group hover:border-primary/20 min-h-[120px]"
           )}
         >
-          <span className="text-4xl mb-2">🇫🇷</span>
-          <span className="text-xl font-bold text-foreground">Français</span>
+          <span className="text-3xl mb-2">🇫🇷</span>
+          <span className="text-lg font-bold text-foreground">Français</span>
           <span className="text-xs text-muted-foreground mt-1">French</span>
         </button>
       </div>

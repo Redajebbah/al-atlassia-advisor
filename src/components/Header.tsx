@@ -45,13 +45,13 @@ const Header = () => {
 
   return (
     <header
-      className="sticky top-0 z-50 transition-all duration-500 ease-in-out"
+      className="sticky top-0 z-50 transition-all duration-400 ease-in-out"
       style={{
         background: isCompact ? '#1e3a8a' : 'linear-gradient(to bottom, #1e3a8a, #1e40af, #1e3a8a)',
-        boxShadow: isCompact ? '0 10px 40px rgba(0,0,0,0.3)' : '0 2px 10px rgba(0,0,0,0.1)',
+        boxShadow: isCompact ? '0 8px 28px rgba(0,0,0,0.28)' : '0 1px 8px rgba(0,0,0,0.08)',
       }}
     >
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 transition-all duration-500 ease-in-out" style={{ paddingTop: isCompact ? '0.5rem' : '0.75rem', paddingBottom: isCompact ? '0.5rem' : '0.75rem' }}>
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 transition-all duration-300 ease-in-out" style={{ paddingTop: isCompact ? '0.25rem' : '0.5rem', paddingBottom: isCompact ? '0.25rem' : '0.5rem' }}>
         {!isCompact ? (
           /* FULL STATE */
           <div className="animate-in fade-in duration-500">
@@ -71,21 +71,21 @@ const Header = () => {
             <div className="flex-1 text-center px-1 sm:px-2 min-w-0">
               <div className="space-y-0.5 sm:space-y-1">
                 <div className="flex flex-col items-center gap-0.5">
-                  <h1 className="text-sm sm:text-lg md:text-2xl lg:text-3xl font-bold text-white leading-tight font-arabic">
+                  <h1 className="text-sm sm:text-base md:text-xl lg:text-2xl font-bold text-white leading-tight font-arabic">
                     الأطلسية للتأمينات
                   </h1>
-                  <h2 className="text-xs sm:text-sm md:text-xl lg:text-2xl font-semibold text-blue-100">
+                  <h2 className="text-xs sm:text-xs md:text-lg lg:text-xl font-semibold text-blue-100">
                     Al Atlassia Assurances
                   </h2>
                   {/* Slogan update (FR/AR) */}
-                  <span className="block text-[10px] sm:text-xs md:text-sm text-blue-200 font-arabic mt-1">
+                  <span className="block text-[9px] sm:text-[10px] md:text-[11px] text-blue-200 font-arabic mt-1">
                     طريقة جديدة في التأمين
                   </span>
-                  <span className="block text-[10px] sm:text-xs md:text-sm text-blue-200 mt-1">
+                  <span className="block text-[9px] sm:text-[10px] md:text-[11px] text-blue-200 mt-1">
                     Une nouvelle approche de l’assurance
                   </span>
                 </div>
-                <p className="text-[8px] sm:text-[10px] md:text-xs text-blue-300 leading-tight font-arabic px-1">
+                <p className="text-[8px] sm:text-[9px] md:text-xs text-blue-300 leading-tight font-arabic px-1">
                   وسيط تأمين خاضع لمقتضيات القانون رقم 17.99 المتعلق بمدونة التأمينات
                 </p>
               </div>
