@@ -10,8 +10,8 @@ interface LanguageSelectionProps {
 
 const LanguageSelection = ({ onSelect }: LanguageSelectionProps) => {
   return (
-    <div className="fixed inset-0 z-50 gradient-hero flex items-center justify-center p-6 overflow-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
-      <div className="w-full max-w-md" style={{ paddingTop: 'env(safe-area-inset-top, 1rem)', paddingBottom: 'env(safe-area-inset-bottom, 1rem)' }}>
+    <div className="fixed inset-0 z-50 gradient-hero flex items-start justify-center pt-10 pb-6 overflow-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
+      <div className="w-full max-w-md px-4" style={{ paddingTop: 'env(safe-area-inset-top, 1.25rem)', paddingBottom: 'env(safe-area-inset-bottom, 1rem)' }}>
       {/* Logos */}
       <div className="flex items-center gap-4 mb-8 animate-fade-in-up flex-wrap justify-center mt-6">
         <div className="flex items-center justify-center">
