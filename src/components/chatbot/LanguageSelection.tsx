@@ -1,5 +1,6 @@
 import { Language } from '@/types/chatbot';
 import { cn } from '@/lib/utils';
+import { t } from '@/lib/translations';
 import logoAlAtlassia from '@/assets/logo-al-atlassia.jpg';
 import logoAtlantaSanad from '@/assets/logo-atlanta-sanad.png';
 import { Globe } from 'lucide-react';
@@ -12,6 +13,20 @@ const LanguageSelection = ({ onSelect }: LanguageSelectionProps) => {
   return (
     <div className="fixed inset-0 z-50 gradient-hero flex items-start justify-center pt-6 pb-6 overflow-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
       <div className="w-full max-w-md px-4" style={{ paddingTop: 'env(safe-area-inset-top, 0.75rem)', paddingBottom: 'env(safe-area-inset-bottom, 0.75rem)' }}>
+      {/* Chatbot-style welcome bubble - bilingual (FR + AR) */}
+      <div className="animate-fade-in-up mb-6">
+        <div className="relative max-w-xl mx-auto">
+          <div className="bg-card border border-border rounded-3xl px-5 py-4 shadow-md text-foreground">
+            <p className="text-base text-muted-foreground mb-1">{t('welcome', 'fr')}</p>
+            <p className="text-base font-arabic text-foreground" dir="rtl">{t('welcome', 'ar')}</p>
+          </div>
+          <div className="absolute -right-3 -top-3">
+            <div className="w-12 h-12 rounded-full bg-primary shadow-lg flex items-center justify-center text-primary-foreground">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6"><path d="M12 3C7.03 3 3 6.69 3 11c0 2.4 1.27 4.56 3.34 6.03V21l3.05-1.62C11.02 20.52 11.99 21 13 21c4.97 0 9-3.69 9-8s-4.03-9-9-9z"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
       {/* Logos */}
       <div className="flex items-center gap-4 mb-6 animate-fade-in-up flex-wrap justify-center mt-4">
         <div className="flex items-center justify-center">

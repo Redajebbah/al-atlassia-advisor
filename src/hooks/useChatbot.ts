@@ -447,9 +447,13 @@ export const useChatbot = (language: Language) => {
 
   const initialize = useCallback(() => {
     if (state.messages.length === 0) {
-      processStep('welcome');
+      // Skip the in-chat welcome (we display it on the language selection screen)
+      // and start directly at the insurance selection options so the flow
+      // continues immediately after the user picks a language.
+      setState(prev => ({ ...prev, step: 'select_insurance' }));
+      addBotMessage(t('selectInsurance', language), getInsuranceOptions(language));
     }
-  }, [state.messages.length, processStep]);
+  }, [state.messages.length, addBotMessage, language]);
 
   return {
     state,
