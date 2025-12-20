@@ -37,11 +37,18 @@ export default async function handler(req: any, res: any) {
       html,
     } as any;
 
-    await sgMail.send(msg);
+    const response = await sgMail.send(msg);
 
-    res.status(200).json({ ok: true });
+    // SendGrid returns an array of responses; include status for debugging
+    res.status(200).json({ ok: true, sgStatus: response?.[0]?.statusCode || null });
   } catch (err: any) {
-    console.error('SendGrid send error:', err?.response || err);
-    res.status(500).json({ error: 'Failed to send email', details: err?.message || err });
+    // Log detailed error server-side
+    console.error('SendGrid send error:', err);
+
+    // Try to extract structured SendGrid error info if present
+    const sgDetails = err?.response?.body || err?.message || err;
+
+    // Return non-sensitive diagnostic info to client for debugging
+    res.status(500).json({ error: 'Failed to send email', details: sgDetails });
   }
 }
