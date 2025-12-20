@@ -326,31 +326,40 @@ export const sendEmailNotification = async (emailData: EmailData): Promise<boole
     }
 
     try {
+      const trimmedKey = (WEB3FORMS_KEY || '').trim();
+      const payload = {
+        access_key: trimmedKey,
+        to_email: RECEIVING_EMAIL,
+        subject: "Nouvelle demande d'assurance - Atlas Assurances",
+        message: emailContent,
+      };
+
+      // Log payload without exposing full access key (show trimmed)
+      const maskedKey = trimmedKey ? `${trimmedKey.slice(0, 4)}...${trimmedKey.slice(-4)}` : 'MISSING';
+      console.info('Sending Web3Forms request', { access_key: maskedKey, to_email: RECEIVING_EMAIL, subject: payload.subject });
+
       const resp = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          access_key: WEB3FORMS_KEY,
-          to_email: RECEIVING_EMAIL,
-          subject: "Nouvelle demande d'assurance - Atlas Assurances",
-          message: emailContent,
-        }),
+        body: JSON.stringify(payload),
       });
 
+      const respText = await resp.text().catch(() => '');
+      let respJson: any = null;
+      try { respJson = respText ? JSON.parse(respText) : null; } catch (e) { /* not JSON */ }
+
       if (!resp.ok) {
-        const err = await resp.json().catch(() => ({}));
-        console.error('Web3Forms error', err);
+        console.error('Web3Forms error response', { status: resp.status, statusText: resp.statusText, body: respJson || respText });
         return false;
       }
 
-      const json = await resp.json().catch(() => ({}));
       // Web3Forms returns { success: true } on success
-      if (json && (json.success === true || json.success === 'true')) {
+      if (respJson && (respJson.success === true || respJson.success === 'true')) {
         console.log('Email sent successfully via Web3Forms');
         return true;
       }
 
-      console.error('Web3Forms response indicates failure', json);
+      console.error('Web3Forms response indicates failure', respJson || respText);
       return false;
     } catch (err) {
       console.error('Error sending via Web3Forms:', err);
