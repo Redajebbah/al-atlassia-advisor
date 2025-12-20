@@ -49,11 +49,14 @@ const LanguageSelection = ({ onSelect }: LanguageSelectionProps) => {
         </p>
       </div>
 
-      {/* Language icon */}
-      <div className="mb-4 animate-fade-in-up animation-delay-200">
-        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+      {/* Language icon + hint (inline) */}
+      <div className="mb-4 animate-fade-in-up animation-delay-200 flex items-center gap-3">
+        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
           <Globe className="w-6 h-6 text-primary" />
         </div>
+        <p className="text-sm sm:text-base text-muted-foreground">
+          Choisissez votre langue • اختر لغتك
+        </p>
       </div>
 
       <div className="grid grid-cols-2 gap-3 w-full">
@@ -82,9 +85,7 @@ const LanguageSelection = ({ onSelect }: LanguageSelectionProps) => {
         </button>
       </div>
 
-      <p className="mt-6 text-xs text-muted-foreground animate-fade-in-up animation-delay-400">
-        Choisissez votre langue • اختر لغتك
-      </p>
+      
       </div>
     </div>
   );
