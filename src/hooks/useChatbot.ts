@@ -116,8 +116,8 @@ export const useChatbot = (language: Language) => {
       
       switch (newStep) {
         case 'welcome':
-          // Greeting then follow-up after a 4s pause (with a short typing indicator)
-          const BOT_PAUSE_MS = 4000; // total wait between messages
+          // Greeting then follow-up: 5s for French, 4s for other languages
+          const BOT_PAUSE_MS = language === 'fr' ? 5000 : 4000;
           const TYPING_MS = 500; // typing indicator duration before the next message
 
           addBotMessage(t('welcome', language));
