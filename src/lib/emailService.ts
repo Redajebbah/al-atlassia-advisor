@@ -6,6 +6,8 @@ import { InsuranceType, ClientInfo, Language } from '@/types/chatbot';
 const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || '';
 const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || '';
 const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '';
+// Receiving email for recap of demandes - set via Vite env `VITE_RECEIVING_EMAIL`
+const RECEIVING_EMAIL = import.meta.env.VITE_RECEIVING_EMAIL || 'aalatlassia@gmail.com';
 
 interface EmailData {
   selectedInsurance: InsuranceType;
@@ -129,51 +131,6 @@ const formatContactPreference = (preference: string, lang: Language): string => 
     appel: { fr: 'Appel téléphonique', ar: 'مكالمة هاتفية' },
   };
   return prefs[preference]?.[lang] || preference;
-};
-
-export const sendEmailNotification = async (emailData: EmailData): Promise<boolean> => {
-  try {
-    const { selectedInsurance, insuranceData, clientInfo, language } = emailData;
-
-    // Format the email template parameters
-    const templateParams = {
-      // Insurance Information
-      insurance_type: translateInsuranceType(selectedInsurance, language),
-      insurance_details: formatInsuranceDetails(selectedInsurance, insuranceData, language),
-      
-      // Client Information
-      client_name: clientInfo.fullName || 'N/A',
-      client_phone: clientInfo.phone || 'N/A',
-      client_city: clientInfo.city || 'N/A',
-      contact_preference: formatContactPreference(clientInfo.contactPreference, language),
-      preferred_day: clientInfo.preferredDay || 'N/A',
-      preferred_hour: clientInfo.preferredHour || 'N/A',
-      
-      // Additional Info
-      language: language === 'fr' ? 'Français' : 'العربية',
-      date: new Date().toLocaleDateString('fr-FR', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-      }),
-    };
-
-    // Send email using EmailJS
-    await emailjs.send(
-      EMAILJS_SERVICE_ID,
-      EMAILJS_TEMPLATE_ID,
-      templateParams,
-      EMAILJS_PUBLIC_KEY
-    );
-
-    console.log('Email sent successfully');
-    return true;
-  } catch (error) {
-    console.error('Error sending email:', error);
-    return false;
-  }
 };
 
 // Alternative: Format as HTML email body for direct Gmail
@@ -308,3 +265,98 @@ export const generateEmailHTML = (emailData: EmailData): string => {
 </html>
   `.trim();
 };
+
+export const sendEmailNotification = async (emailData: EmailData): Promise<boolean> => {
+  try {
+    const { selectedInsurance, insuranceData, clientInfo, language } = emailData;
+
+    // Prepare a nicely formatted time string
+    const timeString = new Date().toLocaleString('fr-FR', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    });
+
+    // HTML message for template (uses the existing generator)
+    const htmlMessage = generateEmailHTML(emailData);
+
+    // Format the email template parameters
+    const templateParams = {
+      // Insurance Information
+      insurance_type: translateInsuranceType(selectedInsurance, language),
+      insurance_details: formatInsuranceDetails(selectedInsurance, insuranceData, language),
+      
+      // Client Information
+      client_name: clientInfo.fullName || 'N/A',
+      client_phone: clientInfo.phone || 'N/A',
+      client_city: clientInfo.city || 'N/A',
+      contact_preference: formatContactPreference(clientInfo.contactPreference, language),
+      preferred_day: clientInfo.preferredDay || 'N/A',
+      preferred_hour: clientInfo.preferredHour || 'N/A',
+      
+      // Additional Info
+      language: language === 'fr' ? 'Français' : 'العربية',
+      date: new Date().toLocaleDateString('fr-FR', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      }),
+      // Receiving address for the recap (used by EmailJS template)
+      receiver_email: RECEIVING_EMAIL,
+      to_email: RECEIVING_EMAIL,
+      // Additional template variables matching your EmailJS template
+      name: clientInfo.fullName || 'N/A',
+      message: htmlMessage,
+      time: timeString,
+      subject: language === 'fr' ? "Nouvelle demande d'assurance - Chatbot Al Atlassia" : 'طلب تأمين جديد - Chatbot Al Atlassia',
+    };
+
+    // If EmailJS client credentials are provided, use EmailJS (client-side)
+    if (EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_ID && EMAILJS_PUBLIC_KEY) {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        templateParams,
+        EMAILJS_PUBLIC_KEY
+      );
+
+      console.log('Email sent successfully via EmailJS');
+      return true;
+    }
+
+    // Fallback: POST to serverless SendGrid endpoint
+    try {
+      const resp = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          subject: templateParams.subject,
+          html: templateParams.message,
+          text: `${templateParams.insurance_type}\n\n${templateParams.insurance_details}\n\n${templateParams.client_name} - ${templateParams.client_phone}`,
+          to: templateParams.to_email,
+        }),
+      });
+
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => ({}));
+        console.error('SendGrid endpoint error', err);
+        return false;
+      }
+
+      console.log('Email sent successfully via SendGrid endpoint');
+      return true;
+    } catch (err) {
+      console.error('Error sending via SendGrid endpoint:', err);
+      return false;
+    }
+  } catch (error) {
+    console.error('Error sending email:', error);
+    return false;
+  }
+};
+
