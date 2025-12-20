@@ -116,14 +116,18 @@ export const useChatbot = (language: Language) => {
       
       switch (newStep) {
         case 'welcome':
+          // Greeting then follow-up after a 4s pause (with a short typing indicator)
+          const BOT_PAUSE_MS = 4000; // total wait between messages
+          const TYPING_MS = 500; // typing indicator duration before the next message
+
           addBotMessage(t('welcome', language));
           setTimeout(() => {
             showTyping();
             setTimeout(() => {
               addBotMessage(t('selectInsurance', language), getInsuranceOptions(language));
               setState(prev => ({ ...prev, step: 'select_insurance' }));
-            }, 800);
-          }, 500);
+            }, TYPING_MS);
+          }, BOT_PAUSE_MS - TYPING_MS);
           break;
 
         case 'automobile_vehicle':
