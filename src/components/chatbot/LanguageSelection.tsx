@@ -31,12 +31,15 @@ const LanguageSelection = ({ onSelect }: LanguageSelectionProps) => {
         </div>
       </div>
 
-      <div className="text-center mb-10 animate-fade-in-up animation-delay-100">
+      <div className="text-center mb-8 animate-fade-in-up animation-delay-100">
         <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
           Al Atlassia Assurances
         </h1>
         <p className="text-lg text-muted-foreground font-arabic">
           الأطلسية للتأمينات
+        </p>
+        <p className="mt-2 text-[13px] sm:text-sm md:text-sm text-muted-foreground font-arabic px-4 leading-tight max-w-xl mx-auto">
+          وسيط تأمين خاضع لمقتضيات القانون رقم 17.99 المتعلق بمدونة التأمينات
         </p>
       </div>
 
