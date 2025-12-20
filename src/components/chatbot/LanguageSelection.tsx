@@ -10,7 +10,8 @@ interface LanguageSelectionProps {
 
 const LanguageSelection = ({ onSelect }: LanguageSelectionProps) => {
   return (
-    <div className="fixed inset-0 z-50 gradient-hero flex flex-col items-center justify-center p-6">
+    <div className="fixed inset-0 z-50 gradient-hero flex items-center justify-center p-6 overflow-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
+      <div className="w-full max-w-md" style={{ paddingTop: 'env(safe-area-inset-top, 1rem)', paddingBottom: 'env(safe-area-inset-bottom, 1rem)' }}>
       {/* Logos */}
       <div className="flex items-center gap-4 mb-8 animate-fade-in-up">
         <div className="partner-wrapper">
@@ -72,9 +73,10 @@ const LanguageSelection = ({ onSelect }: LanguageSelectionProps) => {
         </button>
       </div>
 
-      <p className="mt-8 text-xs text-muted-foreground animate-fade-in-up animation-delay-400">
+      <p className="mt-6 text-xs text-muted-foreground animate-fade-in-up animation-delay-400">
         Choisissez votre langue • اختر لغتك
       </p>
+      </div>
     </div>
   );
 };
