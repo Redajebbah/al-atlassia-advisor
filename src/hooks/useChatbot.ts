@@ -145,8 +145,13 @@ export const useChatbot = (language: Language) => {
         case 'habitation_value':
           setInputMode('number', t('valuePlaceholder', language));
           addBotMessage(t('housingValue', language));
+          // Keep the step set to 'habitation_value' so the user's numeric input
+          // is handled by the corresponding input handler. Previously the code
+          // advanced the step to 'habitation_furniture_value' immediately which
+          // caused the user's response to not match any input case and blocked
+          // the flow.
           setTimeout(() => {
-            setState(prev => ({ ...prev, step: 'habitation_furniture_value' }));
+            setState(prev => ({ ...prev, step: 'habitation_value' }));
           }, 500);
           break;
 
@@ -242,13 +247,21 @@ export const useChatbot = (language: Language) => {
 
         case 'confirmation':
           addBotMessage(t('confirmation', language));
-          
-          // Send email notification
-          if (state.selectedInsurance && state.clientInfo.fullName) {
+
+          // Build a clientInfo object that prefers any data passed into
+          // processStep (e.g. preferredHour) — this avoids a race where the
+          // local state hasn't yet reflected the latest selection.
+          const clientInfoForEmail: ClientInfo = {
+            ...(state.clientInfo as ClientInfo),
+            ...(data && data.preferredHour ? { preferredHour: data.preferredHour } : {}),
+          } as ClientInfo;
+
+          // Send email notification using the merged clientInfo
+          if (state.selectedInsurance && clientInfoForEmail.fullName) {
             sendEmailNotification({
               selectedInsurance: state.selectedInsurance,
               insuranceData: state.insuranceData,
-              clientInfo: state.clientInfo as ClientInfo,
+              clientInfo: clientInfoForEmail,
               language,
             }).then((success) => {
               if (success) {
@@ -258,6 +271,7 @@ export const useChatbot = (language: Language) => {
               }
             });
           }
+
           break;
       }
     }, 600);
@@ -368,7 +382,10 @@ export const useChatbot = (language: Language) => {
 
       case 'client_hour':
         setState(prev => ({ ...prev, clientInfo: { ...prev.clientInfo, preferredHour: optionId } }));
-        processStep('confirmation');
+        // Pass the selected hour along to the confirmation step so the
+        // sendEmailNotification uses the freshly-selected value instead
+        // of relying on state which may not have been updated yet.
+        processStep('confirmation', { preferredHour: optionId });
         break;
 
       case 'transport_means':

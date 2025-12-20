@@ -22,10 +22,10 @@ const ChatInput = ({ onSubmit, language, placeholder, type = 'text' }: ChatInput
     const trimmed = value.trim();
     if (!trimmed) return;
 
-    if (type === 'phone') {
-      // Validate Moroccan phone number on submit
+      if (type === 'phone') {
+      // Validate Moroccan phone number on submit — allow prefixes 05, 06, 07 and +2125/6/7
       const normalized = trimmed.replace(/[\s-]/g, '');
-      const valid = /^(?:\+212[67]\d{8}|0[67]\d{8})$/.test(normalized);
+      const valid = /^(?:\+212[567]\d{8}|0[567]\d{8})$/.test(normalized);
         if (!valid) {
         setTouched(true);
         setError(t('phoneInvalid' as any, language));
@@ -55,9 +55,9 @@ const ChatInput = ({ onSubmit, language, placeholder, type = 'text' }: ChatInput
             const v = e.target.value;
             setValue(v);
             // live clear of error if becomes valid; do not block typing
-            if (type === 'phone' && (touched || error)) {
+              if (type === 'phone' && (touched || error)) {
               const normalized = v.replace(/[\s-]/g, '');
-              const valid = /^(?:\+212[67]\d{8}|0[67]\d{8})$/.test(normalized);
+              const valid = /^(?:\+212[567]\d{8}|0[567]\d{8})$/.test(normalized);
               if (valid) {
                 setError('');
               }
@@ -76,10 +76,10 @@ const ChatInput = ({ onSubmit, language, placeholder, type = 'text' }: ChatInput
           autoCapitalize="off"
           spellCheck="false"
           onBlur={() => {
-            if (type === 'phone') {
+              if (type === 'phone') {
               setTouched(true);
               const normalized = value.trim().replace(/[\s-]/g, '');
-              const valid = /^(?:\+212[67]\d{8}|0[67]\d{8})$/.test(normalized);
+              const valid = /^(?:\+212[567]\d{8}|0[567]\d{8})$/.test(normalized);
               if (!valid && value.trim() !== '') {
                 setError(t('phoneInvalid' as any, language));
               } else {

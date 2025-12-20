@@ -1,13 +1,15 @@
-import emailjs from '@emailjs/browser';
 import { InsuranceType, ClientInfo, Language } from '@/types/chatbot';
+import { t, getHourOptions } from '@/lib/translations';
 
-// EmailJS Configuration
-// Get your credentials from https://www.emailjs.com/
+// Email configuration
+// EmailJS credentials (kept for compatibility but disabled)
 const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || '';
 const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || '';
 const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '';
-// Receiving email for recap of demandes - set via Vite env `VITE_RECEIVING_EMAIL`
+// Receiving email for recap of demandes - default
 const RECEIVING_EMAIL = import.meta.env.VITE_RECEIVING_EMAIL || 'aalatlassia@gmail.com';
+// Web3Forms API key (from Vite env)
+const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY || '';
 
 interface EmailData {
   selectedInsurance: InsuranceType;
@@ -43,7 +45,8 @@ const formatInsuranceDetails = (
   switch (type) {
     case 'automobile':
       if (data.vehicleType) {
-        details.push(`${lang === 'fr' ? 'Type de véhicule' : 'نوع المركبة'}: ${data.vehicleType}`);
+        const vehicleLabel = t(data.vehicleType as any, lang) || data.vehicleType;
+        details.push(`${lang === 'fr' ? 'Type de véhicule' : 'نوع المركبة'}: ${vehicleLabel}`);
       }
       break;
 
@@ -89,8 +92,9 @@ const formatInsuranceDetails = (
         details.push(`${lang === 'fr' ? 'Type d\'activité' : 'نوع النشاط'}: ${data.activityType}`);
       }
       if (data.insuranceTypes && data.insuranceTypes.length > 0) {
+        const mapped = data.insuranceTypes.map((id: string) => t(id as any, lang) || id);
         details.push(
-          `${lang === 'fr' ? 'Types d\'assurance' : 'أنواع التأمين'}: ${data.insuranceTypes.join(', ')}`
+          `${lang === 'fr' ? 'Types d\'assurance' : 'أنواع التأمين'}: ${mapped.join(', ')}`
         );
       }
       break;
@@ -105,8 +109,9 @@ const formatInsuranceDetails = (
 
     case 'scolaire':
       if (data.coverageTypes && data.coverageTypes.length > 0) {
+        const mapped = data.coverageTypes.map((id: string) => t(id as any, lang) || id);
         details.push(
-          `${lang === 'fr' ? 'Types de couverture' : 'أنواع التغطية'}: ${data.coverageTypes.join(', ')}`
+          `${lang === 'fr' ? 'Types de couverture' : 'أنواع التغطية'}: ${mapped.join(', ')}`
         );
       }
       if (data.institutionName) {
@@ -116,7 +121,8 @@ const formatInsuranceDetails = (
 
     case 'transport_public':
       if (data.transportMeans) {
-        details.push(`${lang === 'fr' ? 'Moyen de transport' : 'وسيلة النقل'}: ${data.transportMeans}`);
+        const transportLabel = t(data.transportMeans as any, lang) || data.transportMeans;
+        details.push(`${lang === 'fr' ? 'Moyen de transport' : 'وسيلة النقل'}: ${transportLabel}`);
       }
       break;
   }
@@ -136,134 +142,77 @@ const formatContactPreference = (preference: string, lang: Language): string => 
 // Alternative: Format as HTML email body for direct Gmail
 export const generateEmailHTML = (emailData: EmailData): string => {
   const { selectedInsurance, insuranceData, clientInfo, language } = emailData;
-  
+  // Build a custom HTML layout matching the requested template
+  const dateString = new Date().toLocaleString('fr-FR', {
+    year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'
+  });
+
+  const langLabel = language === 'fr' ? 'Français (FR)' : 'العربية (AR)';
+
   return `
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
-      color: #333;
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-    .header {
-      background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-      color: white;
-      padding: 30px;
-      text-align: center;
-      border-radius: 10px 10px 0 0;
-    }
-    .content {
-      background: #f9fafb;
-      padding: 30px;
-      border-radius: 0 0 10px 10px;
-    }
-    .section {
-      background: white;
-      padding: 20px;
-      margin-bottom: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    .section-title {
-      color: #1e40af;
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 15px;
-      padding-bottom: 10px;
-      border-bottom: 2px solid #3b82f6;
-    }
-    .info-row {
-      display: flex;
-      padding: 8px 0;
-      border-bottom: 1px solid #e5e7eb;
-    }
-    .info-row:last-child {
-      border-bottom: none;
-    }
-    .info-label {
-      font-weight: bold;
-      min-width: 180px;
-      color: #4b5563;
-    }
-    .info-value {
-      color: #111827;
-    }
-    .footer {
-      text-align: center;
-      padding: 20px;
-      color: #6b7280;
-      font-size: 12px;
-    }
+    body { font-family: Arial, Helvetica, sans-serif; color: #111827; background: #ffffff; margin:0; padding:20px; }
+    .container { max-width:800px; margin:0 auto; }
+    .header { text-align:center; background: #16325c; color: #fff; padding:18px; border-radius:6px; }
+    h1 { margin:0; font-size:24px; }
+    .subtitle { margin-top:6px; color:#cfe0ff; }
+    .section { margin-top:18px; }
+    .section-title { font-size:18px; margin-bottom:8px; color:#0b3b6f; }
+    .muted { color:#374151; }
+    pre { white-space: pre-wrap; font-family: inherit; }
+    .footer { margin-top:18px; color:#6b7280; font-size:12px; }
   </style>
 </head>
 <body>
-  <div class="header">
-    <h1>Atlas Assurances</h1>
-    <p>${language === 'fr' ? 'Nouvelle demande d\'assurance via chatbot' : 'طلب تأمين جديد عبر الشات بوت'}</p>
-  </div>
-  
-  <div class="content">
+  <div class="container">
+    <div class="header">
+      <h1>Atlas Assurances</h1>
+      <div class="subtitle">Nouvelle demande d'assurance via chatbot</div>
+    </div>
+
     <div class="section">
-      <div class="section-title">📋 ${language === 'fr' ? 'Type d\'Assurance' : 'نوع التأمين'}</div>
-      <div class="info-row">
-        <div class="info-value" style="font-size: 16px; font-weight: bold;">
-          ${translateInsuranceType(selectedInsurance, language)}
-        </div>
+      <div class="section-title">📋 Type d'Assurance</div>
+      <div class="muted">${translateInsuranceType(selectedInsurance, language)}</div>
+      <div style="margin-top:8px;font-size:13px;">Langue sélectionnée: ${langLabel}</div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">📝 Détails de la demande</div>
+      <div class="muted">
+        ${insuranceData.activityType ? `نشاط الشركة: ${insuranceData.activityType}<br/><br/>` : ''}
+        ${formatInsuranceDetails(selectedInsurance, insuranceData, language).split('\n').map(line => line ? `${line}<br/>` : '').join('')}
       </div>
     </div>
 
     <div class="section">
-      <div class="section-title">📝 ${language === 'fr' ? 'Détails de la demande' : 'تفاصيل الطلب'}</div>
-      <div class="info-value" style="white-space: pre-line;">
-        ${formatInsuranceDetails(selectedInsurance, insuranceData, language)}
-      </div>
+      <div class="section-title">👤 Informations Client</div>
+      <div class="muted">Nom complet: ${clientInfo.fullName || 'N/A'}</div>
+      <div class="muted" style="margin-top:8px;">Téléphone: ${clientInfo.phone || 'N/A'}</div>
+      <div class="muted" style="margin-top:8px;">Ville: ${clientInfo.city || 'N/A'}</div>
+      <div class="muted" style="margin-top:8px;">Moyen de contact préféré: ${formatContactPreference(clientInfo.contactPreference, language)}</div>
+      <div class="muted" style="margin-top:8px;">اليوم المفضل للتواصل: ${clientInfo.preferredDay ? t(clientInfo.preferredDay as any, language) : 'N/A'}</div>
+      <div class="muted" style="margin-top:8px;">الساعة المفضلة للتواصل: ${(() => {
+        const ph = clientInfo.preferredHour;
+        if (!ph) return 'N/A';
+        const found = getHourOptions(language).find(h => h.id === ph);
+        return found ? found.label : ph;
+      })()}</div>
     </div>
 
     <div class="section">
-      <div class="section-title">👤 ${language === 'fr' ? 'Informations Client' : 'معلومات العميل'}</div>
-      <div class="info-row">
-        <div class="info-label">${language === 'fr' ? 'Nom complet:' : 'الاسم الكامل:'}</div>
-        <div class="info-value">${clientInfo.fullName || 'N/A'}</div>
-      </div>
-      <div class="info-row">
-        <div class="info-label">${language === 'fr' ? 'Téléphone:' : 'الهاتف:'}</div>
-        <div class="info-value">${clientInfo.phone || 'N/A'}</div>
-      </div>
-      <div class="info-row">
-        <div class="info-label">${language === 'fr' ? 'Ville:' : 'المدينة:'}</div>
-        <div class="info-value">${clientInfo.city || 'N/A'}</div>
-      </div>
-      <div class="info-row">
-        <div class="info-label">${language === 'fr' ? 'Moyen de contact préféré:' : 'وسيلة الاتصال المفضلة:'}</div>
-        <div class="info-value">${formatContactPreference(clientInfo.contactPreference, language)}</div>
-      </div>
-      <div class="info-row">
-        <div class="info-label">${language === 'fr' ? 'Jour préféré pour contact:' : 'اليوم المفضل للتواصل:'}</div>
-        <div class="info-value">${clientInfo.preferredDay || 'N/A'}</div>
-      </div>
-      <div class="info-row">
-        <div class="info-label">${language === 'fr' ? 'Heure préférée:' : 'الوقت المفضل:'}</div>
-        <div class="info-value">${clientInfo.preferredHour || 'N/A'}</div>
-      </div>
+      <div class="muted">⏰ Date de demande: ${dateString}</div>
     </div>
-  </div>
 
-  <div class="footer">
-    <p>${language === 'fr' 
-      ? `Demande reçue le ${new Date().toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}`
-      : `تم استلام الطلب في ${new Date().toLocaleDateString('ar-MA')}`
-    }</p>
-    <p>Al Atlassia Assurances - Agent général Atlanta Sanad - Ksar El Kebir</p>
+    <div class="footer">© 2024 Atlas Assurances - Système automatisé</div>
   </div>
 </body>
 </html>
-  `.trim();
+`.trim();
 };
 
 export const sendEmailNotification = async (emailData: EmailData): Promise<boolean> => {
@@ -294,8 +243,13 @@ export const sendEmailNotification = async (emailData: EmailData): Promise<boole
       client_phone: clientInfo.phone || 'N/A',
       client_city: clientInfo.city || 'N/A',
       contact_preference: formatContactPreference(clientInfo.contactPreference, language),
-      preferred_day: clientInfo.preferredDay || 'N/A',
-      preferred_hour: clientInfo.preferredHour || 'N/A',
+      preferred_day: clientInfo.preferredDay ? t(clientInfo.preferredDay as any, language) : 'N/A',
+      preferred_hour: (() => {
+        const hour = clientInfo.preferredHour;
+        if (!hour) return 'N/A';
+        const found = getHourOptions(language).find(h => h.id === hour);
+        return found ? found.label : hour;
+      })(),
       
       // Additional Info
       language: language === 'fr' ? 'Français' : 'العربية',
@@ -316,42 +270,90 @@ export const sendEmailNotification = async (emailData: EmailData): Promise<boole
       subject: language === 'fr' ? "Nouvelle demande d'assurance - Chatbot Al Atlassia" : 'طلب تأمين جديد - Chatbot Al Atlassia',
     };
 
-    // If EmailJS client credentials are provided, use EmailJS (client-side)
-    if (EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_ID && EMAILJS_PUBLIC_KEY) {
-      await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        templateParams,
-        EMAILJS_PUBLIC_KEY
-      );
+    // Prepare a readable plain-text recap message for fallback (kept for logs)
+    const messageText = `Type d'assurance: ${translateInsuranceType(selectedInsurance, language)}\n\nDétails saisis:\n${formatInsuranceDetails(selectedInsurance, insuranceData, language)}\n\nNom client: ${clientInfo.fullName || 'N/A'}\nTéléphone: ${clientInfo.phone || 'N/A'}\nVille: ${clientInfo.city || 'N/A'}\nJour préféré: ${clientInfo.preferredDay ? t(clientInfo.preferredDay as any, language) : 'N/A'}\nHeure préférée: ${templateParams.preferred_hour}\nLangue: ${language === 'fr' ? 'Français' : 'العربية'}`;
 
-      console.log('Email sent successfully via EmailJS');
-      return true;
+    // Build plain-text email content (no HTML tags) for Web3Forms message field
+    const detailsLines = formatInsuranceDetails(selectedInsurance, insuranceData, language)
+      .split('\n')
+      .filter(Boolean)
+      .map(line => `- ${line}`)
+      .join('\n');
+
+    const dateStr = new Date().toLocaleString('fr-FR', {
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', second: '2-digit'
+    });
+
+    const emailContent = [
+      '--------------------------------',
+      'Atlas Assurances',
+      "Nouvelle demande d'assurance via chatbot",
+      '--------------------------------',
+      '',
+      '📋 TYPE D\'ASSURANCE',
+      translateInsuranceType(selectedInsurance, language),
+      '',
+      '📝 DÉTAILS DE LA DEMANDE',
+      insuranceData.activityType ? `- نشاط الشركة: ${insuranceData.activityType}` : '',
+      detailsLines,
+      '',
+      '--------------------------------',
+      '',
+      '👤 INFORMATIONS CLIENT',
+      `- Nom complet : ${clientInfo.fullName || 'N/A'}`,
+      `- Téléphone  : ${clientInfo.phone || 'N/A'}`,
+      `- Ville      : ${clientInfo.city || 'N/A'}`,
+      `- Contact    : ${formatContactPreference(clientInfo.contactPreference, language)}`,
+      `- Jour       : ${clientInfo.preferredDay ? t(clientInfo.preferredDay as any, language) : 'N/A'}`,
+      `- Heure      : ${templateParams.preferred_hour}`,
+      '',
+      '--------------------------------',
+      '',
+      '⏰ DATE DE DEMANDE',
+      dateStr,
+      '',
+      '--------------------------------',
+      '© 2024 Atlas Assurances',
+      'Système automatisé',
+      '--------------------------------'
+    ].filter(Boolean).join('\n');
+
+    // Use Web3Forms to send the email. Ensure the access key is present.
+    if (!WEB3FORMS_KEY) {
+      console.error('VITE_WEB3FORMS_KEY is not set. Email not sent.');
+      return false;
     }
 
-    // Fallback: POST to serverless SendGrid endpoint
     try {
-      const resp = await fetch('/api/send-email', {
+      const resp = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          subject: templateParams.subject,
-          html: templateParams.message,
-          text: `${templateParams.insurance_type}\n\n${templateParams.insurance_details}\n\n${templateParams.client_name} - ${templateParams.client_phone}`,
-          to: templateParams.to_email,
+          access_key: WEB3FORMS_KEY,
+          to_email: RECEIVING_EMAIL,
+          subject: "Nouvelle demande d'assurance - Atlas Assurances",
+          message: emailContent,
         }),
       });
 
       if (!resp.ok) {
         const err = await resp.json().catch(() => ({}));
-        console.error('SendGrid endpoint error', err);
+        console.error('Web3Forms error', err);
         return false;
       }
 
-      console.log('Email sent successfully via SendGrid endpoint');
-      return true;
+      const json = await resp.json().catch(() => ({}));
+      // Web3Forms returns { success: true } on success
+      if (json && (json.success === true || json.success === 'true')) {
+        console.log('Email sent successfully via Web3Forms');
+        return true;
+      }
+
+      console.error('Web3Forms response indicates failure', json);
+      return false;
     } catch (err) {
-      console.error('Error sending via SendGrid endpoint:', err);
+      console.error('Error sending via Web3Forms:', err);
       return false;
     }
   } catch (error) {
