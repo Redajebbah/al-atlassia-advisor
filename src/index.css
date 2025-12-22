@@ -1,0 +1,540 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Al Atlassia Official Colors */
+    --background: 210 20% 98%;
+    --foreground: 215 25% 20%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 215 25% 20%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 25% 20%;
+
+    /* Primary - Official Navy Blue from Al Atlassia */
+    --primary: 215 65% 28%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary - Light Blue/Grey */
+    --secondary: 210 25% 95%;
+    --secondary-foreground: 215 25% 25%;
+
+    /* Muted - Soft Grey */
+    --muted: 210 20% 94%;
+    --muted-foreground: 215 15% 50%;
+
+    /* Accent - Coral/Pink from logo */
+    --accent: 350 70% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 210 20% 90%;
+    --input: 210 20% 90%;
+    --ring: 205 75% 42%;
+
+    --radius: 0.75rem;
+
+    /* Success color */
+    --success: 152 69% 40%;
+    --success-foreground: 0 0% 100%;
+
+    /* Al Atlassia Brand Colors */
+    --insurance-blue: 215 65% 28%;
+    --insurance-blue-light: 215 65% 92%;
+    --insurance-blue-dark: 215 65% 18%;
+    --insurance-coral: 350 70% 55%;
+    --insurance-coral-light: 350 70% 95%;
+    --insurance-grey: 210 15% 96%;
+    --insurance-text: 215 25% 20%;
+    --insurance-text-muted: 215 15% 50%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(205 75% 42%) 0%, hsl(205 80% 32%) 100%);
+    --gradient-hero: linear-gradient(180deg, hsl(210 20% 98%) 0%, hsl(205 65% 97%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(210 25% 99%) 100%);
+
+    /* Shadows */
+    --shadow-sm: 0 1px 3px hsl(215 25% 20% / 0.06);
+    --shadow-md: 0 4px 12px hsl(215 25% 20% / 0.08);
+    --shadow-lg: 0 12px 32px hsl(215 25% 20% / 0.12);
+    --shadow-glow: 0 0 24px hsl(205 75% 42% / 0.2);
+
+    /* Sidebar (if needed) */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 215 28% 10%;
+    --foreground: 210 20% 95%;
+
+    --card: 215 25% 14%;
+    --card-foreground: 210 20% 95%;
+
+    --popover: 215 25% 14%;
+    --popover-foreground: 210 20% 95%;
+
+    --primary: 205 70% 55%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 215 25% 18%;
+    --secondary-foreground: 210 20% 90%;
+
+    --muted: 215 25% 18%;
+    --muted-foreground: 215 15% 60%;
+
+    --accent: 350 65% 60%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 215 25% 20%;
+    --input: 215 25% 20%;
+    --ring: 205 70% 55%;
+
+    --insurance-blue: 205 70% 55%;
+    --insurance-blue-light: 205 50% 20%;
+    --insurance-blue-dark: 205 75% 45%;
+    --insurance-coral: 350 65% 60%;
+    --insurance-coral-light: 350 50% 20%;
+    --insurance-grey: 215 25% 16%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', 'Noto Sans Arabic', sans-serif;
+  }
+
+  /* RTL Support for Arabic */
+  [dir="rtl"] {
+    font-family: 'Noto Sans Arabic', 'Inter', sans-serif;
+    direction: rtl;
+  }
+
+  /* Enhanced RTL text alignment */
+  [dir="rtl"] input,
+  [dir="rtl"] textarea {
+    text-align: right;
+  }
+
+  [dir="rtl"] .text-left {
+    text-align: right !important;
+  }
+
+  [dir="rtl"] .text-right {
+    text-align: left !important;
+  }
+}
+
+@layer components {
+  /* Chat Message Bubbles */
+  .chat-bubble-bot {
+    @apply bg-card text-card-foreground rounded-2xl rounded-tl-md px-4 py-3;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .chat-bubble-user {
+    @apply bg-primary text-primary-foreground rounded-2xl rounded-tr-md px-4 py-3;
+  }
+
+  /* Insurance Cards */
+  .insurance-card {
+    @apply bg-card rounded-xl p-4 cursor-pointer transition-all duration-300;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .insurance-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .insurance-card.selected {
+    @apply ring-2 ring-primary;
+    box-shadow: var(--shadow-glow);
+  }
+
+  /* Language Selection Cards */
+  .language-card {
+    @apply bg-card rounded-2xl p-8 cursor-pointer transition-all duration-300 flex flex-col items-center justify-center gap-4;
+    box-shadow: var(--shadow-md);
+  }
+
+  .language-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
+  }
+
+  .language-card.selected {
+    @apply ring-2 ring-primary bg-primary/5;
+  }
+
+  /* Partner Carousel */
+  .partner-logo {
+    @apply h-12 object-contain opacity-70 transition-opacity duration-300;
+  }
+
+  .partner-logo:hover {
+    @apply opacity-100;
+  }
+
+  /* Equal partner logos (wrapper + image) - ensures identical sizing and visual theme */
+  .partner-wrapper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 0.5rem;
+    padding: 0.375rem; /* 6px */
+    box-shadow: var(--shadow-md);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .partner-wrapper:hover {
+    transform: translateY(-2px) scale(1.02);
+  }
+
+  /* CSS variable-driven logo size to keep both logos identical across breakpoints */
+  :root {
+    --partner-logo-size: 48px;
+  }
+
+  @media (min-width: 640px) {
+    :root { --partner-logo-size: 56px; }
+  }
+
+  @media (min-width: 768px) {
+    :root { --partner-logo-size: 64px; }
+  }
+
+  @media (min-width: 1024px) {
+    :root { --partner-logo-size: 72px; }
+  }
+
+  .partner-logo-equal {
+    width: var(--partner-logo-size);
+    height: var(--partner-logo-size);
+    object-fit: contain;
+    opacity: 0.95;
+    -webkit-filter: none;
+    filter: none;
+    display: block;
+  }
+
+  /* Typing Indicator */
+  .typing-dot {
+    @apply w-2 h-2 bg-muted-foreground rounded-full;
+    animation: typing-bounce 1.4s ease-in-out infinite;
+  }
+
+  .typing-dot:nth-child(1) { animation-delay: 0s; }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+}
+
+@layer utilities {
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+
+  .gradient-card {
+    background: var(--gradient-card);
+  }
+
+  .shadow-insurance-sm {
+    box-shadow: var(--shadow-sm);
+  }
+
+  .shadow-insurance-md {
+    box-shadow: var(--shadow-md);
+  }
+
+  .shadow-insurance-lg {
+    box-shadow: var(--shadow-lg);
+  }
+
+  .shadow-insurance-glow {
+    box-shadow: var(--shadow-glow);
+  }
+}
+
+/* Animations */
+@keyframes typing-bounce {
+  0%, 60%, 100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse-ring {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.7;
+  }
+}
+
+@keyframes carousel-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.4s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out forwards;
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 0.4s ease-out forwards;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.4s ease-out forwards;
+}
+
+.animate-slide-in-up {
+  animation: slide-in-up 0.5s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.3s ease-out forwards;
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 2s ease-in-out infinite;
+}
+
+.animate-carousel {
+  animation: carousel-scroll 20s linear infinite;
+}
+
+/* Staggered animation delays */
+.animation-delay-100 { animation-delay: 100ms; }
+.animation-delay-200 { animation-delay: 200ms; }
+.animation-delay-300 { animation-delay: 300ms; }
+.animation-delay-400 { animation-delay: 400ms; }
+.animation-delay-500 { animation-delay: 500ms; }
+
+/* Custom scrollbar for chat */
+.chat-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-scroll::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 3px;
+}
+
+.chat-scroll::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground));
+}
+/* Mobile Optimizations */
+@layer utilities {
+  /* Safe area insets for mobile notch/home indicator */
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  .safe-left {
+    padding-left: env(safe-area-inset-left);
+  }
+  
+  .safe-right {
+    padding-right: env(safe-area-inset-right);
+  }
+  
+  .pb-safe {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+  
+  /* Disable text selection on touch devices for better UX */
+  .touch-action-pan-y {
+    touch-action: pan-y;
+  }
+  
+  /* Smooth scrolling with momentum on iOS */
+  .scroll-smooth-ios {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Prevent pull-to-refresh on mobile */
+  .overscroll-none {
+    overscroll-behavior: none;
+  }
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 640px) {
+  /* Increase tap target sizes for mobile */
+  button, a, input, select, textarea {
+    min-height: 44px; /* Apple's recommended minimum */
+  }
+  
+  /* Better text rendering on mobile */
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  
+  /* Prevent zoom on input focus */
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Landscape mobile optimization */
+@media (max-height: 500px) and (orientation: landscape) {
+  .chat-scroll {
+    max-height: 60vh;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* Remove hover effects on touch devices */
+  .hover\:scale-105:hover {
+    transform: none;
+  }
+  
+  /* Add active states instead */
+  .active\:scale-95:active {
+    transform: scale(0.95);
+  }
+  
+  /* Better button press feedback */
+  button:active {
+    opacity: 0.7;
+    transition: opacity 0.1s;
+  }
+}
+
+/* Footer animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out forwards;
+  opacity: 0;
+}

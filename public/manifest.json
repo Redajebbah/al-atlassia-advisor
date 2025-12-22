@@ -1,0 +1,20 @@
+{
+  "name": "Al Atlassia Assurances",
+  "short_name": "Al Atlassia",
+  "description": "Votre assistant digital pour tous vos besoins en assurance au Maroc",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1e3a6f",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ],
+  "categories": ["business", "finance"],
+  "lang": "fr",
+  "dir": "auto"
+}
