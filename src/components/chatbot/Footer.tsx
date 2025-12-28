@@ -82,7 +82,7 @@ const Footer = ({ language }: FooterProps) => {
               
               <p className={cn("text-blue-100 text-sm leading-relaxed animate-fade-in-up", isRtl && "font-arabic text-right")} dir={isRtl ? "rtl" : "ltr"} style={{ animationDelay: '100ms' }}>
                 {isRtl 
-                  ? 'الأطلسية للتأمينات، شركة رائدة في مجال التأمين بالمغرب، نقدم حلول تأمين شاملة لحماية عائلتك وممتلكاتك وأعمالك.'
+                  ? 'الأطلسية للتأمينات، نقدم حلول تأمين شاملة لحماية عائلتك وممتلكاتك وأعمالك.'
                   : "Al Atlassia Assurances, société leader dans le secteur de l'assurance au Maroc, offrant des solutions complètes pour protéger votre famille, vos biens et vos entreprises."
                 }
               </p>
@@ -177,8 +177,8 @@ const Footer = ({ language }: FooterProps) => {
                   <Shield className="w-5 h-5 text-blue-400 group-hover:scale-110 transition-transform duration-300" />
                   <div>
                     <p className={cn("text-xs text-blue-200", isRtl && "font-arabic")}>{isRtl ? 'الموقع الإلكتروني' : 'Site web'}</p>
-                    <a href="https://alatlassia-assurances.com" target="_blank" rel="noopener noreferrer" className="text-sm text-blue-300 hover:text-white underline break-all">
-                      https://alatlassia-assurances.com
+                    <a href="https://www.alatlassia-assurances.com" target="_blank" rel="noopener noreferrer" className="text-sm text-blue-300 hover:text-white underline break-all">
+                      www.alatlassia-assurances.com
                     </a>
                   </div>
                 </div>

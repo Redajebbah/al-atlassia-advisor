@@ -11,6 +11,7 @@ type TranslationKey =
   | 'professionnels'
   | 'scolaire'
   | 'autres'
+  | 'renouvellement'
   | 'transport_public'
   | 'transport_means_question'
   | 'transport_taxi'
@@ -53,6 +54,8 @@ type TranslationKey =
   | 'appel'
   | 'activityType'
   | 'activityPlaceholder'
+  | 'professionType'
+  | 'professionPlaceholder'
   | 'selectInsuranceTypes'
   | 'accidents_travail'
   | 'rc'
@@ -61,6 +64,7 @@ type TranslationKey =
   | 'multirisques_chantiers'
   | 'rc_transport'
   | 'marchandises'
+  | 'autres_assurances'
   | 'vehicules_engins'
   | 'rc_professionnelle'
   | 'automobile_pro'
@@ -115,7 +119,8 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     professionnels: 'تأمين المهنيين',
     scolaire: 'التأمين المدرسي',
     autres: 'تأمينات أخرى',
-    transport_public: 'تأمين النقل العمومي للمستخدمين',
+    renouvellement: 'تجديد عقد تأمين',
+    transport_public: 'تأمين النقل العمومي للمسافرين',
     transport_means_question: 'ما هي وسيلة النقل المستعملة؟',
     transport_taxi: 'تاكسي',
     transport_nusers: 'نقل المستخدمين',
@@ -138,7 +143,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     proprietaire: 'مالك',
     locataire: 'مستأجر',
     housingValue: 'ما القيمة التقريبية للسكن بالدرهم؟',
-    furnitureValue: 'ماهي القيمة التقريبية للأثاث المنزلي؟',
+    furnitureValue: 'ما هي القيمة التقريبية للأثاث؟',
     valuePlaceholder: 'أدخل القيمة بالدرهم',
     healthCoverage: 'نوع التغطية المطلوبة:',
     individuel: 'فردي',
@@ -158,16 +163,19 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     appel: 'اتصال هاتفي',
     activityType: 'ما نوع نشاط شركتك؟',
     activityPlaceholder: 'أدخل نوع النشاط',
+    professionType: 'ما هو نوع المهنة؟',
+    professionPlaceholder: 'أدخل نوع المهنة',
     selectInsuranceTypes: 'اختر أنواع التأمين المطلوبة:',
     accidents_travail: 'تأمين حوادث الشغل',
     rc: 'تأمين المسؤولية المدنية',
-    rc_exploitation: 'تأمين م.م. الاستغلال',
+    rc_exploitation: 'تأمين المسؤولية المدنية الاستغلال',
     multirisques: 'تأمين متعدد المخاطر',
-    multirisques_chantiers: 'أمين متعدد المخاطر للاوراش',
-    rc_transport: 'تأمين م.م. النقل',
+    multirisques_chantiers: 'تأمين متعدد المخاطر للأوراش',
+    rc_transport: 'تأمين المسؤولية المدنية للنقل',
     marchandises: 'تأمين البضائع المنقولة',
     vehicules_engins: 'تأمين المركبات والآليات',
-    rc_professionnelle: 'تأمين م.م. المهنية',
+    autres_assurances: 'تأمينات أخرى',
+    rc_professionnelle: 'تأمين المسؤولية المدنية المهنية',
     automobile_pro: 'تأمين السيارات',
     scolaireInfo: 'التأمين المدرسي الذي يوفر الحماية الشاملة والمتكاملة  خلال العام الدراسي.',
     scolaireCoverageQuestion: 'هذا التأمين يشمل:',
@@ -221,7 +229,8 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     professionnels: 'Assurance Professionnels',
     scolaire: 'Assurance Scolaire',
     autres: 'Autres Assurances',
-    transport_public: 'Assurance Transport Public des Utilisateurs',
+    renouvellement: 'Renouvellement de contrat d\'assurance',
+    transport_public: 'Assurance Transport Public des Voyageurs',
     transport_means_question: 'Quel moyen de transport utilisez-vous ?',
     transport_taxi: 'Taxi',
     transport_nusers: 'Transport Utilisateurs',
@@ -244,7 +253,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     proprietaire: 'Propriétaire',
     locataire: 'Locataire',
     housingValue: 'Quelle est la valeur approximative du logement en dirhams ?',
-    furnitureValue: 'Quelle est la valeur approximative donnée pour Les meubles de maison ?',
+    furnitureValue: 'Quelle est la valeur approximative du mobilier ?',
     valuePlaceholder: 'Entrez la valeur en dirhams',
     healthCoverage: 'Type de couverture souhaitée :',
     individuel: 'Moi seul',
@@ -264,6 +273,8 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     appel: 'Vous appeler',
     activityType: 'Quel est le type d\'activité de votre entreprise ?',
     activityPlaceholder: 'Entrez le type d\'activité',
+    professionType: 'Quel est le type de profession ?',
+    professionPlaceholder: 'Entrez le type de profession',
     selectInsuranceTypes: 'Sélectionnez les types d\'assurance souhaités :',
     accidents_travail: 'Assurance Accidents du travail',
     rc: 'Assurance Responsabilité civile',
@@ -273,7 +284,8 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     rc_transport: 'Assurance RC transport',
     marchandises: 'Assurance Marchandises transportées',
     vehicules_engins: 'Assurance Véhicules et engins',
-    rc_professionnelle: 'Assurance RC professionnelle',
+    autres_assurances: 'Autres assurances',
+    rc_professionnelle: 'Assurance Responsabilité Civile Professionnelle',
     automobile_pro: 'Assurance automobile',
     scolaireInfo: 'L\'assurance scolaire protège vos enfants tout au long de l\'année scolaire.',
     scolaireCoverageQuestion: 'Cette assurance comprend :',
@@ -331,6 +343,7 @@ export const getInsuranceOptions = (lang: Language): ChatOption[] => [
   { id: 'entreprises', label: t('entreprises', lang) },
   { id: 'professionnels', label: t('professionnels', lang) },
   { id: 'scolaire', label: t('scolaire', lang) },
+  { id: 'renouvellement', label: t('renouvellement', lang) },
   { id: 'autres', label: t('autres', lang) },
 ];
 
@@ -393,6 +406,7 @@ export const getEntrepriseInsuranceOptions = (lang: Language): ChatOption[] => [
   { id: 'rc_transport', label: t('rc_transport', lang) },
   { id: 'marchandises', label: t('marchandises', lang) },
   { id: 'vehicules_engins', label: t('vehicules_engins', lang) },
+  { id: 'autres_assurances', label: t('autres_assurances', lang) },
 ];
 
 export const getProfessionnelInsuranceOptions = (lang: Language): ChatOption[] => [
@@ -401,7 +415,8 @@ export const getProfessionnelInsuranceOptions = (lang: Language): ChatOption[] =
   { id: 'rc', label: t('rc', lang), highlight: true, required: true },
   { id: 'rc_exploitation', label: t('rc_exploitation', lang) },
   { id: 'multirisques', label: t('multirisques', lang) },
-  { id: 'automobile_pro', label: t('automobile_pro', lang) }
+  { id: 'automobile_pro', label: t('automobile_pro', lang) },
+  { id: 'autres_assurances', label: t('autres_assurances', lang) },
 ];
 
 export const getContactPreferenceOptions = (lang: Language): ChatOption[] => [

@@ -16,7 +16,8 @@ import {
   Check,
   Truck,
   Bike,
-  Tractor
+  Tractor,
+  RefreshCw
 } from 'lucide-react';
 
 // Import custom PNG icons
@@ -46,6 +47,7 @@ const iconMap: Record<string, React.ElementType | string> = {
   professionnels: Briefcase,
   scolaire: GraduationCap,
   autres: FileText,
+  renouvellement: RefreshCw,
   bureau: Building,
   appel: Phone,
   whatsapp: MessageCircle,

@@ -208,6 +208,11 @@ export const useChatbot = (language: Language) => {
           setState(prev => ({ ...prev, preSelectedOptions: ['rc_professionnelle'] }));
           break;
 
+        case 'professionnels_profession_type':
+          setInputMode('text', t('professionPlaceholder', language));
+          addBotMessage(t('professionType', language));
+          break;
+
         case 'scolaire_coverage':
           addBotMessage(t('scolaireInfo', language));
           setTimeout(() => {
@@ -312,6 +317,9 @@ export const useChatbot = (language: Language) => {
             break;
           case 'transport_public':
             processStep('transport_means');
+            break;
+          case 'renouvellement':
+            processStep('client_name');
             break;
           case 'autres':
             showTyping();
@@ -420,7 +428,7 @@ export const useChatbot = (language: Language) => {
 
       case 'professionnels_types':
         setState(prev => ({ ...prev, insuranceData: { ...prev.insuranceData, insuranceTypes: selectedIds } }));
-        processStep('client_name');
+        processStep('professionnels_profession_type');
         break;
     }
   }, [state.step, processStep, addUserMessage]);
@@ -436,6 +444,11 @@ export const useChatbot = (language: Language) => {
 
       case 'habitation_value':
         setState(prev => ({ ...prev, insuranceData: { ...prev.insuranceData, value } }));
+        processStep('habitation_furniture_value');
+        break;
+
+      case 'habitation_furniture_value':
+        setState(prev => ({ ...prev, insuranceData: { ...prev.insuranceData, furnitureValue: value } }));
         processStep('client_name');
         break;
 
@@ -447,6 +460,11 @@ export const useChatbot = (language: Language) => {
       case 'entreprises_activity':
         setState(prev => ({ ...prev, insuranceData: { ...prev.insuranceData, activityType: value } }));
         processStep('entreprises_types');
+        break;
+
+      case 'professionnels_profession_type':
+        setState(prev => ({ ...prev, insuranceData: { ...prev.insuranceData, professionType: value } }));
+        processStep('client_name');
         break;
 
       case 'scolaire_institution':

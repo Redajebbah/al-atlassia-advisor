@@ -29,7 +29,8 @@ const translateInsuranceType = (type: InsuranceType, lang: Language): string => 
     professionnels: { fr: 'Assurance Professionnels', ar: 'التأمين المهني' },
     scolaire: { fr: 'Assurance Scolaire', ar: 'التأمين المدرسي' },
     autres: { fr: 'Autres Assurances', ar: 'تأمينات أخرى' },
-    transport_public: { fr: 'Assurance Transport Public des Utilisateurs', ar: 'تأمين النقل العمومي للمستخدمين' },
+    transport_public: { fr: 'Assurance Transport Public des Voyageurs', ar: 'تأمين النقل العمومي للمسافرين' },
+    renouvellement: { fr: 'Renouvellement de contrat d\'assurance', ar: 'تجديد عقد تأمين' },
   };
   return translations[type][lang];
 };
@@ -126,6 +127,10 @@ const formatInsuranceDetails = (
         const transportLabel = t(data.transportMeans as any, lang) || data.transportMeans;
         details.push(`${lang === 'fr' ? 'Moyen de transport' : 'وسيلة النقل'}: ${transportLabel}`);
       }
+      break;
+
+    case 'renouvellement':
+      // Renouvellement has no specific insurance data, just client info
       break;
   }
 

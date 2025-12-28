@@ -9,7 +9,8 @@ export type InsuranceType =
   | 'professionnels'
   | 'scolaire'
   | 'autres'
-  | 'transport_public';
+  | 'transport_public'
+  | 'renouvellement';
 
 export type VehicleType =
   | 'voiture'
@@ -67,6 +68,7 @@ export interface EntreprisesData {
 }
 
 export interface ProfessionnelsData {
+  professionType?: string;
   insuranceTypes: string[];
 }
 
@@ -107,6 +109,7 @@ export type ChatStep =
   | 'entreprises_activity'
   | 'entreprises_types'
   | 'professionnels_types'
+  | 'professionnels_profession_type'
   | 'scolaire_coverage'
   | 'scolaire_institution'
   | 'autres_need'
