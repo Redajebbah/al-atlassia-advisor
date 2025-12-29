@@ -53,7 +53,9 @@ export interface HabitationData {
 
 export interface SanteData {
   coverage: HealthCoverage;
-  age: string;
+  age?: string; // For individual coverage
+  familyMembersCount?: number; // For family coverage
+  familyMembersAges?: string[]; // Array of ages for family members
   hasCurrentInsurance: boolean;
   currentInsuranceType?: CurrentInsuranceType;
 }
@@ -103,6 +105,8 @@ export type ChatStep =
   | 'habitation_furniture_value'
   | 'sante_coverage'
   | 'sante_age'
+  | 'sante_family_count'
+  | 'sante_family_ages'
   | 'sante_current'
   | 'sante_current_type'
   | 'vie_contact'

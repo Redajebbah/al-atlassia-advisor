@@ -70,8 +70,21 @@ const formatInsuranceDetails = (
       if (data.coverage) {
         details.push(`${lang === 'fr' ? 'Couverture' : 'التغطية'}: ${data.coverage}`);
       }
-      if (data.age) {
+      // For individual coverage
+      if (data.coverage === 'individuel' && data.age) {
         details.push(`${lang === 'fr' ? 'Âge' : 'العمر'}: ${data.age}`);
+      }
+      // For family coverage
+      if (data.coverage === 'famille') {
+        if (data.familyMembersCount) {
+          details.push(`${lang === 'fr' ? 'Nombre de membres' : 'عدد الأفراد'}: ${data.familyMembersCount}`);
+        }
+        if (data.familyMembersAges && data.familyMembersAges.length > 0) {
+          const agesLabel = lang === 'fr' 
+            ? 'Âges des membres de la famille' 
+            : 'أعمار أفراد العائلة';
+          details.push(`${agesLabel}: ${data.familyMembersAges.join(', ')}`);
+        }
       }
       if (data.hasCurrentInsurance !== undefined) {
         details.push(

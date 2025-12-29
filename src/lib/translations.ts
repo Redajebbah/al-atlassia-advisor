@@ -105,7 +105,10 @@ type TranslationKey =
   | 'registrationQuestion'
   | 'registrationPlaceholder'
   | 'registrationInvalid'
-  | 'registrationLabel';
+  | 'registrationLabel'
+  | 'familyMembersCount'
+  | 'familyMembersCountPlaceholder'
+  | 'familyMemberAge';
 
 const translations: Record<Language, Record<TranslationKey, string>> = {
   ar: {
@@ -148,7 +151,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     healthCoverage: 'نوع التغطية المطلوبة:',
     individuel: 'فردي',
     famille: 'عائلي',
-    healthAge: 'كم عمر المؤمن الرئيسي؟',
+    healthAge: 'العمر',
     agePlaceholder: 'أدخل العمر',
     hasInsurance: 'هل لديك تأمين حالي؟',
     yes: 'نعم',
@@ -217,6 +220,9 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     registrationPlaceholder: '12345 - أ - 6',
     registrationInvalid: 'رقم تسجيل غير صحيح. مثال: 12345 - أ - 6',
     registrationLabel: 'رقم تسجيل المركبة',
+    familyMembersCount: 'كم عدد أفراد العائلة؟',
+    familyMembersCountPlaceholder: 'أدخل العدد',
+    familyMemberAge: 'العمر – الفرد',
   },
   fr: {
     welcome: 'Bienvenue chez Al Atlassia Assurances, je suis votre assistant. Comment puis-je vous aider ?',
@@ -258,7 +264,7 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     healthCoverage: 'Type de couverture souhaitée :',
     individuel: 'Moi seul',
     famille: 'Famille',
-    healthAge: 'Quel est l\'âge de l\'assuré principal ?',
+    healthAge: 'Âge',
     agePlaceholder: 'Entrez l\'âge',
     hasInsurance: 'Avez-vous une assurance actuelle ?',
     yes: 'Oui',
@@ -323,10 +329,13 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     autresNeedPlaceholder: 'Écrivez ici (200 mots maximum)',
     continue: 'Continuer',
     submit: 'Envoyer',
-    registrationQuestion: 'Quel est le numéro d’immatriculation du véhicule ?',
+    registrationQuestion: 'Quel est le numéro d\'immatriculation du véhicule ?',
     registrationPlaceholder: '12345 - A - 6',
-    registrationInvalid: 'Numéro d’immatriculation invalide. Exemple : 12345 - A - 6',
-    registrationLabel: 'Numéro d’immatriculation',
+    registrationInvalid: 'Numéro d\'immatriculation invalide. Exemple : 12345 - A - 6',
+    registrationLabel: 'Numéro d\'immatriculation',
+    familyMembersCount: 'Combien de personnes composent la famille ?',
+    familyMembersCountPlaceholder: 'Entrez le nombre',
+    familyMemberAge: 'Âge – Personne',
   },
 };
 
