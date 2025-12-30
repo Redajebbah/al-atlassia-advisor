@@ -46,6 +46,7 @@ interface ChatbotState {
   currentInputType: 'text' | 'phone' | 'number' | 'registration' | null;
   currentInputPlaceholder: string;
   preSelectedOptions: string[];
+  stepData?: Record<string, any>;
 }
 
 const generateId = () => Math.random().toString(36).substr(2, 9);
@@ -63,6 +64,7 @@ export const useChatbot = (language: Language) => {
     currentInputType: null,
     currentInputPlaceholder: '',
     preSelectedOptions: [],
+    stepData: {},
   });
 
   const addBotMessage = useCallback((content: string, options: ChatOption[] = [], multiSelect = false) => {
@@ -112,7 +114,7 @@ export const useChatbot = (language: Language) => {
     showTyping();
 
     setTimeout(() => {
-      setState(prev => ({ ...prev, step: newStep }));
+      setState(prev => ({ ...prev, step: newStep, stepData: data }));
 
       switch (newStep) {
         case 'welcome':
@@ -172,6 +174,39 @@ export const useChatbot = (language: Language) => {
         case 'sante_age':
           setInputMode('number', t('agePlaceholder', language));
           addBotMessage(t('healthAge', language));
+          break;
+
+        case 'sante_spouse_count':
+          setInputMode('number', t('spousesCountPlaceholder', language));
+          addBotMessage(t('spousesCount', language));
+          break;
+
+        case 'sante_children_count':
+          setInputMode('number', t('childrenCountPlaceholder', language));
+          addBotMessage(t('childrenCount', language));
+          break;
+
+        case 'sante_family_member_ages':
+          // Ask for the age of the next family member (spouse or child)
+          // Use data if provided (for accurate counts after state update)
+          const spousesCount = data?.spousesCount ?? state.insuranceData.spousesCount ?? 0;
+          const childrenCount = data?.childrenCount ?? state.insuranceData.childrenCount ?? 0;
+          const spousesAges = data?.spousesAges ?? state.insuranceData.spousesAges ?? [];
+          const childrenAges = data?.childrenAges ?? state.insuranceData.childrenAges ?? [];
+          
+          setInputMode('number', t('agePlaceholder', language));
+          
+          if (spousesAges.length < spousesCount) {
+            // Still collecting spouse ages
+            const spouseNumber = spousesAges.length + 1;
+            const ageLabel = `${t('spouseAge', language)} ${spouseNumber}`;
+            addBotMessage(ageLabel);
+          } else if (childrenAges.length < childrenCount) {
+            // Collecting children ages
+            const childNumber = childrenAges.length + 1;
+            const ageLabel = `${t('childAge', language)} ${childNumber}`;
+            addBotMessage(ageLabel);
+          }
           break;
 
         case 'sante_family_count':
@@ -380,7 +415,7 @@ export const useChatbot = (language: Language) => {
       case 'sante_coverage':
         setState(prev => ({ ...prev, insuranceData: { ...prev.insuranceData, coverage: optionId } }));
         if (optionId === 'famille') {
-          processStep('sante_family_count');
+          processStep('sante_spouse_count');
         } else {
           processStep('sante_age');
         }
@@ -478,6 +513,119 @@ export const useChatbot = (language: Language) => {
         // This is for individual coverage only
         setState(prev => ({ ...prev, insuranceData: { ...prev.insuranceData, age: value } }));
         processStep('sante_current');
+        break;
+
+      case 'sante_spouse_count':
+        // Store the number of spouses (0-4)
+        const spousesCount = parseInt(value, 10);
+        if (isNaN(spousesCount) || spousesCount < 0 || spousesCount > 4) {
+          // Invalid input, ask again
+          processStep('sante_spouse_count');
+        } else {
+          setState(prev => ({ 
+            ...prev, 
+            insuranceData: { 
+              ...prev.insuranceData, 
+              spousesCount,
+              spousesAges: []
+            } 
+          }));
+          processStep('sante_children_count');
+        }
+        break;
+
+      case 'sante_children_count':
+        // Store the number of children (0-25)
+        const childrenCount = parseInt(value, 10);
+        if (isNaN(childrenCount) || childrenCount < 0 || childrenCount > 25) {
+          // Invalid input, ask again
+          processStep('sante_children_count');
+        } else {
+          const spousesCount = state.insuranceData.spousesCount || 0;
+          const spousesAges = state.insuranceData.spousesAges || [];
+          
+          setState(prev => ({ 
+            ...prev, 
+            insuranceData: { 
+              ...prev.insuranceData, 
+              childrenCount,
+              childrenAges: []
+            } 
+          }));
+          
+          // If there are family members, start collecting ages
+          const totalFamilyMembers = spousesCount + childrenCount;
+          if (totalFamilyMembers > 0) {
+            // Pass the updated data to processStep so it knows the current state
+            processStep('sante_family_member_ages', { 
+              spousesCount, 
+              childrenCount, 
+              spousesAges, 
+              childrenAges: [] 
+            });
+          } else {
+            // No family members, proceed to current insurance question
+            processStep('sante_current');
+          }
+        }
+        break;
+
+      case 'sante_family_member_ages':
+        // Collect age for current family member (spouse or child)
+        const age = parseInt(value, 10);
+        if (isNaN(age) || age < 0 || age > 120) {
+          // Invalid age, ask again with current progress
+          const spousesCount = state.insuranceData.spousesCount || 0;
+          const childrenCount = state.insuranceData.childrenCount || 0;
+          const spousesAges = state.insuranceData.spousesAges || [];
+          const childrenAges = state.insuranceData.childrenAges || [];
+          processStep('sante_family_member_ages', { spousesCount, childrenCount, spousesAges, childrenAges });
+        } else {
+          const spousesCount = state.insuranceData.spousesCount || 0;
+          const childrenCount = state.insuranceData.childrenCount || 0;
+          const spousesAges = state.insuranceData.spousesAges || [];
+          const childrenAges = state.insuranceData.childrenAges || [];
+          
+          if (spousesAges.length < spousesCount) {
+            // Collecting spouse age
+            const updatedSpousesAges = [...spousesAges, value];
+            setState(prev => ({ 
+              ...prev, 
+              insuranceData: { 
+                ...prev.insuranceData, 
+                spousesAges: updatedSpousesAges 
+              } 
+            }));
+            
+            // Check if we still need more spouse ages
+            if (updatedSpousesAges.length < spousesCount) {
+              processStep('sante_family_member_ages', { spousesCount, childrenCount, spousesAges: updatedSpousesAges, childrenAges });
+            } else if (childrenCount > 0) {
+              // All spouse ages collected, now collect children ages
+              processStep('sante_family_member_ages', { spousesCount, childrenCount, spousesAges: updatedSpousesAges, childrenAges });
+            } else {
+              // All done
+              processStep('sante_current');
+            }
+          } else if (childrenAges.length < childrenCount) {
+            // Collecting child age
+            const updatedChildrenAges = [...childrenAges, value];
+            setState(prev => ({ 
+              ...prev, 
+              insuranceData: { 
+                ...prev.insuranceData, 
+                childrenAges: updatedChildrenAges 
+              } 
+            }));
+            
+            // Check if we need more children ages
+            if (updatedChildrenAges.length < childrenCount) {
+              processStep('sante_family_member_ages', { spousesCount, childrenCount, spousesAges, childrenAges: updatedChildrenAges });
+            } else {
+              processStep('sante_current');
+            }
+          }
+        }
         break;
 
       case 'sante_family_count':

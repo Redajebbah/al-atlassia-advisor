@@ -108,7 +108,13 @@ type TranslationKey =
   | 'registrationLabel'
   | 'familyMembersCount'
   | 'familyMembersCountPlaceholder'
-  | 'familyMemberAge';
+  | 'familyMemberAge'
+  | 'spousesCount'
+  | 'spousesCountPlaceholder'
+  | 'childrenCount'
+  | 'childrenCountPlaceholder'
+  | 'spouseAge'
+  | 'childAge';
 
 const translations: Record<Language, Record<TranslationKey, string>> = {
   ar: {
@@ -223,6 +229,12 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     familyMembersCount: 'كم عدد أفراد العائلة؟',
     familyMembersCountPlaceholder: 'أدخل العدد',
     familyMemberAge: 'العمر – الفرد',
+    spousesCount: 'كم عدد الزوجات؟',
+    spousesCountPlaceholder: 'أدخل العدد (0-4)',
+    childrenCount: 'كم عدد الأبناء؟',
+    childrenCountPlaceholder: 'أدخل العدد (0-25)',
+    spouseAge: 'العمر – الزوجة',
+    childAge: 'العمر – الابن',
   },
   fr: {
     welcome: 'Bienvenue chez Al Atlassia Assurances, je suis votre assistant. Comment puis-je vous aider ?',
@@ -336,6 +348,12 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     familyMembersCount: 'Combien de personnes composent la famille ?',
     familyMembersCountPlaceholder: 'Entrez le nombre',
     familyMemberAge: 'Âge – Personne',
+    spousesCount: 'Combien d\'épouses ?',
+    spousesCountPlaceholder: 'Entrez le nombre (0-4)',
+    childrenCount: 'Combien d\'enfants ?',
+    childrenCountPlaceholder: 'Entrez le nombre (0-25)',
+    spouseAge: 'Âge – Épouse',
+    childAge: 'Âge – Enfant',
   },
 };
 

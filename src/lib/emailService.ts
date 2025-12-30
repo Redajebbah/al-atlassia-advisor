@@ -74,12 +74,32 @@ const formatInsuranceDetails = (
       if (data.coverage === 'individuel' && data.age) {
         details.push(`${lang === 'fr' ? 'Âge' : 'العمر'}: ${data.age}`);
       }
-      // For family coverage
+      // For family coverage with new spouse/children structure
       if (data.coverage === 'famille') {
-        if (data.familyMembersCount) {
+        // Check if we have the new structure (spousesCount/childrenCount)
+        if (data.spousesCount !== undefined) {
+          details.push(`${lang === 'fr' ? 'Nombre d\'épouses' : 'عدد الزوجات'}: ${data.spousesCount}`);
+          
+          if (data.spousesAges && data.spousesAges.length > 0) {
+            const agesLabel = lang === 'fr' ? 'Âges des épouses' : 'أعمار الزوجات';
+            details.push(`${agesLabel}: ${data.spousesAges.join(', ')}`);
+          }
+        }
+        
+        if (data.childrenCount !== undefined) {
+          details.push(`${lang === 'fr' ? 'Nombre d\'enfants' : 'عدد الأبناء'}: ${data.childrenCount}`);
+          
+          if (data.childrenAges && data.childrenAges.length > 0) {
+            const agesLabel = lang === 'fr' ? 'Âges des enfants' : 'أعمار الأبناء';
+            details.push(`${agesLabel}: ${data.childrenAges.join(', ')}`);
+          }
+        }
+        
+        // Fallback to old structure for backward compatibility
+        if (data.familyMembersCount && data.spousesCount === undefined) {
           details.push(`${lang === 'fr' ? 'Nombre de membres' : 'عدد الأفراد'}: ${data.familyMembersCount}`);
         }
-        if (data.familyMembersAges && data.familyMembersAges.length > 0) {
+        if (data.familyMembersAges && data.familyMembersAges.length > 0 && data.spousesCount === undefined) {
           const agesLabel = lang === 'fr' 
             ? 'Âges des membres de la famille' 
             : 'أعمار أفراد العائلة';
