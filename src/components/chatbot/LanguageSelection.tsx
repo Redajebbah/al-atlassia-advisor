@@ -11,7 +11,7 @@ interface LanguageSelectionProps {
 
 const LanguageSelection = ({ onSelect }: LanguageSelectionProps) => {
   return (
-    <div className="fixed inset-0 z-50 gradient-hero flex items-start justify-center pt-6 pb-6 overflow-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
+    <div className="fixed inset-0 z-50 flex items-start justify-center pt-6 pb-6 overflow-auto" style={{ WebkitOverflowScrolling: 'touch', background: 'radial-gradient(1200px 800px at 20% -10%, hsl(210 60% 96% / 0.9), transparent 65%), radial-gradient(900px 700px at 85% 5%, hsl(205 70% 95% / 0.8), transparent 60%), linear-gradient(180deg, hsl(210 40% 97%) 0%, hsl(210 35% 95%) 50%, hsl(210 30% 96%) 100%)' }}>
       <div className="w-full max-w-md px-4" style={{ paddingTop: 'env(safe-area-inset-top, 0.75rem)', paddingBottom: 'env(safe-area-inset-bottom, 0.75rem)' }}>
       {/* Logos */}
       <div className="flex items-center gap-4 mb-6 animate-fade-in-up flex-wrap justify-center mt-4">
@@ -27,7 +27,7 @@ const LanguageSelection = ({ onSelect }: LanguageSelectionProps) => {
         </div>
         <div className="h-10 w-px bg-border" />
         <div className="flex items-center justify-center">
-          <div className="w-28 sm:w-32 md:w-40 h-28 sm:h-32 md:h-40 rounded-xl bg-white shadow-md flex items-center justify-center">
+          <div className="w-28 sm:w-32 md:w-40 h-28 sm:h-32 md:h-40 rounded-xl flex items-center justify-center" style={{ background: 'linear-gradient(145deg, hsl(0 0% 100% / 0.95) 0%, hsl(210 30% 98% / 0.95) 100%)', boxShadow: '0 8px 25px hsl(215 25% 20% / 0.1), 0 3px 10px hsl(215 25% 20% / 0.08)', border: '1px solid hsl(210 20% 88%)' }}>
             <img
               src={logoAtlantaSanad}
               alt="Atlanta Sanad"
@@ -53,7 +53,7 @@ const LanguageSelection = ({ onSelect }: LanguageSelectionProps) => {
       {/* Chatbot-style welcome bubble placed under the header text */}
       <div className="animate-fade-in-up mb-6 px-2">
         <div className="relative max-w-md mx-auto">
-          <div className="bg-card border border-border rounded-3xl px-5 py-4 shadow-md text-foreground">
+          <div className="rounded-3xl px-5 py-4 text-foreground" style={{ background: 'linear-gradient(145deg, hsl(0 0% 100% / 0.92) 0%, hsl(210 35% 98% / 0.92) 100%)', boxShadow: '0 12px 28px hsl(215 25% 20% / 0.12), 0 4px 12px hsl(215 25% 20% / 0.08)', border: '1px solid hsl(210 20% 88%)' }}>
             <p className="text-base text-muted-foreground mb-1">{t('welcome', 'fr')}</p>
             <p className="text-base font-arabic text-foreground" dir="rtl">{t('welcome', 'ar')}</p>
           </div>
@@ -79,9 +79,18 @@ const LanguageSelection = ({ onSelect }: LanguageSelectionProps) => {
         <button
           onClick={() => onSelect('ar')}
           className={cn(
-            "language-card animate-fade-in-up animation-delay-200 flex flex-col items-center justify-center text-center",
-            "group hover:border-primary/20 min-h-[88px]"
+            "animate-fade-in-up animation-delay-200 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 rounded-2xl p-8 gap-4 min-h-[88px]",
+            "group hover:border-primary/20"
           )}
+          style={{ background: 'linear-gradient(145deg, hsl(0 0% 100% / 0.95) 0%, hsl(210 35% 98% / 0.95) 100%)', boxShadow: '0 8px 20px hsl(215 25% 20% / 0.1), 0 3px 8px hsl(215 25% 20% / 0.06)', border: '1px solid hsl(210 20% 88%)' }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'translateY(-4px)';
+            e.currentTarget.style.boxShadow = '0 12px 32px hsl(215 25% 20% / 0.15), 0 6px 14px hsl(215 25% 20% / 0.08)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'translateY(0px)';
+            e.currentTarget.style.boxShadow = '0 8px 20px hsl(215 25% 20% / 0.1), 0 3px 8px hsl(215 25% 20% / 0.06)';
+          }}
         >
           <span className="text-2xl mb-1">🇲🇦</span>
           <span className="text-sm font-semibold text-foreground font-arabic">العربية</span>
@@ -91,9 +100,18 @@ const LanguageSelection = ({ onSelect }: LanguageSelectionProps) => {
         <button
           onClick={() => onSelect('fr')}
           className={cn(
-            "language-card animate-fade-in-up animation-delay-300 flex flex-col items-center justify-center text-center",
-            "group hover:border-primary/20 min-h-[88px]"
+            "animate-fade-in-up animation-delay-300 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 rounded-2xl p-8 gap-4 min-h-[88px]",
+            "group hover:border-primary/20"
           )}
+          style={{ background: 'linear-gradient(145deg, hsl(0 0% 100% / 0.95) 0%, hsl(210 35% 98% / 0.95) 100%)', boxShadow: '0 8px 20px hsl(215 25% 20% / 0.1), 0 3px 8px hsl(215 25% 20% / 0.06)', border: '1px solid hsl(210 20% 88%)' }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'translateY(-4px)';
+            e.currentTarget.style.boxShadow = '0 12px 32px hsl(215 25% 20% / 0.15), 0 6px 14px hsl(215 25% 20% / 0.08)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'translateY(0px)';
+            e.currentTarget.style.boxShadow = '0 8px 20px hsl(215 25% 20% / 0.1), 0 3px 8px hsl(215 25% 20% / 0.06)';
+          }}
         >
           <span className="text-2xl mb-1">🇫🇷</span>
           <span className="text-sm font-semibold text-foreground">Français</span>
