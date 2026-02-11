@@ -44,7 +44,7 @@ const ChatMessage = ({ type, content, language, isNew = false }: ChatMessageProp
       >
         <div
           className={cn(
-            "px-4 py-3 rounded-2xl shadow-sm transition-all duration-300 hover:shadow-md",
+            "px-4 py-3 rounded-2xl shadow-insurance-sm transition-all duration-300 hover:shadow-md",
             isBot 
               ? "bg-white text-gray-800 rounded-tl-sm" 
               : "bg-gradient-to-br from-blue-600 to-blue-700 text-white rounded-tr-sm"

@@ -7,10 +7,10 @@
 @layer base {
   :root {
     /* Al Atlassia Official Colors */
-    --background: 210 20% 98%;
+    --background: 210 28% 98%;
     --foreground: 215 25% 20%;
 
-    --card: 0 0% 100%;
+    --card: 210 30% 99%;
     --card-foreground: 215 25% 20%;
 
     --popover: 0 0% 100%;
@@ -21,11 +21,11 @@
     --primary-foreground: 0 0% 100%;
 
     /* Secondary - Light Blue/Grey */
-    --secondary: 210 25% 95%;
+    --secondary: 210 28% 95%;
     --secondary-foreground: 215 25% 25%;
 
     /* Muted - Soft Grey */
-    --muted: 210 20% 94%;
+    --muted: 210 24% 94%;
     --muted-foreground: 215 15% 50%;
 
     /* Accent - Coral/Pink from logo */
@@ -35,7 +35,7 @@
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 210 20% 90%;
+    --border: 210 20% 88%;
     --input: 210 20% 90%;
     --ring: 205 75% 42%;
 
@@ -56,15 +56,19 @@
     --insurance-text-muted: 215 15% 50%;
 
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(205 75% 42%) 0%, hsl(205 80% 32%) 100%);
-    --gradient-hero: linear-gradient(180deg, hsl(210 20% 98%) 0%, hsl(205 65% 97%) 100%);
-    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(210 25% 99%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(210 60% 40%) 0%, hsl(210 65% 32%) 100%);
+    --gradient-hero:
+      radial-gradient(1200px 700px at 15% -10%, hsl(210 55% 96% / 0.95), transparent 60%),
+      radial-gradient(900px 600px at 90% 0%, hsl(205 65% 95% / 0.75), transparent 55%),
+      linear-gradient(180deg, hsl(210 35% 98%) 0%, hsl(210 30% 96%) 60%, hsl(210 30% 97%) 100%);
+    --gradient-card:
+      linear-gradient(180deg, hsl(0 0% 100% / 0.96) 0%, hsl(210 35% 98% / 0.96) 100%);
 
     /* Shadows */
-    --shadow-sm: 0 1px 3px hsl(215 25% 20% / 0.06);
-    --shadow-md: 0 4px 12px hsl(215 25% 20% / 0.08);
-    --shadow-lg: 0 12px 32px hsl(215 25% 20% / 0.12);
-    --shadow-glow: 0 0 24px hsl(205 75% 42% / 0.2);
+    --shadow-sm: 0 1px 2px hsl(215 25% 20% / 0.06), 0 1px 6px hsl(215 25% 20% / 0.05);
+    --shadow-md: 0 6px 18px hsl(215 25% 20% / 0.08), 0 2px 6px hsl(215 25% 20% / 0.06);
+    --shadow-lg: 0 18px 38px hsl(215 25% 20% / 0.12), 0 6px 14px hsl(215 25% 20% / 0.08);
+    --shadow-glow: 0 0 22px hsl(210 70% 45% / 0.16);
 
     /* Sidebar (if needed) */
     --sidebar-background: 0 0% 98%;
@@ -123,6 +127,10 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', 'Noto Sans Arabic', sans-serif;
+    background-image:
+      radial-gradient(1200px 700px at 15% -10%, hsl(210 55% 96% / 0.95), transparent 60%),
+      radial-gradient(900px 600px at 90% 0%, hsl(205 65% 95% / 0.75), transparent 55%),
+      linear-gradient(180deg, hsl(210 35% 98%) 0%, hsl(210 30% 96%) 100%);
   }
 
   /* RTL Support for Arabic */
@@ -177,6 +185,8 @@
   .language-card {
     @apply bg-card rounded-2xl p-8 cursor-pointer transition-all duration-300 flex flex-col items-center justify-center gap-4;
     box-shadow: var(--shadow-md);
+    background: var(--gradient-card);
+    border: 1px solid hsl(var(--border));
   }
 
   .language-card:hover {
@@ -422,6 +432,11 @@
 
 .chat-scroll::-webkit-scrollbar-thumb:hover {
   background: hsl(var(--muted-foreground));
+}
+
+.chat-scroll {
+  background: var(--gradient-card);
+  box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.7);
 }
 /* Mobile Optimizations */
 @layer utilities {
