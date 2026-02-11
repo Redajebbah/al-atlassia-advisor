@@ -104,7 +104,7 @@ const OptionCards = ({
     }
   };
 
-  // Special grid for time slot pills: 3 per row on mobile, 4 per row on desktop
+  // Special grid for time slot pills
   const isTimeSlot = options.length === 8 && options.every(o => /^\d{2}:\d{2}–\d{2}:\d{2}$/.test(o.label));
   const gridCols = isTimeSlot
     ? 'grid-cols-3 sm:grid-cols-4'
@@ -119,9 +119,7 @@ const OptionCards = ({
     
     if (!iconOrPath) return null;
     
-    // Check if it's a string (PNG path) or a component (Lucide icon)
     if (typeof iconOrPath === 'string') {
-      // Render PNG image
       return (
         <img 
           src={iconOrPath} 
@@ -130,9 +128,8 @@ const OptionCards = ({
         />
       );
     } else {
-      // Render Lucide icon component
       const IconComponent = iconOrPath;
-      return <IconComponent className="w-6 h-6 text-primary" />;
+      return <IconComponent className="w-6 h-6" style={{ color: '#1e3a6f' }} />;
     }
   };
 
@@ -153,46 +150,96 @@ const OptionCards = ({
               className={cn(
                 isTimeSlot
                   ? [
-                      "min-h-0 h-9 px-2.5 sm:px-3 rounded-full border text-sm font-medium flex items-center justify-center transition-all duration-200",
-                      "bg-white border-gray-200 text-primary",
+                      "min-h-0 h-9 px-2.5 sm:px-3 rounded-full text-sm font-medium flex items-center justify-center transition-all duration-200",
                       "active:scale-95 animate-scale-in",
-                      isSelected && "border-blue-600 bg-blue-50 text-blue-900 shadow-sm",
-                      !isSelected && "hover:border-blue-300 hover:bg-blue-50",
                     ]
                   : [
-                      "relative min-h-[48px] touch-manipulation rounded-lg p-1.5 text-center border-2 transition-all duration-300 active:scale-95 animate-scale-in",
-                      isFeatured && !isSelected && "bg-gradient-to-br from-green-50 to-emerald-50 border-green-400 shadow-lg hover:shadow-xl hover:from-green-100 hover:to-emerald-100 hover:border-green-500 ring-2 ring-green-300 ring-opacity-50",
-                      !isFeatured && !isSelected && "bg-white hover:shadow-md hover:border-blue-300 border-gray-200 shadow-sm",
-                      isSelected && "border-blue-600 shadow-md bg-blue-50"
+                      "relative min-h-[48px] touch-manipulation rounded-xl p-1.5 text-center transition-all duration-300 active:scale-95 animate-scale-in",
                     ],
                 isRtl && "font-arabic"
               )}
-              style={{ animationDelay: `${index * 50}ms` }}
+              style={
+                isTimeSlot
+                  ? {
+                      background: isSelected ? 'rgba(30, 58, 138, 0.06)' : '#ffffff',
+                      color: '#1e3a6f',
+                      border: isSelected ? '1.5px solid #1e3a6f' : '1px solid rgba(0,0,0,0.08)',
+                      boxShadow: isSelected ? '0 2px 8px rgba(30,58,138,0.1)' : '0 1px 3px rgba(0,0,0,0.04)',
+                    }
+                  : isFeatured && !isSelected
+                    ? {
+                        background: 'linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%)',
+                        border: '2px solid #86efac',
+                        boxShadow: '0 4px 16px rgba(34,197,94,0.1), 0 0 0 3px rgba(34,197,94,0.06)',
+                      }
+                    : isSelected
+                      ? {
+                          background: 'rgba(30, 58, 138, 0.04)',
+                          border: '2px solid #1e3a6f',
+                          boxShadow: '0 4px 14px rgba(30, 58, 138, 0.12)',
+                        }
+                      : {
+                          background: '#ffffff',
+                          border: '2px solid rgba(0,0,0,0.06)',
+                          boxShadow: '0 1px 4px rgba(0,0,0,0.04)',
+                        }
+              }
+              onMouseEnter={(e) => {
+                if (!isTimeSlot && !isSelected && !isFeatured) {
+                  e.currentTarget.style.boxShadow = '0 4px 14px rgba(0,0,0,0.08)';
+                  e.currentTarget.style.borderColor = 'rgba(30, 58, 138, 0.2)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!isTimeSlot && !isSelected && !isFeatured) {
+                  e.currentTarget.style.boxShadow = '0 1px 4px rgba(0,0,0,0.04)';
+                  e.currentTarget.style.borderColor = 'rgba(0,0,0,0.06)';
+                }
+              }}
             >
               {!isTimeSlot && isFeatured && !isSelected && (
-                <div className="absolute -top-2 -right-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-[8px] px-2 py-0.5 rounded-full shadow-md font-semibold animate-pulse">
+                <div
+                  className="absolute -top-2 -right-2 text-white text-[8px] px-2 py-0.5 rounded-full font-semibold animate-pulse"
+                  style={{
+                    background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)',
+                    boxShadow: '0 2px 6px rgba(34,197,94,0.3)',
+                  }}
+                >
                   {language === 'ar' ? 'جديد' : 'NEW'}
                 </div>
               )}
               {!isTimeSlot && multiSelect && isSelected && (
-                <div className="absolute top-1.5 right-1.5 w-5 h-5 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center shadow-md">
+                <div
+                  className="absolute top-1.5 right-1.5 w-5 h-5 rounded-full flex items-center justify-center"
+                  style={{
+                    background: 'linear-gradient(135deg, #1e3a6f 0%, #1a2f5a 100%)',
+                    boxShadow: '0 2px 6px rgba(30,58,138,0.25)',
+                  }}
+                >
                   <Check className="w-3 h-3 text-white" />
                 </div>
               )}
               {!isTimeSlot && getIcon(option.id) && (
-                <div className={cn(
-                  "flex items-center justify-center mx-auto mb-1 w-7 h-7 rounded-full bg-blue-50",
-                  isSelected && "bg-blue-100"
-                )}>
+                <div
+                  className="flex items-center justify-center mx-auto mb-1 w-7 h-7 rounded-full"
+                  style={{
+                    background: isSelected ? 'rgba(30, 58, 138, 0.08)' : 'rgba(30, 58, 138, 0.04)',
+                  }}
+                >
                   {getIcon(option.id)}
                 </div>
               )}
-              <div className={cn(
-                isTimeSlot
-                  ? "text-sm font-semibold text-primary"
-                  : "font-semibold text-primary text-[9px] sm:text-[10px] whitespace-pre-line",
-                isRtl && "font-arabic"
-              )}>{option.label}</div>
+              <div
+                className={cn(
+                  isTimeSlot
+                    ? "text-sm font-semibold"
+                    : "font-semibold text-[9px] sm:text-[10px] whitespace-pre-line",
+                  isRtl && "font-arabic"
+                )}
+                style={{ color: '#1e3a6f' }}
+              >
+                {option.label}
+              </div>
             </button>
           );
         })}
@@ -201,7 +248,11 @@ const OptionCards = ({
       {multiSelect && selected.length > 0 && (
         <button
           onClick={handleConfirm}
-          className="mt-3 w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-full py-2.5 px-4 font-medium transition-all hover:shadow-md hover:scale-[1.01] active:scale-[0.98] shadow-md"
+          className="mt-3 w-full text-white rounded-full py-2.5 px-4 font-medium transition-all hover:scale-[1.01] active:scale-[0.98]"
+          style={{
+            background: 'linear-gradient(135deg, #1e3a6f 0%, #1a2f5a 100%)',
+            boxShadow: '0 6px 18px rgba(30, 58, 138, 0.2)',
+          }}
         >
           {isRtl ? 'متابعة' : 'Continuer'}
         </button>

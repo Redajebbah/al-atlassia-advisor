@@ -28,7 +28,7 @@ const Index = () => {
       </div>
       
       {/* ZONE 2: Page Content - Clear separation */}
-      <div className="mt-20 pt-8 border-t-4 border-blue-200 bg-gradient-to-b from-gray-50 to-white">
+      <div className="mt-20 pt-8" style={{ borderTop: '2px solid rgba(30, 58, 138, 0.08)', background: 'linear-gradient(180deg, #f4f6fa 0%, #ffffff 100%)' }}>
         <PartnerCarousel />
         <Footer language={language} />
       </div>

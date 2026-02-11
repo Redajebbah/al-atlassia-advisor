@@ -21,11 +21,9 @@ const ChatInput = ({ onSubmit, language, placeholder, type = 'text' }: ChatInput
   const handleRegistrationChange = (index: number, val: string) => {
     const newReg = [...registration];
 
-    // Validate based on block
-    if (index === 0) { // 5 digits
+    if (index === 0) {
       if (!/^\d*$/.test(val)) return;
       if (val.length > 5) {
-        // Auto-jump to next block if full
         document.getElementById('reg-input-1')?.focus();
         return;
       }
@@ -33,8 +31,7 @@ const ChatInput = ({ onSubmit, language, placeholder, type = 'text' }: ChatInput
       if (val.length === 5) {
         document.getElementById('reg-input-1')?.focus();
       }
-    } else if (index === 1) { // 1 letter
-      // Allow only letters (Latin or Arabic)
+    } else if (index === 1) {
       if (!/^[\u0600-\u06FFa-zA-Z]*$/.test(val)) return;
       if (val.length > 1) {
         document.getElementById('reg-input-2')?.focus();
@@ -44,7 +41,7 @@ const ChatInput = ({ onSubmit, language, placeholder, type = 'text' }: ChatInput
       if (val.length === 1) {
         document.getElementById('reg-input-2')?.focus();
       }
-    } else if (index === 2) { // 1-2 digits
+    } else if (index === 2) {
       if (!/^\d*$/.test(val)) return;
       if (val.length > 2) return;
       newReg[2] = val;
@@ -58,10 +55,6 @@ const ChatInput = ({ onSubmit, language, placeholder, type = 'text' }: ChatInput
     e.preventDefault();
     const fullReg = `${registration[0]}-${registration[1]}-${registration[2]}`;
 
-    // Strict validation
-    // Block 1: exactly 5 digits
-    // Block 2: exactly 1 letter (Arabic or Latin)
-    // Block 3: 1 or 2 digits
     const isValid = /^\d{1,5}-[\u0600-\u06FFa-zA-Z]-\d{1,2}$/.test(fullReg);
 
     if (!isValid) {
@@ -80,13 +73,12 @@ const ChatInput = ({ onSubmit, language, placeholder, type = 'text' }: ChatInput
     if (!trimmed) return;
 
     if (type === 'phone') {
-      // Validate Moroccan phone number on submit — allow prefixes 05, 06, 07 and +2125/6/7
       const normalized = trimmed.replace(/[\s-]/g, '');
       const valid = /^(?:\+212[567]\d{8}|0[567]\d{8})$/.test(normalized);
       if (!valid) {
         setTouched(true);
         setError(t('phoneInvalid' as any, language));
-        return; // do NOT proceed to next step
+        return;
       }
     }
 
@@ -102,8 +94,14 @@ const ChatInput = ({ onSubmit, language, placeholder, type = 'text' }: ChatInput
     return (
       <form onSubmit={handleRegistrationSubmit} className="w-full animate-fade-in-up" dir="ltr">
         <div className="flex flex-col gap-2">
-          <div className="flex gap-2 items-center justify-center bg-white rounded-xl shadow-lg p-3 border border-gray-200">
-            {/* Block 1: 5 digits */}
+          <div
+            className="flex gap-2 items-center justify-center rounded-xl p-3"
+            style={{
+              background: '#ffffff',
+              boxShadow: '0 4px 16px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04)',
+              border: '1px solid rgba(0,0,0,0.06)',
+            }}
+          >
             <input
               id="reg-input-0"
               type="text"
@@ -111,21 +109,25 @@ const ChatInput = ({ onSubmit, language, placeholder, type = 'text' }: ChatInput
               value={registration[0]}
               onChange={(e) => handleRegistrationChange(0, e.target.value)}
               placeholder="12345"
-              className="w-20 text-center text-lg font-bold border-b-2 border-gray-300 focus:border-blue-600 focus:outline-none p-1"
+              className="w-20 text-center text-lg font-bold p-1 focus:outline-none transition-colors"
+              style={{ borderBottom: '2px solid #dde3ed', color: '#1a2a4a' }}
+              onFocus={(e) => (e.currentTarget.style.borderBottomColor = '#1e3a6f')}
+              onBlur={(e) => (e.currentTarget.style.borderBottomColor = '#dde3ed')}
               autoFocus
             />
-            <span className="text-gray-400 font-bold">-</span>
-            {/* Block 2: 1 Letter */}
+            <span style={{ color: '#94a3b8' }} className="font-bold">-</span>
             <input
               id="reg-input-1"
               type="text"
               value={registration[1]}
               onChange={(e) => handleRegistrationChange(1, e.target.value)}
               placeholder="A"
-              className="w-12 text-center text-lg font-bold border-b-2 border-gray-300 focus:border-blue-600 focus:outline-none p-1 uppercase"
+              className="w-12 text-center text-lg font-bold p-1 uppercase focus:outline-none transition-colors"
+              style={{ borderBottom: '2px solid #dde3ed', color: '#1a2a4a' }}
+              onFocus={(e) => (e.currentTarget.style.borderBottomColor = '#1e3a6f')}
+              onBlur={(e) => (e.currentTarget.style.borderBottomColor = '#dde3ed')}
             />
-            <span className="text-gray-400 font-bold">-</span>
-            {/* Block 3: 1-2 digits */}
+            <span style={{ color: '#94a3b8' }} className="font-bold">-</span>
             <input
               id="reg-input-2"
               type="text"
@@ -133,17 +135,24 @@ const ChatInput = ({ onSubmit, language, placeholder, type = 'text' }: ChatInput
               value={registration[2]}
               onChange={(e) => handleRegistrationChange(2, e.target.value)}
               placeholder="6"
-              className="w-12 text-center text-lg font-bold border-b-2 border-gray-300 focus:border-blue-600 focus:outline-none p-1"
+              className="w-12 text-center text-lg font-bold p-1 focus:outline-none transition-colors"
+              style={{ borderBottom: '2px solid #dde3ed', color: '#1a2a4a' }}
+              onFocus={(e) => (e.currentTarget.style.borderBottomColor = '#1e3a6f')}
+              onBlur={(e) => (e.currentTarget.style.borderBottomColor = '#dde3ed')}
             />
 
             <button
               type="submit"
               className={cn(
-                "ml-2 bg-gradient-to-br from-blue-600 to-blue-700 text-white rounded-full",
+                "ml-2 text-white rounded-full",
                 "w-10 h-10 flex-shrink-0",
-                "transition-all hover:scale-105 active:scale-95 touch-manipulation shadow-md",
+                "transition-all hover:scale-105 active:scale-95 touch-manipulation",
                 "flex items-center justify-center"
               )}
+              style={{
+                background: 'linear-gradient(135deg, #1e3a6f 0%, #1a2f5a 100%)',
+                boxShadow: '0 4px 12px rgba(30, 58, 138, 0.2)',
+              }}
             >
               <Send className="w-5 h-5" />
             </button>
@@ -164,14 +173,20 @@ const ChatInput = ({ onSubmit, language, placeholder, type = 'text' }: ChatInput
       className="w-full animate-fade-in-up"
       dir={isRtl ? "rtl" : "ltr"}
     >
-      <div className="flex gap-3 items-center bg-white rounded-full shadow-lg px-2 py-2 border border-gray-200 hover:shadow-xl transition-shadow duration-300">
+      <div
+        className="flex gap-3 items-center rounded-full px-2 py-2 transition-shadow duration-300"
+        style={{
+          background: '#ffffff',
+          boxShadow: '0 4px 16px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04)',
+          border: '1px solid rgba(0,0,0,0.06)',
+        }}
+      >
         <input
           type={inputType}
           value={value}
           onChange={(e) => {
             const v = e.target.value;
             setValue(v);
-            // live clear of error if becomes valid; do not block typing
             if (type === 'phone' && (touched || error)) {
               const normalized = v.replace(/[\s-]/g, '');
               const valid = /^(?:\+212[567]\d{8}|0[567]\d{8})$/.test(normalized);
@@ -183,10 +198,11 @@ const ChatInput = ({ onSubmit, language, placeholder, type = 'text' }: ChatInput
           placeholder={placeholder}
           className={cn(
             "flex-1 bg-transparent px-4 py-2",
-            "text-[16px] sm:text-base text-foreground placeholder:text-gray-400",
+            "text-[16px] sm:text-base placeholder:text-gray-400",
             "focus:outline-none transition-all touch-manipulation",
             isRtl ? "font-arabic text-right" : ""
           )}
+          style={{ color: '#1a2a4a' }}
           autoFocus
           autoComplete="off"
           autoCorrect="off"
@@ -209,12 +225,16 @@ const ChatInput = ({ onSubmit, language, placeholder, type = 'text' }: ChatInput
           type="submit"
           disabled={!value.trim()}
           className={cn(
-            "bg-gradient-to-br from-blue-600 to-blue-700 text-white rounded-full",
+            "text-white rounded-full",
             "w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0",
-            "transition-all hover:scale-105 active:scale-95 touch-manipulation shadow-md hover:shadow-lg",
-            "disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100",
+            "transition-all hover:scale-105 active:scale-95 touch-manipulation",
+            "disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100",
             "flex items-center justify-center"
           )}
+          style={{
+            background: 'linear-gradient(135deg, #1e3a6f 0%, #1a2f5a 100%)',
+            boxShadow: '0 4px 12px rgba(30, 58, 138, 0.2)',
+          }}
         >
           <Send className={cn("w-5 h-5", isRtl && "rotate-180")} />
         </button>

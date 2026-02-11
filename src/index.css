@@ -6,27 +6,27 @@
 
 @layer base {
   :root {
-    /* Al Atlassia Official Colors */
-    --background: 210 28% 98%;
-    --foreground: 215 25% 20%;
+    /* Al Atlassia Official Colors — refined palette */
+    --background: 215 30% 97%;
+    --foreground: 220 25% 18%;
 
     --card: 210 30% 99%;
-    --card-foreground: 215 25% 20%;
+    --card-foreground: 220 25% 18%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 215 25% 20%;
+    --popover-foreground: 220 25% 18%;
 
-    /* Primary - Official Navy Blue from Al Atlassia */
+    /* Primary - Official Navy Blue */
     --primary: 215 65% 28%;
     --primary-foreground: 0 0% 100%;
 
-    /* Secondary - Light Blue/Grey */
-    --secondary: 210 28% 95%;
+    /* Secondary */
+    --secondary: 212 30% 95%;
     --secondary-foreground: 215 25% 25%;
 
-    /* Muted - Soft Grey */
-    --muted: 210 24% 94%;
-    --muted-foreground: 215 15% 50%;
+    /* Muted */
+    --muted: 212 22% 93%;
+    --muted-foreground: 218 12% 48%;
 
     /* Accent - Coral/Pink from logo */
     --accent: 350 70% 55%;
@@ -35,42 +35,26 @@
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 210 20% 88%;
-    --input: 210 20% 90%;
-    --ring: 205 75% 42%;
+    --border: 214 18% 88%;
+    --input: 214 18% 88%;
+    --ring: 215 65% 28%;
 
     --radius: 0.75rem;
 
-    /* Success color */
     --success: 152 69% 40%;
     --success-foreground: 0 0% 100%;
 
-    /* Al Atlassia Brand Colors */
+    /* Brand Colors */
     --insurance-blue: 215 65% 28%;
     --insurance-blue-light: 215 65% 92%;
     --insurance-blue-dark: 215 65% 18%;
     --insurance-coral: 350 70% 55%;
     --insurance-coral-light: 350 70% 95%;
     --insurance-grey: 210 15% 96%;
-    --insurance-text: 215 25% 20%;
-    --insurance-text-muted: 215 15% 50%;
+    --insurance-text: 220 25% 18%;
+    --insurance-text-muted: 218 12% 48%;
 
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(210 60% 40%) 0%, hsl(210 65% 32%) 100%);
-    --gradient-hero:
-      radial-gradient(1200px 700px at 15% -10%, hsl(210 55% 96% / 0.95), transparent 60%),
-      radial-gradient(900px 600px at 90% 0%, hsl(205 65% 95% / 0.75), transparent 55%),
-      linear-gradient(180deg, hsl(210 35% 98%) 0%, hsl(210 30% 96%) 60%, hsl(210 30% 97%) 100%);
-    --gradient-card:
-      linear-gradient(180deg, hsl(0 0% 100% / 0.96) 0%, hsl(210 35% 98% / 0.96) 100%);
-
-    /* Shadows */
-    --shadow-sm: 0 1px 2px hsl(215 25% 20% / 0.06), 0 1px 6px hsl(215 25% 20% / 0.05);
-    --shadow-md: 0 6px 18px hsl(215 25% 20% / 0.08), 0 2px 6px hsl(215 25% 20% / 0.06);
-    --shadow-lg: 0 18px 38px hsl(215 25% 20% / 0.12), 0 6px 14px hsl(215 25% 20% / 0.08);
-    --shadow-glow: 0 0 22px hsl(210 70% 45% / 0.16);
-
-    /* Sidebar (if needed) */
+    /* Sidebar */
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
@@ -84,32 +68,23 @@
   .dark {
     --background: 215 28% 10%;
     --foreground: 210 20% 95%;
-
     --card: 215 25% 14%;
     --card-foreground: 210 20% 95%;
-
     --popover: 215 25% 14%;
     --popover-foreground: 210 20% 95%;
-
     --primary: 205 70% 55%;
     --primary-foreground: 0 0% 100%;
-
     --secondary: 215 25% 18%;
     --secondary-foreground: 210 20% 90%;
-
     --muted: 215 25% 18%;
     --muted-foreground: 215 15% 60%;
-
     --accent: 350 65% 60%;
     --accent-foreground: 0 0% 100%;
-
     --destructive: 0 62% 50%;
     --destructive-foreground: 0 0% 100%;
-
     --border: 215 25% 20%;
     --input: 215 25% 20%;
     --ring: 205 70% 55%;
-
     --insurance-blue: 205 70% 55%;
     --insurance-blue-light: 205 50% 20%;
     --insurance-blue-dark: 205 75% 45%;
@@ -127,19 +102,16 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', 'Noto Sans Arabic', sans-serif;
-    background-image:
-      radial-gradient(1200px 700px at 15% -10%, hsl(210 55% 96% / 0.95), transparent 60%),
-      radial-gradient(900px 600px at 90% 0%, hsl(205 65% 95% / 0.75), transparent 55%),
-      linear-gradient(180deg, hsl(210 35% 98%) 0%, hsl(210 30% 96%) 100%);
+    letter-spacing: -0.01em;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
   }
 
-  /* RTL Support for Arabic */
   [dir="rtl"] {
     font-family: 'Noto Sans Arabic', 'Inter', sans-serif;
     direction: rtl;
+    letter-spacing: 0;
   }
 
-  /* Enhanced RTL text alignment */
   [dir="rtl"] input,
   [dir="rtl"] textarea {
     text-align: right;
@@ -155,10 +127,10 @@
 }
 
 @layer components {
-  /* Chat Message Bubbles */
+  /* Chat Bubbles */
   .chat-bubble-bot {
-    @apply bg-card text-card-foreground rounded-2xl rounded-tl-md px-4 py-3;
-    box-shadow: var(--shadow-sm);
+    @apply bg-white text-card-foreground rounded-2xl rounded-tl-md px-4 py-3;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
   }
 
   .chat-bubble-user {
@@ -167,35 +139,18 @@
 
   /* Insurance Cards */
   .insurance-card {
-    @apply bg-card rounded-xl p-4 cursor-pointer transition-all duration-300;
-    box-shadow: var(--shadow-sm);
+    @apply bg-white rounded-xl p-4 cursor-pointer transition-all duration-300;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
   }
 
   .insurance-card:hover {
-    box-shadow: var(--shadow-md);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
     transform: translateY(-2px);
   }
 
   .insurance-card.selected {
     @apply ring-2 ring-primary;
-    box-shadow: var(--shadow-glow);
-  }
-
-  /* Language Selection Cards */
-  .language-card {
-    @apply bg-card rounded-2xl p-8 cursor-pointer transition-all duration-300 flex flex-col items-center justify-center gap-4;
-    box-shadow: var(--shadow-md);
-    background: var(--gradient-card);
-    border: 1px solid hsl(var(--border));
-  }
-
-  .language-card:hover {
-    box-shadow: var(--shadow-lg);
-    transform: translateY(-4px);
-  }
-
-  .language-card.selected {
-    @apply ring-2 ring-primary bg-primary/5;
+    box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
   }
 
   /* Partner Carousel */
@@ -207,23 +162,21 @@
     @apply opacity-100;
   }
 
-  /* Equal partner logos (wrapper + image) - ensures identical sizing and visual theme */
   .partner-wrapper {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     background: white;
     border-radius: 0.5rem;
-    padding: 0.375rem; /* 6px */
-    box-shadow: var(--shadow-md);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    padding: 0.375rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease;
   }
 
   .partner-wrapper:hover {
     transform: translateY(-2px) scale(1.02);
   }
 
-  /* CSS variable-driven logo size to keep both logos identical across breakpoints */
   :root {
     --partner-logo-size: 48px;
   }
@@ -231,11 +184,9 @@
   @media (min-width: 640px) {
     :root { --partner-logo-size: 56px; }
   }
-
   @media (min-width: 768px) {
     :root { --partner-logo-size: 64px; }
   }
-
   @media (min-width: 1024px) {
     :root { --partner-logo-size: 72px; }
   }
@@ -245,14 +196,14 @@
     height: var(--partner-logo-size);
     object-fit: contain;
     opacity: 0.95;
-    -webkit-filter: none;
     filter: none;
     display: block;
   }
 
   /* Typing Indicator */
   .typing-dot {
-    @apply w-2 h-2 bg-muted-foreground rounded-full;
+    @apply w-2 h-2 rounded-full;
+    background: hsl(218 12% 68%);
     animation: typing-bounce 1.4s ease-in-out infinite;
   }
 
@@ -261,295 +212,149 @@
   .typing-dot:nth-child(3) { animation-delay: 0.4s; }
 }
 
+/* ────── Utility shadows ────── */
 @layer utilities {
-  .gradient-primary {
-    background: var(--gradient-primary);
-  }
-
-  .gradient-hero {
-    background: var(--gradient-hero);
-  }
-
-  .gradient-card {
-    background: var(--gradient-card);
-  }
-
   .shadow-insurance-sm {
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.03);
   }
-
   .shadow-insurance-md {
-    box-shadow: var(--shadow-md);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.07), 0 2px 6px rgba(0,0,0,0.04);
   }
-
   .shadow-insurance-lg {
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.09), 0 5px 14px rgba(0,0,0,0.05);
   }
-
   .shadow-insurance-glow {
-    box-shadow: var(--shadow-glow);
+    box-shadow: 0 0 20px hsl(215 65% 28% / 0.12);
   }
 }
 
-/* Animations */
+/* ────── Animations ────── */
 @keyframes typing-bounce {
-  0%, 60%, 100% {
-    transform: translateY(0);
-  }
-  30% {
-    transform: translateY(-6px);
-  }
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-6px); }
 }
 
 @keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fade-in {
   from { opacity: 0; }
-  to { opacity: 1; }
+  to   { opacity: 1; }
 }
 
 @keyframes slide-in-left {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes slide-in-right {
-  from {
-    opacity: 0;
-    transform: translateX(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes slide-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes scale-in {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.94); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
 @keyframes pulse-ring {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.1);
-    opacity: 0.7;
-  }
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%      { transform: scale(1.1); opacity: 0.7; }
 }
 
 @keyframes carousel-scroll {
-  0% { transform: translateX(0); }
+  0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
 
 .animate-fade-in-up {
-  animation: fade-in-up 0.4s ease-out forwards;
+  animation: fade-in-up 0.55s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 }
-
 .animate-fade-in {
-  animation: fade-in 0.3s ease-out forwards;
+  animation: fade-in 0.4s ease-out forwards;
 }
-
 .animate-slide-in-left {
   animation: slide-in-left 0.4s ease-out forwards;
 }
-
 .animate-slide-in-right {
   animation: slide-in-right 0.4s ease-out forwards;
 }
-
 .animate-slide-in-up {
-  animation: slide-in-up 0.5s ease-out forwards;
+  animation: slide-in-up 0.55s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 }
-
 .animate-scale-in {
-  animation: scale-in 0.3s ease-out forwards;
+  animation: scale-in 0.4s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 }
-
 .animate-pulse-ring {
   animation: pulse-ring 2s ease-in-out infinite;
 }
-
 .animate-carousel {
   animation: carousel-scroll 20s linear infinite;
 }
 
-/* Staggered animation delays */
+/* Stagger */
 .animation-delay-100 { animation-delay: 100ms; }
 .animation-delay-200 { animation-delay: 200ms; }
 .animation-delay-300 { animation-delay: 300ms; }
 .animation-delay-400 { animation-delay: 400ms; }
 .animation-delay-500 { animation-delay: 500ms; }
 
-/* Custom scrollbar for chat */
+/* ────── Scrollbar ────── */
 .chat-scroll::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
-
 .chat-scroll::-webkit-scrollbar-track {
   background: transparent;
 }
-
 .chat-scroll::-webkit-scrollbar-thumb {
-  background: hsl(var(--border));
-  border-radius: 3px;
+  background: hsl(215 15% 82%);
+  border-radius: 4px;
 }
-
 .chat-scroll::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--muted-foreground));
+  background: hsl(215 15% 68%);
 }
 
-.chat-scroll {
-  background: var(--gradient-card);
-  box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.7);
-}
-/* Mobile Optimizations */
+/* ────── Mobile ────── */
 @layer utilities {
-  /* Safe area insets for mobile notch/home indicator */
-  .safe-top {
-    padding-top: env(safe-area-inset-top);
-  }
-  
-  .safe-bottom {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-  
-  .safe-left {
-    padding-left: env(safe-area-inset-left);
-  }
-  
-  .safe-right {
-    padding-right: env(safe-area-inset-right);
-  }
-  
-  .pb-safe {
-    padding-bottom: max(1rem, env(safe-area-inset-bottom));
-  }
-  
-  /* Disable text selection on touch devices for better UX */
-  .touch-action-pan-y {
-    touch-action: pan-y;
-  }
-  
-  /* Smooth scrolling with momentum on iOS */
-  .scroll-smooth-ios {
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  /* Prevent pull-to-refresh on mobile */
-  .overscroll-none {
-    overscroll-behavior: none;
-  }
+  .safe-top    { padding-top:    env(safe-area-inset-top); }
+  .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+  .safe-left   { padding-left:   env(safe-area-inset-left); }
+  .safe-right  { padding-right:  env(safe-area-inset-right); }
+  .pb-safe     { padding-bottom: max(1rem, env(safe-area-inset-bottom)); }
+  .touch-action-pan-y  { touch-action: pan-y; }
+  .scroll-smooth-ios   { -webkit-overflow-scrolling: touch; }
+  .overscroll-none     { overscroll-behavior: none; }
 }
 
-/* Mobile-specific adjustments */
 @media (max-width: 640px) {
-  /* Increase tap target sizes for mobile */
   button, a, input, select, textarea {
-    min-height: 44px; /* Apple's recommended minimum */
+    min-height: 44px;
   }
-  
-  /* Better text rendering on mobile */
   body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
   }
-  
-  /* Prevent zoom on input focus */
   input, select, textarea {
     font-size: 16px !important;
   }
 }
 
-/* Landscape mobile optimization */
 @media (max-height: 500px) and (orientation: landscape) {
   .chat-scroll {
     max-height: 60vh;
   }
 }
 
-/* Touch device optimizations */
 @media (hover: none) and (pointer: coarse) {
-  /* Remove hover effects on touch devices */
-  .hover\:scale-105:hover {
-    transform: none;
-  }
-  
-  /* Add active states instead */
-  .active\:scale-95:active {
-    transform: scale(0.95);
-  }
-  
-  /* Better button press feedback */
-  button:active {
-    opacity: 0.7;
-    transition: opacity 0.1s;
-  }
-}
-
-/* Footer animations */
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in {
-  animation: fade-in 0.8s ease-out forwards;
-  opacity: 0;
-}
-
-.animate-fade-in-up {
-  animation: fade-in-up 0.8s ease-out forwards;
-  opacity: 0;
+  .hover\:scale-105:hover { transform: none; }
+  .active\:scale-95:active { transform: scale(0.95); }
+  button:active { opacity: 0.7; transition: opacity 0.1s; }
 }

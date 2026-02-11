@@ -47,8 +47,8 @@ const Header = () => {
     <header
       className="sticky top-0 z-50 transition-all duration-400 ease-in-out"
       style={{
-        background: isCompact ? '#1e3a8a' : 'linear-gradient(to bottom, #1e3a8a, #1e40af, #1e3a8a)',
-        boxShadow: isCompact ? '0 8px 28px rgba(0,0,0,0.28)' : '0 1px 8px rgba(0,0,0,0.08)',
+        background: isCompact ? 'linear-gradient(135deg, #1a2f5a 0%, #1e3a6f 100%)' : 'linear-gradient(180deg, #1a2f5a 0%, #1e3a6f 50%, #1a2f5a 100%)',
+        boxShadow: isCompact ? '0 8px 32px rgba(26, 47, 90, 0.3)' : '0 2px 12px rgba(26, 47, 90, 0.1)',
       }}
     >
       <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 transition-all duration-300 ease-in-out" style={{ paddingTop: isCompact ? '0.25rem' : '0.5rem', paddingBottom: isCompact ? '0.25rem' : '0.5rem' }}>
@@ -59,7 +59,7 @@ const Header = () => {
             {/* Left Logo */}
             <div className="flex-shrink-0">
               <div className="transform hover:scale-105 transition-transform duration-300 flex items-center justify-center">
-                <div className="w-12 sm:w-16 md:w-20 lg:w-24 h-12 sm:h-16 md:h-20 lg:h-24 rounded-lg bg-white shadow-sm flex items-center justify-center">
+                <div className="w-12 sm:w-16 md:w-20 lg:w-24 h-12 sm:h-16 md:h-20 lg:h-24 rounded-lg flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.95)', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
                   <img
                     src={logoAlAtlassia}
                     alt="Al Atlassia Assurances"
@@ -96,7 +96,7 @@ const Header = () => {
             {/* Right Logo */}
             <div className="flex-shrink-0">
               <div className="transform hover:scale-105 transition-transform duration-300 flex items-center justify-center">
-                <div className="w-12 sm:w-16 md:w-20 lg:w-24 h-12 sm:h-16 md:h-20 lg:h-24 rounded-lg bg-white shadow-sm flex items-center justify-center">
+                <div className="w-12 sm:w-16 md:w-20 lg:w-24 h-12 sm:h-16 md:h-20 lg:h-24 rounded-lg flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.95)', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
                   <img
                     src={logoAtlantaSanad}
                     alt="Atlanta Sanad"
@@ -156,7 +156,7 @@ const Header = () => {
               onClick={scrollToTop}
               className="flex-shrink-0 transform hover:scale-105 transition-transform duration-300 flex items-center justify-center"
             >
-              <div className="w-10 sm:w-12 md:w-14 h-10 sm:h-12 md:h-14 rounded-lg bg-white shadow-sm flex items-center justify-center">
+              <div className="w-10 sm:w-12 md:w-14 h-10 sm:h-12 md:h-14 rounded-lg flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.95)', boxShadow: '0 2px 6px rgba(0,0,0,0.08)' }}>
                 <img
                   src={logoAlAtlassia}
                   alt="Al Atlassia Assurances"
@@ -199,7 +199,7 @@ const Header = () => {
 
             {/* Right Logo */}
             <div className="flex-shrink-0 transform hover:scale-105 transition-transform duration-300 flex items-center justify-center">
-              <div className="w-10 sm:w-12 md:w-14 h-10 sm:h-12 md:h-14 rounded-lg bg-white shadow-sm flex items-center justify-center">
+              <div className="w-10 sm:w-12 md:w-14 h-10 sm:h-12 md:h-14 rounded-lg flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.95)', boxShadow: '0 2px 6px rgba(0,0,0,0.08)' }}>
                 <img
                   src={logoAtlantaSanad}
                   alt="Atlanta Sanad"
@@ -253,7 +253,7 @@ const Header = () => {
       </div>
 
       {/* Gradient Accent Line */}
-      <div className="h-1 bg-gradient-to-r from-transparent via-blue-400 to-transparent"></div>
+      <div className="h-0.5" style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(148,163,184,0.4) 30%, rgba(148,163,184,0.5) 50%, rgba(148,163,184,0.4) 70%, transparent 100%)' }}></div>
     </header>
   );
 };
