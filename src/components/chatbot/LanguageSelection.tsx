@@ -33,7 +33,7 @@ const LanguageSelection = ({ onSelect }: LanguageSelectionProps) => {
         <div className="flex items-center gap-4 mb-6 animate-fade-in-up flex-wrap justify-center mt-4">
           <div className="flex items-center justify-center">
             <div
-              className="w-28 sm:w-32 md:w-40 h-28 sm:h-32 md:h-40 rounded-2xl flex items-center justify-center transition-all duration-300 ease-out"
+              className="w-24 sm:w-32 md:w-40 h-24 sm:h-32 md:h-40 rounded-2xl flex items-center justify-center transition-all duration-300 ease-out"
               style={{
                 background: '#ffffff',
                 boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
@@ -56,7 +56,7 @@ const LanguageSelection = ({ onSelect }: LanguageSelectionProps) => {
           />
           <div className="flex items-center justify-center">
             <div
-              className="w-28 sm:w-32 md:w-40 h-28 sm:h-32 md:h-40 rounded-2xl flex items-center justify-center transition-all duration-300 ease-out"
+              className="w-24 sm:w-32 md:w-40 h-24 sm:h-32 md:h-40 rounded-2xl flex items-center justify-center transition-all duration-300 ease-out"
               style={{
                 background: '#ffffff',
                 boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
@@ -74,7 +74,7 @@ const LanguageSelection = ({ onSelect }: LanguageSelectionProps) => {
         </div>
 
         {/* Brand Text */}
-        <div className="text-center mb-6 animate-fade-in-up animation-delay-100">
+        <div className="text-center mb-5 animate-fade-in-up animation-delay-100">
           <h1
             className="text-xl md:text-2xl font-bold mb-1"
             style={{
@@ -95,10 +95,11 @@ const LanguageSelection = ({ onSelect }: LanguageSelectionProps) => {
             الأطلسية للتأمينات
           </p>
           <p
-            className="mt-1 text-sm sm:text-sm md:text-sm font-arabic px-4 leading-tight max-w-xl mx-auto"
+            className="mt-1 text-sm sm:text-sm md:text-sm font-arabic px-4 max-w-xl mx-auto"
             style={{
               color: '#4a5568',
               fontWeight: 400,
+              lineHeight: '1.6',
             }}
           >
             وسيط تأمين خاضع لمقتضيات القانون رقم 17.99 المتعلق بمدونة التأمينات
@@ -149,7 +150,7 @@ const LanguageSelection = ({ onSelect }: LanguageSelectionProps) => {
                 dir="rtl"
                 style={{
                   color: '#1a2947',
-                  lineHeight: 1.8,
+                  lineHeight: '1.9',
                   fontWeight: 500,
                 }}
               >
@@ -178,7 +179,7 @@ const LanguageSelection = ({ onSelect }: LanguageSelectionProps) => {
         </div>
 
         {/* Language hint */}
-        <div className="mb-4 animate-fade-in-up animation-delay-300 flex items-center gap-3">
+        <div className="mb-4 animate-fade-in-up animation-delay-300 flex items-center justify-center gap-3">
           <div
             className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300"
             style={{
