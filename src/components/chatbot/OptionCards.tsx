@@ -81,11 +81,12 @@ const OptionCards = ({
   columns = 2,
   preSelected = []
 }: OptionCardsProps) => {
+  const [selected, setSelected] = useState<string[]>(preSelected);
+
   // Safety check for invalid options
   if (!Array.isArray(options) || options.length === 0) return null;
 
   const isRtl = language === 'ar';
-  const [selected, setSelected] = useState<string[]>(preSelected);
 
   const handleClick = (id: string) => {
     if (multiSelect) {
@@ -106,156 +107,93 @@ const OptionCards = ({
 
   // Special grid for time slot pills
   const isTimeSlot = options.length === 8 && options.every(o => /^\d{2}:\d{2}–\d{2}:\d{2}$/.test(o.label));
+  // Short labels (vehicles, days...) fit 3 per row even on small phones
+  const shortLabels = options.length > 4 && options.every(o => o.label.length <= 18);
   const gridCols = isTimeSlot
     ? 'grid-cols-3 sm:grid-cols-4'
-    : columns === 2
+    : shortLabels
+      ? 'grid-cols-3'
+      : columns === 2
       ? 'grid-cols-2'
       : columns === 3
-        ? 'grid-cols-2 md:grid-cols-3'
+        ? 'grid-cols-2 sm:grid-cols-3'
         : 'grid-cols-2 md:grid-cols-4';
 
   const getIcon = (optionId: string) => {
     const iconOrPath = iconMap[optionId];
-    
+
     if (!iconOrPath) return null;
-    
+
     if (typeof iconOrPath === 'string') {
-      return (
-        <img 
-          src={iconOrPath} 
-          alt={optionId}
-          className="w-6 h-6 object-contain"
-        />
-      );
-    } else {
-      const IconComponent = iconOrPath;
-      return <IconComponent className="w-6 h-6" style={{ color: '#1e3a6f' }} />;
+      return <img src={iconOrPath} alt="" aria-hidden="true" className="w-5 h-5 object-contain" />;
     }
+    const IconComponent = iconOrPath;
+    return <IconComponent className="w-5 h-5" style={{ color: '#1e3a6f' }} aria-hidden="true" />;
   };
 
   return (
-    <div 
-      className={cn("w-full animate-fade-in-up", isRtl ? "font-arabic" : "")}
+    <div
+      className={cn("w-full flex flex-col min-h-0 animate-fade-in-up", isRtl ? "font-arabic" : "")}
       dir={isRtl ? "rtl" : "ltr"}
     >
-      <div className={cn("grid gap-1.5", gridCols)}>
-        {options.map((option, index) => {
+      {multiSelect && (
+        <p className="text-xs mb-1 px-0.5 flex-shrink-0" style={{ color: '#64748b' }}>
+          {isRtl ? 'يمكنك اختيار عدة إجابات' : 'Plusieurs choix possibles'}
+        </p>
+      )}
+
+      <div className="min-h-0 overflow-y-auto chat-scroll -mx-1 px-1 pt-2 pb-1">
+      <div className={cn("grid gap-2", gridCols)} role="group">
+        {options.map((option) => {
           const isSelected = selected.includes(option.id);
           const isFeatured = featuredOptions.includes(option.id);
-          
+          const icon = !isTimeSlot && getIcon(option.id);
+
           return (
             <button
               key={option.id}
+              type="button"
               onClick={() => handleClick(option.id)}
+              aria-pressed={multiSelect ? isSelected : undefined}
               className={cn(
-                isTimeSlot
-                  ? [
-                      "min-h-0 h-9 px-2.5 sm:px-3 rounded-full text-sm font-medium flex items-center justify-center transition-all duration-200",
-                      "active:scale-95 animate-scale-in",
-                    ]
-                  : [
-                      "relative min-h-[48px] touch-manipulation rounded-xl p-1.5 text-center transition-all duration-300 active:scale-95 animate-scale-in",
-                    ],
-                isRtl && "font-arabic"
+                'option-card animate-scale-in touch-manipulation',
+                isTimeSlot ? 'option-card--pill' : 'option-card--tile',
+                isSelected && 'is-selected',
+                multiSelect && !isTimeSlot && 'has-check',
+                isFeatured && !isSelected && 'is-featured',
+                isRtl && 'font-arabic',
               )}
-              style={
-                isTimeSlot
-                  ? {
-                      background: isSelected ? 'rgba(30, 58, 138, 0.06)' : '#ffffff',
-                      color: '#1e3a6f',
-                      border: isSelected ? '1.5px solid #1e3a6f' : '1px solid rgba(0,0,0,0.08)',
-                      boxShadow: isSelected ? '0 2px 8px rgba(30,58,138,0.1)' : '0 1px 3px rgba(0,0,0,0.04)',
-                    }
-                  : isFeatured && !isSelected
-                    ? {
-                        background: 'linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%)',
-                        border: '2px solid #86efac',
-                        boxShadow: '0 4px 16px rgba(34,197,94,0.1), 0 0 0 3px rgba(34,197,94,0.06)',
-                      }
-                    : isSelected
-                      ? {
-                          background: 'rgba(30, 58, 138, 0.04)',
-                          border: '2px solid #1e3a6f',
-                          boxShadow: '0 4px 14px rgba(30, 58, 138, 0.12)',
-                        }
-                      : {
-                          background: '#ffffff',
-                          border: '2px solid rgba(0,0,0,0.06)',
-                          boxShadow: '0 1px 4px rgba(0,0,0,0.04)',
-                        }
-              }
-              onMouseEnter={(e) => {
-                if (!isTimeSlot && !isSelected && !isFeatured) {
-                  e.currentTarget.style.boxShadow = '0 4px 14px rgba(0,0,0,0.08)';
-                  e.currentTarget.style.borderColor = 'rgba(30, 58, 138, 0.2)';
-                }
-              }}
-              onMouseLeave={(e) => {
-                if (!isTimeSlot && !isSelected && !isFeatured) {
-                  e.currentTarget.style.boxShadow = '0 1px 4px rgba(0,0,0,0.04)';
-                  e.currentTarget.style.borderColor = 'rgba(0,0,0,0.06)';
-                }
-              }}
             >
               {!isTimeSlot && isFeatured && !isSelected && (
-                <div
-                  className="absolute -top-2 -right-2 text-white text-[8px] px-2 py-0.5 rounded-full font-semibold animate-pulse"
-                  style={{
-                    background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)',
-                    boxShadow: '0 2px 6px rgba(34,197,94,0.3)',
-                  }}
-                >
-                  {language === 'ar' ? 'جديد' : 'NEW'}
-                </div>
+                <span className="option-card__badge">
+                  {isRtl ? 'جديد' : 'NEW'}
+                </span>
               )}
-              {!isTimeSlot && multiSelect && isSelected && (
-                <div
-                  className="absolute top-1.5 right-1.5 w-5 h-5 rounded-full flex items-center justify-center"
-                  style={{
-                    background: 'linear-gradient(135deg, #1e3a6f 0%, #1a2f5a 100%)',
-                    boxShadow: '0 2px 6px rgba(30,58,138,0.25)',
-                  }}
-                >
-                  <Check className="w-3 h-3 text-white" />
-                </div>
+              {!isTimeSlot && multiSelect && (
+                <span className="option-card__check" aria-hidden="true">
+                  {isSelected && <Check className="w-3 h-3 text-white" />}
+                </span>
               )}
-              {!isTimeSlot && getIcon(option.id) && (
-                <div
-                  className="flex items-center justify-center mx-auto mb-1 w-7 h-7 rounded-full"
-                  style={{
-                    background: isSelected ? 'rgba(30, 58, 138, 0.08)' : 'rgba(30, 58, 138, 0.04)',
-                  }}
-                >
-                  {getIcon(option.id)}
-                </div>
-              )}
-              <div
-                className={cn(
-                  isTimeSlot
-                    ? "text-sm font-semibold"
-                    : "font-semibold text-[9px] sm:text-[10px] whitespace-pre-line",
-                  isRtl && "font-arabic"
-                )}
-                style={{ color: '#1e3a6f' }}
-              >
-                {option.label}
-              </div>
+              {icon && <span className="option-card__icon">{icon}</span>}
+              <span className="option-card__label">{option.label}</span>
             </button>
           );
         })}
       </div>
-      
-      {multiSelect && selected.length > 0 && (
-        <button
-          onClick={handleConfirm}
-          className="mt-3 w-full text-white rounded-full py-2.5 px-4 font-medium transition-all hover:scale-[1.01] active:scale-[0.98]"
-          style={{
-            background: 'linear-gradient(135deg, #1e3a6f 0%, #1a2f5a 100%)',
-            boxShadow: '0 6px 18px rgba(30, 58, 138, 0.2)',
-          }}
-        >
-          {isRtl ? 'متابعة' : 'Continuer'}
-        </button>
+      </div>
+
+      {multiSelect && (
+        <div className="flex-shrink-0 pt-3">
+          <button
+            type="button"
+            onClick={handleConfirm}
+            disabled={selected.length === 0}
+            className="btn-primary w-full"
+          >
+            {isRtl ? 'متابعة' : 'Continuer'}
+            {selected.length > 0 && <span className="btn-primary__count">{selected.length}</span>}
+          </button>
+        </div>
       )}
     </div>
   );

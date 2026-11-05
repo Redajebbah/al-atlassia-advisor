@@ -45,6 +45,7 @@ const Header = () => {
 
   return (
     <header
+      id="top"
       className="sticky top-0 z-50 transition-all duration-400 ease-in-out"
       style={{
         background: isCompact ? 'linear-gradient(135deg, #1a2f5a 0%, #1e3a6f 100%)' : 'linear-gradient(180deg, #1a2f5a 0%, #1e3a6f 50%, #1a2f5a 100%)',
@@ -117,28 +118,28 @@ const Header = () => {
           >
             <nav className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-6 lg:gap-8">
               <a
-                href="#"
+                href="#top"
                 className="text-blue-100 hover:text-white transition-colors duration-300 relative group"
               >
                 <span>Accueil</span>
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
               </a>
               <a
-                href="#"
+                href="#assistant"
                 className="text-blue-100 hover:text-white transition-colors duration-300 relative group"
               >
                 <span>Services</span>
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
               </a>
               <a
-                href="#"
+                href="#a-propos"
                 className="text-blue-100 hover:text-white transition-colors duration-300 relative group"
               >
                 <span>À Propos</span>
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
               </a>
               <a
-                href="#"
+                href="#contact"
                 className="text-blue-100 hover:text-white transition-colors duration-300 relative group"
               >
                 <span>Contact</span>
@@ -154,6 +155,7 @@ const Header = () => {
             {/* Left Logo */}
             <button
               onClick={scrollToTop}
+              aria-label="Retour en haut"
               className="flex-shrink-0 transform hover:scale-105 transition-transform duration-300 flex items-center justify-center"
             >
               <div className="w-10 sm:w-12 md:w-14 h-10 sm:h-12 md:h-14 rounded-lg flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.95)', boxShadow: '0 2px 6px rgba(0,0,0,0.08)' }}>
@@ -168,28 +170,28 @@ const Header = () => {
             {/* Center: Compact Navigation */}
             <nav className="hidden md:flex items-center justify-center gap-3 lg:gap-5 flex-1">
               <a
-                href="#"
+                href="#top"
                 className="text-xs lg:text-sm text-blue-100 hover:text-white transition-colors duration-300 relative group whitespace-nowrap"
               >
                 <span>Accueil</span>
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
               </a>
               <a
-                href="#"
+                href="#assistant"
                 className="text-xs lg:text-sm text-blue-100 hover:text-white transition-colors duration-300 relative group whitespace-nowrap"
               >
                 <span>Services</span>
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
               </a>
               <a
-                href="#"
+                href="#a-propos"
                 className="text-xs lg:text-sm text-blue-100 hover:text-white transition-colors duration-300 relative group whitespace-nowrap"
               >
                 <span>À Propos</span>
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
               </a>
               <a
-                href="#"
+                href="#contact"
                 className="text-xs lg:text-sm text-blue-100 hover:text-white transition-colors duration-300 relative group whitespace-nowrap"
               >
                 <span>Contact</span>
@@ -211,6 +213,8 @@ const Header = () => {
             {/* Mobile Menu Toggle */}
             <button
               onClick={() => setIsOpen(!isOpen)}
+              aria-label={isOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
+              aria-expanded={isOpen}
               className="md:hidden text-white hover:text-blue-200 transition-colors flex-shrink-0"
             >
               {isOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
@@ -222,27 +226,27 @@ const Header = () => {
         {/* Mobile Menu (works in both states) */}
         {isOpen && (
           <div className="md:hidden mt-3 pt-3 border-t border-blue-700/50">
-            <nav className="flex flex-col gap-3">
+            <nav className="flex flex-col gap-3" onClick={() => setIsOpen(false)}>
               <a
-                href="#"
+                href="#top"
                 className="text-blue-100 hover:text-white transition-colors duration-300 py-2"
               >
                 Accueil
               </a>
               <a
-                href="#"
+                href="#assistant"
                 className="text-blue-100 hover:text-white transition-colors duration-300 py-2"
               >
                 Services
               </a>
               <a
-                href="#"
+                href="#a-propos"
                 className="text-blue-100 hover:text-white transition-colors duration-300 py-2"
               >
                 À Propos
               </a>
               <a
-                href="#"
+                href="#contact"
                 className="text-blue-100 hover:text-white transition-colors duration-300 py-2"
               >
                 Contact

@@ -22,13 +22,13 @@ const Index = () => {
       {/* Professional Header */}
       <Header />
       
-      {/* ZONE 1: Chatbot - Separated with padding */}
-      <div className="flex-1 overflow-hidden mb-16">
+      {/* ZONE 1: Chatbot */}
+      <div className="flex-1">
         <ChatContainer language={language} onReset={handleReset} />
       </div>
-      
-      {/* ZONE 2: Page Content - Clear separation */}
-      <div className="mt-20 pt-8" style={{ borderTop: '2px solid rgba(30, 58, 138, 0.08)', background: 'linear-gradient(180deg, #f4f6fa 0%, #ffffff 100%)' }}>
+
+      {/* ZONE 2: Page Content */}
+      <div className="pt-6" style={{ borderTop: '2px solid rgba(30, 58, 138, 0.08)', background: 'linear-gradient(180deg, #f4f6fa 0%, #ffffff 100%)' }}>
         <PartnerCarousel />
         <Footer language={language} />
       </div>

@@ -42,7 +42,7 @@ const Footer = ({ language }: FooterProps) => {
   return (
     <div className="w-full h-full">
       {/* Footer */}
-      <footer className="w-full h-fit bg-gradient-to-br from-blue-900 to-blue-800 text-white relative overflow-hidden">
+      <footer id="a-propos" className="w-full h-fit bg-gradient-to-br from-blue-900 to-blue-800 text-white relative overflow-hidden">
         {/* SVG Pattern Overlay */}
         <div className="absolute inset-0 opacity-5">
           <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
@@ -127,7 +127,7 @@ const Footer = ({ language }: FooterProps) => {
             {/* Column 2: (Services section removed as per instructions) */}
 
             {/* Column 3: Contact */}
-            <div className="space-y-4 animate-fade-in-up" style={{ animationDelay: '300ms' }}>
+            <div id="contact" className="space-y-4 animate-fade-in-up scroll-mt-24" style={{ animationDelay: '300ms' }}>
               <h3 className={cn("text-lg font-semibold text-white mb-4", isRtl && "font-arabic")} dir={isRtl ? "rtl" : "ltr"}>
                 {isRtl ? 'اتصل بنا' : 'Contactez-nous'}
               </h3>
