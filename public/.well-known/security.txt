@@ -1,0 +1,4 @@
+Contact: mailto:aalatlassia@gmail.com
+Expires: 2027-11-05T00:00:00.000Z
+Preferred-Languages: fr, ar, en
+Canonical: https://al-atlassia-advisor.vercel.app/.well-known/security.txt

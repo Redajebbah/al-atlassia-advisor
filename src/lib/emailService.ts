@@ -18,6 +18,10 @@ interface EmailData {
   language: Language;
 }
 
+// Escape user input before inserting it into HTML
+const escapeHtml = (value: unknown): string =>
+  String(value ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] as string));
+
 // Translate insurance types
 const translateInsuranceType = (type: InsuranceType, lang: Language): string => {
   const translations: Record<InsuranceType, { fr: string; ar: string }> = {
@@ -224,23 +228,23 @@ export const generateEmailHTML = (emailData: EmailData): string => {
     <div class="section">
       <div class="section-title">📝 Détails de la demande</div>
       <div class="muted">
-        ${insuranceData.activityType ? `نشاط الشركة: ${insuranceData.activityType}<br/><br/>` : ''}
-        ${formatInsuranceDetails(selectedInsurance, insuranceData, language).split('\n').map(line => line ? `${line}<br/>` : '').join('')}
+        ${insuranceData.activityType ? `نشاط الشركة: ${escapeHtml(insuranceData.activityType)}<br/><br/>` : ''}
+        ${formatInsuranceDetails(selectedInsurance, insuranceData, language).split('\n').map(line => line ? `${escapeHtml(line)}<br/>` : '').join('')}
       </div>
     </div>
 
     <div class="section">
       <div class="section-title">👤 Informations Client</div>
-      <div class="muted">Nom complet: ${clientInfo.fullName || 'N/A'}</div>
-      <div class="muted" style="margin-top:8px;">Téléphone: ${clientInfo.phone || 'N/A'}</div>
-      <div class="muted" style="margin-top:8px;">Ville: ${clientInfo.city || 'N/A'}</div>
+      <div class="muted">Nom complet: ${escapeHtml(clientInfo.fullName || 'N/A')}</div>
+      <div class="muted" style="margin-top:8px;">Téléphone: ${escapeHtml(clientInfo.phone || 'N/A')}</div>
+      <div class="muted" style="margin-top:8px;">Ville: ${escapeHtml(clientInfo.city || 'N/A')}</div>
       <div class="muted" style="margin-top:8px;">Moyen de contact préféré: ${formatContactPreference(clientInfo.contactPreference, language)}</div>
       <div class="muted" style="margin-top:8px;">اليوم المفضل للتواصل: ${clientInfo.preferredDay ? t(clientInfo.preferredDay as any, language) : 'N/A'}</div>
       <div class="muted" style="margin-top:8px;">الساعة المفضلة للتواصل: ${(() => {
       const ph = clientInfo.preferredHour;
       if (!ph) return 'N/A';
       const found = getHourOptions(language).find(h => h.id === ph);
-      return found ? found.label : ph;
+      return found ? found.label : escapeHtml(ph);
     })()}</div>
     </div>
 
