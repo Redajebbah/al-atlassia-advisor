@@ -1,246 +1,160 @@
-import { useState, useEffect } from 'react';
 import { Language } from '@/types/chatbot';
 import { cn } from '@/lib/utils';
-import { 
-  Facebook, 
-  Instagram, 
-  Linkedin, 
-  Youtube, 
-  Mail, 
-  Phone, 
-  Smartphone, 
+import {
+  Facebook,
+  Instagram,
+  Linkedin,
+  Youtube,
+  Mail,
+  Phone,
+  Smartphone,
   MessageCircle,
-  Shield,
-  Car,
-  Home,
-  HeartPulse,
-  Heart,
-  Building2
+  Globe,
+  MapPin,
+  ArrowUpRight,
 } from 'lucide-react';
-import logoAlAtlassia from '@/assets/logo-al-atlassia.jpg';
+import logoAlAtlassia from '@/assets/logo-al-atlassia-cropped.jpg';
+import logoAtlantaSanad from '@/assets/logo-atlanta-sanad-cropped.png';
 
 interface FooterProps {
   language: Language;
 }
 
+const socials = [
+  { icon: Facebook, href: 'https://www.facebook.com/alatlassia.assurance', label: 'Facebook' },
+  { icon: Instagram, href: 'https://www.instagram.com/alatlassia_assurances', label: 'Instagram' },
+  { icon: Linkedin, href: 'https://www.linkedin.com/company/al-atlassia-assurances', label: 'LinkedIn' },
+  { icon: Youtube, href: 'https://www.youtube.com/@alatlassiaassurances', label: 'YouTube' },
+];
+
+const MAPS_URL = 'https://maps.google.com/?q=35.00274163192203,-5.910795861057443';
+
 const Footer = ({ language }: FooterProps) => {
   const isRtl = language === 'ar';
-  const [isVisible, setIsVisible] = useState(false);
+  const year = new Date().getFullYear();
 
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
+  const contacts = [
+    { icon: Mail, label: isRtl ? 'البريد الإلكتروني' : 'E-mail', value: 'aalatlassia@gmail.com', href: 'mailto:aalatlassia@gmail.com' },
+    { icon: Phone, label: isRtl ? 'الهاتف الثابت' : 'Téléphone fixe', value: '05 39 91 93 54', href: 'tel:+212539919354' },
+    { icon: Smartphone, label: isRtl ? 'واتساب / الهاتف المحمول' : 'WhatsApp / Mobile', value: '06 62 15 37 57', href: 'tel:+212662153757' },
+    { icon: MessageCircle, label: isRtl ? 'واتساب' : 'WhatsApp', value: '06 66 22 84 37', href: 'https://wa.me/212666228437', external: true },
+  ];
 
-  const services = [
-    { id: 'auto', icon: Car, label: isRtl ? 'تأمين السيارات' : 'Assurance Auto' },
-    { id: 'habitation', icon: Home, label: isRtl ? 'تأمين السكن' : 'Assurance Habitation' },
-    { id: 'sante', icon: HeartPulse, label: isRtl ? 'تأمين الصحة' : 'Assurance Santé' },
-    { id: 'vie', icon: Heart, label: isRtl ? 'تأمين الحياة' : 'Assurance Vie' },
-    { id: 'entreprise', icon: Building2, label: isRtl ? 'تأمين الشركات' : 'Assurance Entreprise' },
+  const emergencies = [
+    { name: 'Atlanta Sanad Assistance', number: '05 22 46 46 44' },
+    { name: 'Assistance Taxi', number: '05 22 95 75 39' },
   ];
 
   return (
-    <div className="w-full h-full">
-      {/* Footer */}
-      <footer id="a-propos" className="w-full h-fit bg-gradient-to-br from-blue-900 to-blue-800 text-white relative overflow-hidden">
-        {/* SVG Pattern Overlay */}
-        <div className="absolute inset-0 opacity-5">
-          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                <circle cx="20" cy="20" r="1" fill="white" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#grid)" />
-          </svg>
-        </div>
-
-        <div className={cn(
-          "w-full mx-auto sm:px-10 px-4 pb-10 relative z-10 transition-all duration-700",
-          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        )}>
-          <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-8 pt-12">
-            {/* Column 1: Company */}
-            <div className="space-y-4 animate-fade-in-up" style={{ animationDelay: '0ms' }}>
-              <div className="flex items-center gap-3 animate-fade-in-up" style={{ animationDelay: '0ms' }}>
-                <div className="partner-wrapper">
-                  <img
-                    className="partner-logo-equal"
-                    src={logoAlAtlassia}
-                    alt="Al Atlassia Assurances"
-                  />
-                </div>
-                <div>
-                  <h3 className={cn("text-xl font-bold text-white", isRtl && "font-arabic")} dir={isRtl ? "rtl" : "ltr"}>
-                    {isRtl ? 'الأطلسية للتأمينات' : 'Al Atlassia'}
-                  </h3>
-                  <p className="text-blue-200 text-sm">
-                    {isRtl ? 'طريقة جديدة في التأمين' : 'Une nouvelle approche de l’assurance'}
-                  </p>
-                </div>
-              </div>
-              
-              <p className={cn("text-blue-100 text-sm leading-relaxed animate-fade-in-up", isRtl && "font-arabic text-right")} dir={isRtl ? "rtl" : "ltr"} style={{ animationDelay: '100ms' }}>
-                {isRtl 
-                  ? 'الأطلسية للتأمينات، نقدم حلول تأمين شاملة لحماية عائلتك وممتلكاتك وأعمالك.'
-                  : "Al Atlassia Assurances, société leader dans le secteur de l'assurance au Maroc, offrant des solutions complètes pour protéger votre famille, vos biens et vos entreprises."
-                }
-              </p>
-
-              {/* Social Media Icons with Hover Animation */}
-              <div className="flex gap-3 pt-2 animate-fade-in-up" style={{ animationDelay: '200ms' }}>
-                <a 
-                  href="https://www.facebook.com/alatlassia.assurance" 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-blue-800/50 border border-blue-600 flex justify-center items-center hover:scale-110 hover:rotate-3 hover:bg-blue-700 transition-all duration-300"
-                >
-                  <Facebook className="w-5 h-5" />
-                </a>
-                <a 
-                  href="https://www.instagram.com/alatlassia_assurances" 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-blue-800/50 border border-blue-600 flex justify-center items-center hover:scale-110 hover:rotate-3 hover:bg-blue-700 transition-all duration-300"
-                >
-                  <Instagram className="w-5 h-5" />
-                </a>
-                <a 
-                  href="https://www.linkedin.com/company/al-atlassia-assurances" 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-blue-800/50 border border-blue-600 flex justify-center items-center hover:scale-110 hover:rotate-3 hover:bg-blue-700 transition-all duration-300"
-                >
-                  <Linkedin className="w-5 h-5" />
-                </a>
-                <a 
-                  href="https://www.youtube.com/@alatlassiaassurances" 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-blue-800/50 border border-blue-600 flex justify-center items-center hover:scale-110 hover:rotate-3 hover:bg-blue-700 transition-all duration-300"
-                >
-                  <Youtube className="w-5 h-5" />
-                </a>
-              </div>
+    <footer
+      id="a-propos"
+      dir={isRtl ? 'rtl' : 'ltr'}
+      className={cn('relative text-white', isRtl && 'font-arabic')}
+      style={{ background: 'linear-gradient(180deg, #1e3a6f 0%, #1a2f5a 100%)' }}
+    >
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-12 pb-8">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr] lg:gap-8">
+          {/* Brand */}
+          <div>
+            <div className="flex items-center gap-3">
+              <span className="footer-logo"><img src={logoAlAtlassia} alt="" className="w-[84%] h-[84%] object-contain" /></span>
+              <span className="footer-logo"><img src={logoAtlantaSanad} alt="Atlanta Sanad" className="w-[80%] h-[80%] object-contain" /></span>
             </div>
-
-            {/* Column 2: (Services section removed as per instructions) */}
-
-            {/* Column 3: Contact */}
-            <div id="contact" className="space-y-4 animate-fade-in-up scroll-mt-24" style={{ animationDelay: '300ms' }}>
-              <h3 className={cn("text-lg font-semibold text-white mb-4", isRtl && "font-arabic")} dir={isRtl ? "rtl" : "ltr"}>
-                {isRtl ? 'اتصل بنا' : 'Contactez-nous'}
-              </h3>
-              
-              <div className="space-y-3">
-                {/* Email */}
-                <a 
-                  href="mailto:aalatlassia@gmail.com" 
-                  className="group flex items-center gap-3 p-3 rounded-lg hover:bg-blue-800/50 transition-all duration-300"
-                >
-                  <Mail className="w-5 h-5 text-blue-400 group-hover:scale-110 transition-transform duration-300" />
-                  <div>
-                    <p className={cn("text-xs text-blue-200", isRtl && "font-arabic")}>{isRtl ? 'البريد الإلكتروني' : 'E-mail'}</p>
-                    <p className="text-sm text-white">aalatlassia@gmail.com</p>
-                  </div>
-                </a>
-
-                {/* Fixed Phone */}
-                <div className="group flex items-center gap-3 p-3 rounded-lg hover:bg-blue-800/50 transition-all duration-300">
-                  <Phone className="w-5 h-5 text-blue-400 group-hover:scale-110 transition-transform duration-300" />
-                  <div>
-                    <p className={cn("text-xs text-blue-200", isRtl && "font-arabic")}>{isRtl ? 'الهاتف الثابت' : 'Téléphone fixe'}</p>
-                    <p className="text-sm text-white">05 39 91 93 54</p>
-                  </div>
-                </div>
-
-                {/* Mobile Phone */}
-                <div className="group flex items-center gap-3 p-3 rounded-lg hover:bg-blue-800/50 transition-all duration-300">
-                  <Smartphone className="w-5 h-5 text-blue-400 group-hover:scale-110 transition-transform duration-300" />
-                  <div>
-                    <p className={cn("text-xs text-blue-200", isRtl && "font-arabic")}>{isRtl ? 'واتساب/ الهاتف المحمول' : 'WhatsApp / Téléphone mobile'}</p>
-                    <p className="text-sm text-white">06 62 15 37 57</p>
-                  </div>
-                </div>
-
-                {/* WhatsApp */}
-                <div className="group flex items-center gap-3 p-3 rounded-lg hover:bg-blue-800/50 transition-all duration-300">
-                  <MessageCircle className="w-5 h-5 text-blue-400 group-hover:scale-110 transition-transform duration-300" />
-                  <div>
-                    <p className={cn("text-xs text-blue-200", isRtl && "font-arabic")}>{isRtl ? 'واتساب' : 'WhatsApp'}</p>
-                    <p className="text-sm text-white">06 66 22 84 37</p>
-                  </div>
-                </div>
-
-                {/* Website link with label, aligned and localized */}
-                <div className="group flex items-center gap-3 p-3 rounded-lg hover:bg-blue-800/50 transition-all duration-300">
-                  <Shield className="w-5 h-5 text-blue-400 group-hover:scale-110 transition-transform duration-300" />
-                  <div>
-                    <p className={cn("text-xs text-blue-200", isRtl && "font-arabic")}>{isRtl ? 'الموقع الإلكتروني' : 'Site web'}</p>
-                    <a href="https://www.alatlassia-assurances.com" target="_blank" rel="noopener noreferrer" className="text-sm text-blue-300 hover:text-white underline break-all">
-                      www.alatlassia-assurances.com
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Column 4: Emergency Assistance */}
-            <div className="space-y-4 animate-fade-in-up" style={{ animationDelay: '450ms' }}>
-              <h3 className={cn("text-lg font-semibold text-white mb-4", isRtl && "font-arabic")} dir={isRtl ? "rtl" : "ltr"}>
-                {isRtl ? 'المساعدة الطارئة' : 'Assistance d\'urgence'}
-              </h3>
-              
-              {/* Emergency Card with Gradient */}
-              <div className="bg-gradient-to-br from-red-600 to-red-700 rounded-xl p-6 shadow-xl hover:scale-105 transition-transform duration-300">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="relative">
-                    <span className="flex h-3 w-3">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
-                    </span>
-                  </div>
-                  <p className={cn("text-white font-bold text-sm", isRtl && "font-arabic")}>
-                    {isRtl ? 'متاح 24/7' : 'Disponible 24/7'}
-                  </p>
-                </div>
-                
-                <p className={cn("text-white text-xs mb-4", isRtl && "font-arabic text-right")} dir={isRtl ? "rtl" : "ltr"}>
-                  {isRtl ? 'في حالة عطب أو حادث' : 'En cas de panne ou d\'accident'}
-                </p>
-                
-                <div className="space-y-3">
-                  <a href="tel:0522464644" className="block">
-                    <p className="text-red-100 text-xs mb-1">ATLANTASANAD</p>
-                    <p className="text-white font-bold text-lg">05 22 46 46 44</p>
-                  </a>
-                  
-                  <div className="border-t border-red-500 my-2"></div>
-                  
-                  <a href="tel:0522957539" className="block">
-                    <p className="text-red-100 text-xs mb-1">ASSISTANCE TAXI</p>
-                    <p className="text-white font-bold text-lg">05 22 95 75 39</p>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Gradient Line Separator */}
-          <div className="mt-12 mb-6 h-px bg-gradient-to-r from-blue-400 via-white to-blue-400 opacity-30 animate-fade-in" style={{ animationDelay: '600ms' }}></div>
-
-          {/* Copyright */}
-          <div className="text-center animate-fade-in" style={{ animationDelay: '700ms' }}>
-            <p className={cn("text-blue-200 text-sm", isRtl && "font-arabic")}>
-              {isRtl 
-                ? 'حقوق النشر © 2024 الأطلسية للتأمينات. جميع الحقوق محفوظة'
-                : 'Copyright © 2024 Al Atlassia Assurances. Tous droits réservés'
-              }
+            <p className="mt-4 text-lg font-semibold">{isRtl ? 'الأطلسية للتأمينات' : 'Al Atlassia Assurances'}</p>
+            <p className="text-sm footer-muted">{isRtl ? 'طريقة جديدة في التأمين' : 'Une nouvelle approche de l’assurance'}</p>
+            <p className="mt-4 text-sm leading-relaxed footer-muted max-w-sm">
+              {isRtl
+                ? 'الأطلسية للتأمينات، نقدم حلول تأمين شاملة لحماية عائلتك وممتلكاتك وأعمالك.'
+                : "Al Atlassia Assurances, société leader dans le secteur de l'assurance au Maroc, offrant des solutions complètes pour protéger votre famille, vos biens et vos entreprises."}
             </p>
+            <div className="mt-5 flex gap-2">
+              {socials.map(s => (
+                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label} className="footer-social">
+                  <s.icon className="w-[18px] h-[18px]" />
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Contact */}
+          <div id="contact" className="scroll-mt-24">
+            <h3 className="footer-title">{isRtl ? 'اتصل بنا' : 'Contactez-nous'}</h3>
+            <ul className="space-y-1">
+              {contacts.map(c => (
+                <li key={c.value}>
+                  <a
+                    href={c.href}
+                    {...(c.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                    className="footer-row"
+                  >
+                    <c.icon className="footer-row__icon" aria-hidden="true" />
+                    <span className="min-w-0">
+                      <span className="block text-xs footer-muted">{c.label}</span>
+                      <span className="block text-sm font-medium" dir="ltr">{c.value}</span>
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Agency */}
+          <div>
+            <h3 className="footer-title">{isRtl ? 'وكالتنا' : 'Notre agence'}</h3>
+            <a href={MAPS_URL} target="_blank" rel="noopener noreferrer" className="footer-row items-start">
+              <MapPin className="footer-row__icon mt-0.5" aria-hidden="true" />
+              <span className="text-sm leading-relaxed">
+                {isRtl
+                  ? 'حي السوق الأخضر (عطاء الله)، المجموعة د، الشارع 1، رقم 33، القصر الكبير 92150'
+                  : 'Hay Marche Verte (AtaaLLAH), Gr D Rue 1 N° 33, Ksar El Kebir 92150'}
+                <span className="mt-1.5 flex items-center gap-1 text-xs font-medium" style={{ color: 'rgba(191, 219, 254, 0.95)' }}>
+                  {isRtl ? 'عرض على الخريطة' : 'Voir l’itinéraire'}
+                  <ArrowUpRight className="w-3.5 h-3.5 rtl:-scale-x-100" aria-hidden="true" />
+                </span>
+              </span>
+            </a>
+            <a href="https://www.alatlassia-assurances.com" target="_blank" rel="noopener noreferrer" className="footer-row">
+              <Globe className="footer-row__icon" aria-hidden="true" />
+              <span className="min-w-0">
+                <span className="block text-xs footer-muted">{isRtl ? 'الموقع الإلكتروني' : 'Site web'}</span>
+                <span className="block text-sm font-medium" dir="ltr">www.alatlassia-assurances.com</span>
+              </span>
+            </a>
+          </div>
+
+          {/* Emergency */}
+          <div>
+            <h3 className="footer-title">{isRtl ? 'المساعدة الطارئة' : 'Assistance d’urgence'}</h3>
+            <div className="footer-emergency">
+              <p className="flex items-center gap-2 text-sm font-semibold">
+                <span className="w-2 h-2 rounded-full" style={{ background: '#f87171' }} aria-hidden="true" />
+                {isRtl ? 'متاح 24/7' : 'Disponible 24h/24, 7j/7'}
+              </p>
+              <p className="mt-1 text-xs footer-muted">{isRtl ? 'في حالة عطب أو حادث' : 'En cas de panne ou d’accident'}</p>
+              <div className="mt-3 space-y-2">
+                {emergencies.map(e => (
+                  <a key={e.number} href={`tel:${e.number.replace(/\s/g, '')}`} className="footer-emergency__call">
+                    <span className="min-w-0">
+                      <span className="block text-[11px] uppercase tracking-wide footer-muted">{e.name}</span>
+                      <span className="block text-base font-semibold" dir="ltr">{e.number}</span>
+                    </span>
+                    <Phone className="w-4 h-4 flex-shrink-0" style={{ color: '#fca5a5' }} aria-hidden="true" />
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
-      </footer>
-    </div>
+
+        {/* Bottom bar */}
+        <div className="mt-10 pt-6 flex flex-col md:flex-row gap-2 md:items-center md:justify-between text-xs footer-muted" style={{ borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+          <p>
+            © {year} {isRtl ? 'الأطلسية للتأمينات. جميع الحقوق محفوظة' : 'Al Atlassia Assurances. Tous droits réservés'}
+          </p>
+          <p className="font-arabic" dir="rtl">وسيط تأمين خاضع لمقتضيات القانون رقم 17.99 المتعلق بمدونة التأمينات</p>
+        </div>
+      </div>
+    </footer>
   );
 };
 

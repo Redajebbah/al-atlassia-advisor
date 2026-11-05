@@ -1,263 +1,146 @@
-import { Menu, X, ChevronUp } from 'lucide-react';
-import { useState, useEffect, useRef } from 'react';
-import logoAlAtlassia from '@/assets/logo-al-atlassia.jpg';
-import logoAtlantaSanad from '@/assets/logo-atlanta-sanad.png';
+import { Menu, X } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Language } from '@/types/chatbot';
+import { cn } from '@/lib/utils';
+import logoAlAtlassia from '@/assets/logo-al-atlassia-cropped.jpg';
+import logoAtlantaSanad from '@/assets/logo-atlanta-sanad-cropped.png';
 
-const Header = () => {
+interface HeaderProps {
+  language?: Language;
+}
+
+const NAV: Record<Language, { href: string; label: string }[]> = {
+  fr: [
+    { href: '#top', label: 'Accueil' },
+    { href: '#assistant', label: 'Assistant' },
+    { href: '#a-propos', label: 'À propos' },
+    { href: '#contact', label: 'Contact' },
+  ],
+  ar: [
+    { href: '#top', label: 'الرئيسية' },
+    { href: '#assistant', label: 'المساعد' },
+    { href: '#a-propos', label: 'من نحن' },
+    { href: '#contact', label: 'اتصل بنا' },
+  ],
+};
+
+/**
+ * Fixed-height header: it never changes layout while scrolling (only its shadow does),
+ * so the page below it does not jump.
+ */
+const Header = ({ language = 'fr' }: HeaderProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isCompact, setIsCompact] = useState(false);
-  const lastScrollY = useRef(0);
-  const ticking = useRef(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const isRtl = language === 'ar';
+  const links = NAV[language];
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (!ticking.current) {
-        window.requestAnimationFrame(() => {
-          const currentScrollY = window.scrollY;
-          const scrollDelta = currentScrollY - lastScrollY.current;
-          
-          // Improved hysteresis with better thresholds
-          if (currentScrollY < 20) {
-            setIsCompact(false);
-          } else if (scrollDelta > 5 && currentScrollY > 100) {
-            // Scrolling down significantly
-            setIsCompact(true);
-          } else if (scrollDelta < -5) {
-            // Scrolling up
-            setIsCompact(false);
-          }
-          
-          lastScrollY.current = currentScrollY;
-          ticking.current = false;
-        });
-        
-        ticking.current = true;
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setIsScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setIsOpen(false);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [isOpen]);
 
   return (
     <header
       id="top"
-      className="sticky top-0 z-50 transition-all duration-400 ease-in-out"
+      dir={isRtl ? 'rtl' : 'ltr'}
+      className="sticky top-0 z-50 transition-shadow duration-300"
       style={{
-        background: isCompact ? 'linear-gradient(135deg, #1a2f5a 0%, #1e3a6f 100%)' : 'linear-gradient(180deg, #1a2f5a 0%, #1e3a6f 50%, #1a2f5a 100%)',
-        boxShadow: isCompact ? '0 8px 32px rgba(26, 47, 90, 0.3)' : '0 2px 12px rgba(26, 47, 90, 0.1)',
+        background: 'linear-gradient(135deg, #1a2f5a 0%, #1e3a6f 100%)',
+        boxShadow: isScrolled ? '0 8px 28px rgba(26, 47, 90, 0.28)' : '0 1px 0 rgba(255,255,255,0.06)',
       }}
     >
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 transition-all duration-300 ease-in-out" style={{ paddingTop: isCompact ? '0.25rem' : '0.5rem', paddingBottom: isCompact ? '0.25rem' : '0.5rem' }}>
-        {!isCompact ? (
-          /* FULL STATE */
-          <div className="animate-in fade-in duration-500">
-          <div className="flex items-center justify-between gap-2 sm:gap-3 md:gap-6">
-            {/* Left Logo */}
-            <div className="flex-shrink-0">
-              <div className="transform hover:scale-105 transition-transform duration-300 flex items-center justify-center">
-                <div className="w-12 sm:w-16 md:w-20 lg:w-24 h-12 sm:h-16 md:h-20 lg:h-24 rounded-lg flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.95)', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
-                  <img
-                    src={logoAlAtlassia}
-                    alt="Al Atlassia Assurances"
-                    className="max-w-[80%] max-h-[80%] object-contain"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Center: Brand Text */}
-            <div className="flex-1 text-center px-1 sm:px-2 min-w-0">
-              <div className="space-y-0.5 sm:space-y-1">
-                <div className="flex flex-col items-center gap-0.5">
-                  <h1 className="text-sm sm:text-base md:text-xl lg:text-2xl font-bold text-white leading-tight font-arabic">
-                    الأطلسية للتأمينات
-                  </h1>
-                  <h2 className="text-xs sm:text-xs md:text-lg lg:text-xl font-semibold text-blue-100">
-                    Al Atlassia Assurances
-                  </h2>
-                  {/* Slogan update (FR/AR) */}
-                  <span className="block text-[9px] sm:text-[10px] md:text-[11px] text-blue-200 font-arabic mt-1">
-                    طريقة جديدة في التأمين
-                  </span>
-                  <span className="block text-[9px] sm:text-[10px] md:text-[11px] text-blue-200 mt-1">
-                    Une nouvelle approche de l’assurance
-                  </span>
-                </div>
-                <p className="text-[8px] sm:text-[9px] md:text-xs text-blue-300 leading-tight font-arabic px-1">
-                  وسيط تأمين خاضع لمقتضيات القانون رقم 17.99 المتعلق بمدونة التأمينات
-                </p>
-              </div>
-            </div>
-
-            {/* Right Logo */}
-            <div className="flex-shrink-0">
-              <div className="transform hover:scale-105 transition-transform duration-300 flex items-center justify-center">
-                <div className="w-12 sm:w-16 md:w-20 lg:w-24 h-12 sm:h-16 md:h-20 lg:h-24 rounded-lg flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.95)', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
-                  <img
-                    src={logoAtlantaSanad}
-                    alt="Atlanta Sanad"
-                    className="max-w-[80%] max-h-[80%] object-contain"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Mobile Menu Toggle removed as requested */}
-          </div>
-
-          {/* Navigation */}
-          <div
-            className={`mt-2 sm:mt-3 md:mt-4 pt-2 sm:pt-3 md:pt-4 border-t border-blue-700/50 transition-all duration-300 overflow-hidden ${
-              isOpen ? 'max-h-20' : 'max-h-0 md:max-h-12'
-            }`}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 sm:h-[72px] flex items-center gap-3 sm:gap-6">
+        {/* Brand */}
+        <a href="#top" className="flex items-center gap-3 min-w-0 rounded-xl" aria-label="Al Atlassia Assurances">
+          <span
+            className="flex-shrink-0 w-11 h-11 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center"
+            style={{ background: '#ffffff', boxShadow: '0 2px 10px rgba(0,0,0,0.15)' }}
           >
-            <nav className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-6 lg:gap-8">
-              <a
-                href="#top"
-                className="text-blue-100 hover:text-white transition-colors duration-300 relative group"
-              >
-                <span>Accueil</span>
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
-              </a>
-              <a
-                href="#assistant"
-                className="text-blue-100 hover:text-white transition-colors duration-300 relative group"
-              >
-                <span>Services</span>
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
-              </a>
-              <a
-                href="#a-propos"
-                className="text-blue-100 hover:text-white transition-colors duration-300 relative group"
-              >
-                <span>À Propos</span>
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
-              </a>
-              <a
-                href="#contact"
-                className="text-blue-100 hover:text-white transition-colors duration-300 relative group"
-              >
-                <span>Contact</span>
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
-              </a>
-            </nav>
-          </div>
+            <img src={logoAlAtlassia} alt="" className="w-[84%] h-[84%] object-contain" />
+          </span>
+          <span className="min-w-0 leading-tight">
+            <span className="block text-[15px] sm:text-[17px] font-semibold text-white truncate" style={{ letterSpacing: '-0.01em' }}>
+              Al Atlassia Assurances
+            </span>
+            <span className="block text-xs sm:text-[13px] font-arabic truncate" style={{ color: 'rgba(219, 234, 254, 0.8)' }}>
+              الأطلسية للتأمينات
+            </span>
+          </span>
+        </a>
+
+        {/* Desktop navigation */}
+        <nav className={cn('hidden md:flex items-center gap-1 ms-auto', isRtl && 'font-arabic')} aria-label={isRtl ? 'القائمة الرئيسية' : 'Menu principal'}>
+          {links.map(link => (
+            <a key={link.href} href={link.href} className="header-link">
+              {link.label}
+            </a>
+          ))}
+        </nav>
+
+        {/* Partner */}
+        <div className="flex items-center gap-2.5 ms-auto md:ms-2 md:ps-5 md:border-s md:border-white/10">
+          <span className="hidden lg:block text-[11px] leading-tight text-end" style={{ color: 'rgba(219, 234, 254, 0.7)' }}>
+            {isRtl ? 'وكيل عام' : 'Agent général'}
+            <br />
+            <span className="text-white/90 font-medium">Atlanta Sanad</span>
+          </span>
+          <span
+            className="flex-shrink-0 w-11 h-11 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center"
+            style={{ background: '#ffffff', boxShadow: '0 2px 10px rgba(0,0,0,0.15)' }}
+          >
+            <img src={logoAtlantaSanad} alt="Atlanta Sanad" className="w-[80%] h-[80%] object-contain" />
+          </span>
         </div>
-        ) : (
-          /* COMPACT STATE */
-          <div className="animate-in fade-in duration-500">
-            <div className="flex items-center justify-between gap-2 sm:gap-3 md:gap-4">
-            {/* Left Logo */}
-            <button
-              onClick={scrollToTop}
-              aria-label="Retour en haut"
-              className="flex-shrink-0 transform hover:scale-105 transition-transform duration-300 flex items-center justify-center"
-            >
-              <div className="w-10 sm:w-12 md:w-14 h-10 sm:h-12 md:h-14 rounded-lg flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.95)', boxShadow: '0 2px 6px rgba(0,0,0,0.08)' }}>
-                <img
-                  src={logoAlAtlassia}
-                  alt="Al Atlassia Assurances"
-                  className="max-w-[78%] max-h-[78%] object-contain"
-                />
-              </div>
-            </button>
 
-            {/* Center: Compact Navigation */}
-            <nav className="hidden md:flex items-center justify-center gap-3 lg:gap-5 flex-1">
-              <a
-                href="#top"
-                className="text-xs lg:text-sm text-blue-100 hover:text-white transition-colors duration-300 relative group whitespace-nowrap"
-              >
-                <span>Accueil</span>
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
-              </a>
-              <a
-                href="#assistant"
-                className="text-xs lg:text-sm text-blue-100 hover:text-white transition-colors duration-300 relative group whitespace-nowrap"
-              >
-                <span>Services</span>
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
-              </a>
-              <a
-                href="#a-propos"
-                className="text-xs lg:text-sm text-blue-100 hover:text-white transition-colors duration-300 relative group whitespace-nowrap"
-              >
-                <span>À Propos</span>
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
-              </a>
-              <a
-                href="#contact"
-                className="text-xs lg:text-sm text-blue-100 hover:text-white transition-colors duration-300 relative group whitespace-nowrap"
-              >
-                <span>Contact</span>
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
-              </a>
-            </nav>
-
-            {/* Right Logo */}
-            <div className="flex-shrink-0 transform hover:scale-105 transition-transform duration-300 flex items-center justify-center">
-              <div className="w-10 sm:w-12 md:w-14 h-10 sm:h-12 md:h-14 rounded-lg flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.95)', boxShadow: '0 2px 6px rgba(0,0,0,0.08)' }}>
-                <img
-                  src={logoAtlantaSanad}
-                  alt="Atlanta Sanad"
-                  className="max-w-[78%] max-h-[78%] object-contain"
-                />
-              </div>
-            </div>
-
-            {/* Mobile Menu Toggle */}
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              aria-label={isOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
-              aria-expanded={isOpen}
-              className="md:hidden text-white hover:text-blue-200 transition-colors flex-shrink-0"
-            >
-              {isOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
-            </button>
-          </div>
-        </div>
-        )}
-
-        {/* Mobile Menu (works in both states) */}
-        {isOpen && (
-          <div className="md:hidden mt-3 pt-3 border-t border-blue-700/50">
-            <nav className="flex flex-col gap-3" onClick={() => setIsOpen(false)}>
-              <a
-                href="#top"
-                className="text-blue-100 hover:text-white transition-colors duration-300 py-2"
-              >
-                Accueil
-              </a>
-              <a
-                href="#assistant"
-                className="text-blue-100 hover:text-white transition-colors duration-300 py-2"
-              >
-                Services
-              </a>
-              <a
-                href="#a-propos"
-                className="text-blue-100 hover:text-white transition-colors duration-300 py-2"
-              >
-                À Propos
-              </a>
-              <a
-                href="#contact"
-                className="text-blue-100 hover:text-white transition-colors duration-300 py-2"
-              >
-                Contact
-              </a>
-            </nav>
-          </div>
-        )}
+        {/* Mobile menu toggle */}
+        <button
+          type="button"
+          onClick={() => setIsOpen(!isOpen)}
+          aria-label={isOpen ? (isRtl ? 'إغلاق القائمة' : 'Fermer le menu') : (isRtl ? 'فتح القائمة' : 'Ouvrir le menu')}
+          aria-expanded={isOpen}
+          aria-controls="mobile-menu"
+          className="md:hidden flex-shrink-0 w-10 h-10 -me-1.5 rounded-xl flex items-center justify-center text-white transition-colors hover:bg-white/10"
+        >
+          {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        </button>
       </div>
 
-      {/* Gradient Accent Line */}
-      <div className="h-0.5" style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(148,163,184,0.4) 30%, rgba(148,163,184,0.5) 50%, rgba(148,163,184,0.4) 70%, transparent 100%)' }}></div>
+      {/* Mobile menu */}
+      <div
+        id="mobile-menu"
+        className={cn(
+          'md:hidden overflow-hidden transition-[max-height,opacity] duration-300 ease-out',
+          isOpen ? 'max-h-72 opacity-100' : 'max-h-0 opacity-0',
+        )}
+        style={{ borderTop: isOpen ? '1px solid rgba(255,255,255,0.08)' : 'none' }}
+      >
+        <nav
+          className={cn('px-4 py-2 flex flex-col', isRtl && 'font-arabic')}
+          aria-label={isRtl ? 'القائمة الرئيسية' : 'Menu principal'}
+          onClick={() => setIsOpen(false)}
+        >
+          {links.map(link => (
+            <a
+              key={link.href}
+              href={link.href}
+              tabIndex={isOpen ? 0 : -1}
+              className="py-3 px-2 rounded-lg text-[15px] font-medium transition-colors hover:bg-white/5"
+              style={{ color: 'rgba(239, 246, 255, 0.92)' }}
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+      </div>
     </header>
   );
 };

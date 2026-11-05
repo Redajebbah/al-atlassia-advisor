@@ -18,9 +18,9 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col overflow-hidden">
+    <div className="min-h-screen flex flex-col overflow-x-clip">
       {/* Professional Header */}
-      <Header />
+      <Header language={language} />
       
       {/* ZONE 1: Chatbot */}
       <div className="flex-1">
@@ -28,8 +28,8 @@ const Index = () => {
       </div>
 
       {/* ZONE 2: Page Content */}
-      <div className="pt-6" style={{ borderTop: '2px solid rgba(30, 58, 138, 0.08)', background: 'linear-gradient(180deg, #f4f6fa 0%, #ffffff 100%)' }}>
-        <PartnerCarousel />
+      <div>
+        <PartnerCarousel language={language} />
         <Footer language={language} />
       </div>
     </div>
