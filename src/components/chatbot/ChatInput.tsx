@@ -184,6 +184,7 @@ const ChatInput = ({ onSubmit, language, placeholder, type = 'text' }: ChatInput
         <input
           type={inputType}
           value={value}
+          maxLength={type === 'phone' ? 20 : 120}
           onChange={(e) => {
             const v = e.target.value;
             setValue(v);
