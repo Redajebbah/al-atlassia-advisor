@@ -134,6 +134,7 @@ export interface ChatMessage {
   id: string;
   type: 'bot' | 'user';
   content: string;
+  createdAt?: number;
   options?: ChatOption[];
   multiSelect?: boolean;
   inputType?: 'text' | 'phone' | 'number' | 'registration';

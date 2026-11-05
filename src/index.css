@@ -99,6 +99,11 @@
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 96px;
+  }
+
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', 'Noto Sans Arabic', sans-serif;
@@ -129,7 +134,7 @@
 @layer components {
   /* Chat Bubbles */
   .chat-bubble-bot {
-    @apply bg-white text-card-foreground rounded-2xl rounded-tl-md px-4 py-3;
+    @apply bg-white text-card-foreground rounded-2xl px-4 py-3;
     box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
   }
 
@@ -198,6 +203,146 @@
     opacity: 0.95;
     filter: none;
     display: block;
+  }
+
+  /* ────── Option cards (theme colors unchanged) ────── */
+  .option-card {
+    @apply relative flex flex-col items-center justify-center text-center transition-all duration-200 active:scale-[0.97];
+    background: #ffffff;
+    color: #1e3a6f;
+    border: 1.5px solid rgba(0,0,0,0.07);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  .option-card--tile {
+    @apply min-h-[64px] rounded-2xl px-2 py-2.5 gap-1;
+  }
+  .option-card--pill {
+    @apply h-10 min-h-0 rounded-full px-3 text-sm font-semibold;
+  }
+  @media (hover: hover) {
+    .option-card:not(.is-selected):not(.is-featured):hover {
+      border-color: rgba(30, 58, 138, 0.25);
+      box-shadow: 0 6px 16px rgba(30, 58, 138, 0.08);
+      transform: translateY(-1px);
+    }
+  }
+  .option-card.is-selected {
+    background: rgba(30, 58, 138, 0.04);
+    border-color: #1e3a6f;
+    box-shadow: 0 4px 14px rgba(30, 58, 138, 0.12);
+  }
+  .option-card.is-featured {
+    background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+    border: 2px solid #86efac;
+    box-shadow: 0 4px 16px rgba(34,197,94,0.1), 0 0 0 3px rgba(34,197,94,0.06);
+  }
+  .option-card--tile.has-check {
+    padding-inline: 1.75rem;
+  }
+  .option-card__icon {
+    @apply flex items-center justify-center w-8 h-8 rounded-full transition-colors;
+    background: rgba(30, 58, 138, 0.05);
+  }
+  .option-card.is-selected .option-card__icon {
+    background: rgba(30, 58, 138, 0.1);
+  }
+  .option-card__label {
+    @apply font-semibold leading-snug whitespace-pre-line;
+  }
+  .option-card--tile .option-card__label {
+    @apply text-xs sm:text-[13px];
+  }
+  .option-card__badge {
+    @apply absolute -top-2 end-2 text-white text-[10px] px-2 py-0.5 rounded-full font-semibold;
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    box-shadow: 0 2px 6px rgba(34,197,94,0.3);
+  }
+  .option-card__check {
+    @apply absolute top-2 end-2 w-5 h-5 rounded-full flex items-center justify-center transition-all;
+    border: 1.5px solid rgba(30, 58, 138, 0.25);
+    background: #ffffff;
+  }
+  .option-card.is-selected .option-card__check {
+    border-color: transparent;
+    background: linear-gradient(135deg, #1e3a6f 0%, #1a2f5a 100%);
+    box-shadow: 0 2px 6px rgba(30,58,138,0.25);
+  }
+
+  /* ────── Buttons ────── */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 text-white rounded-full py-3 px-5 font-semibold transition-all active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed;
+    background: linear-gradient(135deg, #1e3a6f 0%, #1a2f5a 100%);
+    box-shadow: 0 6px 18px rgba(30, 58, 138, 0.2);
+  }
+  @media (hover: hover) {
+    .btn-primary:not(:disabled):hover { box-shadow: 0 8px 24px rgba(30, 58, 138, 0.28); transform: translateY(-1px); }
+  }
+  .btn-primary__count {
+    @apply inline-flex items-center justify-center min-w-[1.375rem] h-[1.375rem] px-1.5 rounded-full text-xs;
+    background: rgba(255,255,255,0.18);
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-all active:scale-[0.98];
+    background: #ffffff;
+    color: #4a5568;
+    border: 1px solid rgba(0,0,0,0.08);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  @media (hover: hover) {
+    .btn-ghost:hover { color: #1e3a6f; border-color: rgba(30, 58, 138, 0.2); }
+  }
+
+  /* Keyboard focus, visible only for keyboard users */
+  .option-card:focus-visible,
+  .btn-primary:focus-visible,
+  .btn-ghost:focus-visible,
+  .icon-btn:focus-visible,
+  .lang-card:focus-visible,
+  header a:focus-visible,
+  header button:focus-visible,
+  footer a:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px #ffffff, 0 0 0 5px rgba(30, 58, 138, 0.55);
+  }
+
+  .icon-btn {
+    @apply inline-flex items-center justify-center w-9 h-9 rounded-full transition-colors;
+    color: #64748b;
+  }
+  @media (hover: hover) {
+    .icon-btn:hover { background: rgba(30, 58, 138, 0.06); color: #1e3a6f; }
+  }
+
+  /* Chat text input */
+  .chat-input {
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.08);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04);
+    transition: border-color .2s ease, box-shadow .2s ease;
+  }
+  .chat-input:focus-within {
+    border-color: rgba(30, 58, 138, 0.35);
+    box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.08), 0 4px 16px rgba(0,0,0,0.06);
+  }
+  .chat-input.has-error {
+    border-color: hsl(var(--destructive) / 0.5);
+    box-shadow: 0 0 0 4px hsl(var(--destructive) / 0.08);
+  }
+
+  /* Language cards */
+  .lang-card {
+    @apply flex flex-col items-center justify-center text-center relative overflow-hidden cursor-pointer rounded-xl sm:rounded-2xl p-6 sm:p-8 gap-3 sm:gap-4 min-h-[120px] transition-all duration-300 ease-out active:scale-[0.97];
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  @media (hover: hover) {
+    .lang-card:hover { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); transform: translateY(-2px); }
+    .lang-card:hover .lang-card__flag { transform: scale(1.08); }
+  }
+  .lang-card__flag {
+    @apply w-11 h-8 rounded-md overflow-hidden transition-transform duration-300;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
   }
 
   /* Typing Indicator */
@@ -400,5 +545,15 @@
   .animate-slide-in-up,
   .animate-scale-in {
     transform: translate3d(0, 0, 0);
+  }
+}
+
+/* ────── Accessibility: respect reduced motion ────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

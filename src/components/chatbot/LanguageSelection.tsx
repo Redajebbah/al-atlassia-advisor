@@ -4,15 +4,60 @@ import { t } from '@/lib/translations';
 import logoAlAtlassia from '@/assets/logo-al-atlassia.jpg';
 import logoAtlantaSanad from '@/assets/logo-atlanta-sanad.png';
 import { Globe } from 'lucide-react';
-import { useState } from 'react';
+
+// Inline SVG flags: emoji flags are not rendered on Windows (they show as "MA" / "FR")
+const FlagMA = () => (
+  <svg viewBox="0 0 90 60" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+    <rect width="90" height="60" fill="#c1272d" />
+    <path
+      d="M45 17.5 51.47 37.4 34.54 25.1h20.92L38.53 37.4z"
+      fill="none"
+      stroke="#006233"
+      strokeWidth="2.6"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+const FlagFR = () => (
+  <svg viewBox="0 0 90 60" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+    <rect width="30" height="60" fill="#0055a4" />
+    <rect x="30" width="30" height="60" fill="#ffffff" />
+    <rect x="60" width="30" height="60" fill="#ef4135" />
+  </svg>
+);
+
+const LANGUAGES: {
+  code: Language;
+  label: string;
+  hint: string;
+  flag: JSX.Element;
+  ribbon: string;
+  ribbonShadow: string;
+}[] = [
+  {
+    code: 'ar',
+    label: 'العربية',
+    hint: 'Arabe',
+    flag: <FlagMA />,
+    ribbon: 'linear-gradient(135deg, #e94b6f 0%, #f55b7f 100%)',
+    ribbonShadow: '0 2px 8px rgba(233, 75, 111, 0.3)',
+  },
+  {
+    code: 'fr',
+    label: 'Français',
+    hint: 'French',
+    flag: <FlagFR />,
+    ribbon: 'linear-gradient(135deg, #4a7fc1 0%, #5a8fd1 100%)',
+    ribbonShadow: '0 2px 8px rgba(74, 127, 193, 0.3)',
+  },
+];
 
 interface LanguageSelectionProps {
   onSelect: (language: Language) => void;
 }
 
 const LanguageSelection = ({ onSelect }: LanguageSelectionProps) => {
-  const [hoveredCard, setHoveredCard] = useState<'ar' | 'fr' | null>(null);
-
   return (
     <div
       className="fixed inset-0 z-50 flex items-start justify-center pt-4 pb-6 overflow-auto"
@@ -200,140 +245,46 @@ const LanguageSelection = ({ onSelect }: LanguageSelectionProps) => {
         </div>
 
         {/* Language Cards */}
-        <div className="grid grid-cols-2 gap-2.5 sm:gap-3 w-full">
-          <button
-            onClick={() => onSelect('ar')}
-            onMouseEnter={() => setHoveredCard('ar')}
-            onMouseLeave={() => setHoveredCard(null)}
-            className={cn(
-              'animate-fade-in-up animation-delay-300 flex flex-col items-center justify-center text-center relative overflow-hidden',
-              'cursor-pointer transition-all duration-300 ease-out rounded-xl sm:rounded-2xl p-6 sm:p-8 gap-3 sm:gap-4 min-h-[120px] sm:min-h-[88px]',
-              'active:scale-[0.97]'
-            )}
-            style={{
-              background: '#ffffff',
-              boxShadow: hoveredCard === 'ar'
-                ? '0 8px 24px rgba(0, 0, 0, 0.12)'
-                : '0 4px 12px rgba(0, 0, 0, 0.08)',
-              border: '1px solid rgba(0, 0, 0, 0.06)',
-              transform: hoveredCard === 'ar' ? 'translateY(-2px)' : 'translateY(0)',
-            }}
-          >
-            {/* Decorative ribbon - top right corner */}
-            <div
-              className="absolute top-0 right-0 w-24 h-24 overflow-hidden pointer-events-none"
-              style={{ borderRadius: '0 0.75rem 0 0' }}
+        <div className="grid grid-cols-2 gap-2.5 sm:gap-3 w-full" role="group" aria-label="Choisissez votre langue • اختر لغتك">
+          {LANGUAGES.map((lang, i) => (
+            <button
+              key={lang.code}
+              type="button"
+              lang={lang.code}
+              onClick={() => onSelect(lang.code)}
+              className={cn('lang-card animate-fade-in-up', i === 0 ? 'animation-delay-300' : 'animation-delay-400')}
             >
+              {/* Decorative ribbon - top right corner */}
               <div
-                className="absolute transform rotate-45 origin-top-right transition-all duration-300"
-                style={{
-                  width: '100px',
-                  height: '30px',
-                  background: hoveredCard === 'ar'
-                    ? 'linear-gradient(135deg, #e94b6f 0%, #f55b7f 100%)'
-                    : 'linear-gradient(135deg, #e94b6f 0%, #f55b7f 100%)',
-                  top: '15px',
-                  right: '-35px',
-                  boxShadow: '0 2px 8px rgba(233, 75, 111, 0.3)',
-                  opacity: hoveredCard === 'ar' ? 1 : 0.95,
-                }}
-              />
-            </div>
+                className="absolute top-0 right-0 w-24 h-24 overflow-hidden pointer-events-none"
+                style={{ borderRadius: '0 0.75rem 0 0' }}
+                aria-hidden="true"
+              >
+                <div
+                  className="absolute transform rotate-45 origin-top-right"
+                  style={{
+                    width: '100px',
+                    height: '30px',
+                    background: lang.ribbon,
+                    top: '15px',
+                    right: '-35px',
+                    boxShadow: lang.ribbonShadow,
+                  }}
+                />
+              </div>
 
-            <span
-              className="text-3xl sm:text-2xl mb-1 transition-transform duration-300"
-              style={{
-                transform: hoveredCard === 'ar' ? 'scale(1.1)' : 'scale(1)',
-              }}
-            >
-              🇲🇦
-            </span>
-            <span
-              className="text-base sm:text-sm font-semibold font-arabic transition-colors duration-300"
-              style={{
-                color: hoveredCard === 'ar' ? '#1a2947' : '#2d4a7c',
-                fontWeight: 600,
-              }}
-            >
-              العربية
-            </span>
-            <span
-              className="text-xs sm:text-[11px] mt-0.5 sm:mt-1 transition-colors duration-300"
-              style={{
-                color: hoveredCard === 'ar' ? '#4a5568' : '#6b7280',
-                fontWeight: 500,
-              }}
-            >
-              Arabe
-            </span>
-          </button>
-
-          <button
-            onClick={() => onSelect('fr')}
-            onMouseEnter={() => setHoveredCard('fr')}
-            onMouseLeave={() => setHoveredCard(null)}
-            className={cn(
-              'animate-fade-in-up animation-delay-400 flex flex-col items-center justify-center text-center relative overflow-hidden',
-              'cursor-pointer transition-all duration-300 ease-out rounded-xl sm:rounded-2xl p-6 sm:p-8 gap-3 sm:gap-4 min-h-[120px] sm:min-h-[88px]',
-              'active:scale-[0.97]'
-            )}
-            style={{
-              background: '#ffffff',
-              boxShadow: hoveredCard === 'fr'
-                ? '0 8px 24px rgba(0, 0, 0, 0.12)'
-                : '0 4px 12px rgba(0, 0, 0, 0.08)',
-              border: '1px solid rgba(0, 0, 0, 0.06)',
-              transform: hoveredCard === 'fr' ? 'translateY(-2px)' : 'translateY(0)',
-            }}
-          >
-            {/* Decorative ribbon - top right corner */}
-            <div
-              className="absolute top-0 right-0 w-24 h-24 overflow-hidden pointer-events-none"
-              style={{ borderRadius: '0 0.75rem 0 0' }}
-            >
-              <div
-                className="absolute transform rotate-45 origin-top-right transition-all duration-300"
-                style={{
-                  width: '100px',
-                  height: '30px',
-                  background: hoveredCard === 'fr'
-                    ? 'linear-gradient(135deg, #4a7fc1 0%, #5a8fd1 100%)'
-                    : 'linear-gradient(135deg, #4a7fc1 0%, #5a8fd1 100%)',
-                  top: '15px',
-                  right: '-35px',
-                  boxShadow: '0 2px 8px rgba(74, 127, 193, 0.3)',
-                  opacity: hoveredCard === 'fr' ? 1 : 0.95,
-                }}
-              />
-            </div>
-
-            <span
-              className="text-3xl sm:text-2xl mb-1 transition-transform duration-300"
-              style={{
-                transform: hoveredCard === 'fr' ? 'scale(1.1)' : 'scale(1)',
-              }}
-            >
-              🇫🇷
-            </span>
-            <span
-              className="text-base sm:text-sm font-semibold transition-colors duration-300"
-              style={{
-                color: hoveredCard === 'fr' ? '#1a2947' : '#2d4a7c',
-                fontWeight: 600,
-              }}
-            >
-              Français
-            </span>
-            <span
-              className="text-xs sm:text-[11px] mt-0.5 sm:mt-1 transition-colors duration-300"
-              style={{
-                color: hoveredCard === 'fr' ? '#4a5568' : '#6b7280',
-                fontWeight: 500,
-              }}
-            >
-              French
-            </span>
-          </button>
+              <span className="lang-card__flag" aria-hidden="true">{lang.flag}</span>
+              <span
+                className={cn('text-base font-semibold', lang.code === 'ar' && 'font-arabic')}
+                style={{ color: '#2d4a7c' }}
+              >
+                {lang.label}
+              </span>
+              <span className="text-xs -mt-1 sm:-mt-2" style={{ color: '#6b7280', fontWeight: 500 }}>
+                {lang.hint}
+              </span>
+            </button>
+          ))}
         </div>
       </div>
     </div>

@@ -109,6 +109,7 @@ const ChatInput = ({ onSubmit, language, placeholder, type = 'text' }: ChatInput
               value={registration[0]}
               onChange={(e) => handleRegistrationChange(0, e.target.value)}
               placeholder="12345"
+              aria-label={isRtl ? 'الرقم' : 'Numéro'}
               className="w-20 text-center text-lg font-bold p-1 focus:outline-none transition-colors"
               style={{ borderBottom: '2px solid #dde3ed', color: '#1a2a4a' }}
               onFocus={(e) => (e.currentTarget.style.borderBottomColor = '#1e3a6f')}
@@ -122,6 +123,7 @@ const ChatInput = ({ onSubmit, language, placeholder, type = 'text' }: ChatInput
               value={registration[1]}
               onChange={(e) => handleRegistrationChange(1, e.target.value)}
               placeholder="A"
+              aria-label={isRtl ? 'الحرف' : 'Lettre'}
               className="w-12 text-center text-lg font-bold p-1 uppercase focus:outline-none transition-colors"
               style={{ borderBottom: '2px solid #dde3ed', color: '#1a2a4a' }}
               onFocus={(e) => (e.currentTarget.style.borderBottomColor = '#1e3a6f')}
@@ -135,6 +137,7 @@ const ChatInput = ({ onSubmit, language, placeholder, type = 'text' }: ChatInput
               value={registration[2]}
               onChange={(e) => handleRegistrationChange(2, e.target.value)}
               placeholder="6"
+              aria-label={isRtl ? 'رمز العمالة' : 'Code préfecture'}
               className="w-12 text-center text-lg font-bold p-1 focus:outline-none transition-colors"
               style={{ borderBottom: '2px solid #dde3ed', color: '#1a2a4a' }}
               onFocus={(e) => (e.currentTarget.style.borderBottomColor = '#1e3a6f')}
@@ -143,6 +146,7 @@ const ChatInput = ({ onSubmit, language, placeholder, type = 'text' }: ChatInput
 
             <button
               type="submit"
+              aria-label="Envoyer"
               className={cn(
                 "ml-2 text-white rounded-full",
                 "w-10 h-10 flex-shrink-0",
@@ -158,7 +162,7 @@ const ChatInput = ({ onSubmit, language, placeholder, type = 'text' }: ChatInput
             </button>
           </div>
           {error && (
-            <p className={cn("text-center text-sm text-destructive", language === 'ar' && "font-arabic")}>
+            <p role="alert" className={cn("text-center text-sm text-destructive", language === 'ar' && "font-arabic")}>
               {error}
             </p>
           )}
@@ -174,12 +178,7 @@ const ChatInput = ({ onSubmit, language, placeholder, type = 'text' }: ChatInput
       dir={isRtl ? "rtl" : "ltr"}
     >
       <div
-        className="flex gap-3 items-center rounded-full px-2 py-2 transition-shadow duration-300"
-        style={{
-          background: '#ffffff',
-          boxShadow: '0 4px 16px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04)',
-          border: '1px solid rgba(0,0,0,0.06)',
-        }}
+        className={cn("chat-input flex gap-2 items-center rounded-full ps-2 pe-1.5 py-1.5", error && "has-error")}
       >
         <input
           type={inputType}
@@ -198,14 +197,19 @@ const ChatInput = ({ onSubmit, language, placeholder, type = 'text' }: ChatInput
           }}
           placeholder={placeholder}
           className={cn(
-            "flex-1 bg-transparent px-4 py-2",
+            "flex-1 min-w-0 bg-transparent px-3 py-2",
             "text-[16px] sm:text-base placeholder:text-gray-400",
             "focus:outline-none transition-all touch-manipulation",
             isRtl ? "font-arabic text-right" : ""
           )}
           style={{ color: '#1a2a4a' }}
           autoFocus
-          autoComplete="off"
+          aria-label={placeholder}
+          aria-invalid={!!error}
+          aria-describedby={error ? 'chat-input-error' : undefined}
+          enterKeyHint="send"
+          inputMode={type === 'phone' ? 'tel' : type === 'number' ? 'numeric' : 'text'}
+          autoComplete={type === 'phone' ? 'tel' : 'off'}
           autoCorrect="off"
           autoCapitalize="off"
           spellCheck="false"
@@ -225,6 +229,7 @@ const ChatInput = ({ onSubmit, language, placeholder, type = 'text' }: ChatInput
         <button
           type="submit"
           disabled={!value.trim()}
+          aria-label={isRtl ? 'إرسال' : 'Envoyer'}
           className={cn(
             "text-white rounded-full",
             "w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0",
@@ -241,7 +246,7 @@ const ChatInput = ({ onSubmit, language, placeholder, type = 'text' }: ChatInput
         </button>
       </div>
       {error && (
-        <p className={cn("mt-2 text-sm text-destructive", isRtl && "font-arabic")}>{error}</p>
+        <p id="chat-input-error" role="alert" className={cn("mt-2 px-4 text-sm text-destructive", isRtl && "font-arabic")}>{error}</p>
       )}
     </form>
   );
